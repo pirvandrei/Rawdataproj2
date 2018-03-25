@@ -6,7 +6,7 @@ using System.Text;
 
 namespace StackoverflowContext
 {
-    public class StackoverflowDbDataservice
+    public class StackoverflowDbDataservice 
     {
         public List<Post> GetPosts()
         {
