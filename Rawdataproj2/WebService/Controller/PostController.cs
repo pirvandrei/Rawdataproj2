@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace WebService.Controller
 {
     [Route("api/posts")]
-    public class MovieController
+    public class PostController
     {
         StackoverflowDbDataservice _dataService = new StackoverflowDbDataservice();
 
@@ -19,8 +19,15 @@ namespace WebService.Controller
         {
             return _dataService.GetPosts();
         }
+
+
+        [HttpGet("{id}")]
+        public Post Get(int id)
+        {
+            return _dataService.GetPost(id);
+        }
     }
-     
+
 
      
 }

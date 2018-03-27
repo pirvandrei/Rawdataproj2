@@ -12,7 +12,7 @@ namespace UnitTesting
         public void Post_Object_HasIdNameAndDescription()
         {
             var post = new Post();
-            Assert.Equal(0, post.Id);
+            Assert.Equal(0, post.ID);
             Assert.Null(post.Body);
             Assert.Equal(0, post.Score); 
         }
@@ -39,12 +39,12 @@ namespace UnitTesting
         {
             var service = new StackoverflowDbDataservice();
             var post = service.CreatePost(13, "Test", 2);
-            Assert.True(post.Id > 0);
+            Assert.True(post.ID > 0);
             Assert.Equal("Test", post.Body);
             Assert.Equal(2, post.Score);
 
             // cleanup
-            service.DeletePost(post.Id);
+            service.DeletePost(post.ID);
         }
 
         //[Fact]

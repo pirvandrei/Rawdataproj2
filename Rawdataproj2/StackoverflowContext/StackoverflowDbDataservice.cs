@@ -13,8 +13,8 @@ namespace StackoverflowContext
         {
             using (var db = new StackoverflowDbContext())
             {
-                var newPost = new Post {UserId = userId, Body = body, Score = score };
-                newPost.Id = db.Posts.Max(p => p.Id) + 1;
+                var newPost = new Post {UserID = userId,   Score = score };
+                newPost.ID = db.Posts.Max(p => p.ID) + 1;
                 db.Posts.Add(newPost);
                 db.SaveChanges();
                 return newPost;
@@ -45,7 +45,7 @@ namespace StackoverflowContext
                              .Include(x => x.Questions)
                                 .Include(x => x.PostTags)
                                      .Include(x => x.Links)
-                                        .FirstOrDefault(x => x.Id == id);
+                             .FirstOrDefault(x => x.ID == id);
                 return post;
             }
         }

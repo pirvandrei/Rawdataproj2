@@ -6,7 +6,7 @@ namespace DomainModel
 {
     public class User
     {
-        public int Id { get; set; }
+        public int ID { get; set; }
         public string DisplayName { get; set; }
         public DateTime CreationDate { get; set; }
         public string Location { get; set; }
