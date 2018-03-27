@@ -6,9 +6,10 @@ namespace DomainModel
 {
     public class Answer
     {
-        public int PostId { get; set; }
+        
         public int ParentId { get; set; }
 
+        public int PostId { get; set; }
         public Post Post { get; set; }
     }
 }

@@ -2,10 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Text; 
+using System.Text;
 
 namespace StackoverflowContext
-{ 
+{
     class StackoverflowDbContext : DbContext
     {
         public DbSet<Post> Posts { get; set; }
@@ -19,7 +19,7 @@ namespace StackoverflowContext
         public DbSet<Bookmark> Bookmarks { get; set; }
         public DbSet<Note> Notes { get; set; }
 
-        public DbSet<Link> Links { get; set; }
+        // public DbSet<Link> Links { get; set; }
         public DbSet<Search> Searches { get; set; }
 
 
@@ -34,16 +34,21 @@ namespace StackoverflowContext
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Post>().Property(x => x.Id).HasColumnName("ID");
-            modelBuilder.Entity<Post>().Property(x => x.Score).HasColumnName("Score");
+            //modelBuilder.Entity<Post>().Property(x => x.Id).HasColumnName("postid");
 
+
+
+            modelBuilder.Entity<Search>().HasKey(x => new { x.UserId });
             modelBuilder.Entity<Note>().HasKey(x => new { x.UserId, x.PostId });
             modelBuilder.Entity<Comment>().HasKey(x => new { x.UserId, x.PostId });
             modelBuilder.Entity<Bookmark>().HasKey(x => new { x.UserId, x.PostId });
 
-            modelBuilder.Entity<PostTag>().HasKey(x => new { x.PostId });
-            modelBuilder.Entity<Search>().HasKey(x => new { x.UserId });
 
+            modelBuilder.Entity<PostTag>().HasKey(x => new { x.PostId });
+            modelBuilder.Entity<Answer>().HasKey(x => new { x.PostId });
+            modelBuilder.Entity<Question>().HasKey(x => new { x.PostId });
+            modelBuilder.Entity<Link>().HasKey(x => new { x.PostId });
+            modelBuilder.Entity<Tag>().HasKey(x => new { x.Name });
         }
     }
 }

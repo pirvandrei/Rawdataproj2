@@ -6,7 +6,7 @@ namespace DomainModel
 {
     public class Tag
     { 
-        public string Name { get; set; }
+        public string Name { get; set; } 
         public PostTag PostTag { get; set; }
 
     }

@@ -9,6 +9,8 @@ namespace DomainModel
         public DateTime Closeddate { get; set; }
 
         public Answer AcceptedAnswer { get; set; }
+
+        public int PostId { get; set; }
         public Post Post { get; set; }
     }
 }
