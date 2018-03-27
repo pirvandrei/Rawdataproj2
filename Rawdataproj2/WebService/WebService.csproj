@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\StackoverflowContext\StackoverflowContext.csproj" />
+    <ProjectReference Include="..\DataRepository\DataRepository.csproj" />
   </ItemGroup>
 
 </Project>

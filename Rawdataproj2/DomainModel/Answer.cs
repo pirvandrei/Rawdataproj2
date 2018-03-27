@@ -2,10 +2,8 @@
 
 namespace DomainModel
 {
-    public class Answer
+    public class Answer : Post
     { 
-        public int ParentId { get; set; } 
-        public int ID { get; set; }
-        public Post Post { get; set; }
+        public int ParentID { get; set; } 
     }
 }

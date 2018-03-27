@@ -4,7 +4,8 @@ using StackoverflowContext;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Threading.Tasks; 
+using DataRepository.Dto.Post;
 
 namespace WebService.Controller
 {
@@ -12,22 +13,19 @@ namespace WebService.Controller
     public class PostController
     {
         StackoverflowDbDataservice _dataService = new StackoverflowDbDataservice();
-
-
-        [HttpGet]
-        public List<Post> Get()
-        {
-            return _dataService.GetPosts();
-        }
-
-
+           
         [HttpGet("{id}")]
-        public Post Get(int id)
+        public QuestionDto Get(int id)
         {
-            return _dataService.GetPost(id);
+            var question = _dataService.GetQuestion(id);
+            QuestionDto model = new QuestionDto
+            {
+                //QuestionID = question.ID,
+                Creationdate = question.CreationDate,
+                Score = question.Score,
+                //AcceptedanswerID = question.AcceptedanswerID
+            };
+            return model;
         }
-    }
-
-
-     
+    } 
 }
