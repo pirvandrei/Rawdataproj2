@@ -10,7 +10,7 @@ namespace DomainModel
         public int Score { get; set; }
         public DateTime CreationDate { get; set; }
         public string Body { get; set; }
-       // public int PostType { get; set; }
+        public int PostType { get; set; }
            
         public IList<Link> Links { get; set; }  
         public IList<PostTag> PostTags { get; set; }  

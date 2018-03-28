@@ -10,12 +10,13 @@ namespace DataRepository.Dto.Post
         public int QuestionID { get; set; }
         public int UserId { get; set; }
         public int Score { get; set; }
+        public string Body { get; set; } 
         public DateTime Creationdate { get; set; }
-        public string Body { get; set; }
-         
+
         public string Title { get; set; } 
-        public DateTime? Closeddate { get; set; } 
-        public int AcceptedanswerID { get; set; }  
-         
+        public DateTime? ClosedDate { get; set; } 
+        public int? AcceptedAnswerID { get; set; }
+
+        public IList<Answer> Answers { get; set; }
     }
 }
