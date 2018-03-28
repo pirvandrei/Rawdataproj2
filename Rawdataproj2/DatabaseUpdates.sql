@@ -38,15 +38,12 @@ UPDATE Posts INNER JOIN Questions ON Posts.ID = Questions.PostID
 	SET Posts.Title = Questions.Title,
 	 Posts.AcceptedAnswerID = Questions.AcceptedanswerID,
      Posts.ClosedDate = Questions.Closeddate;
-  
-
--- `AcceptedAnswerID`
+   
 -- populate answer related attributes-- 
 UPDATE Posts INNER JOIN Answers ON Posts.ID = Answers.PostID SET Posts.ParentID = Answers.ParentID;
 
 
-
-
+ 
 -- UPDATE table1 INNER JOIN table2 ON table1.id = table2.id SET table1.Price = table2.price
 -- 
 
