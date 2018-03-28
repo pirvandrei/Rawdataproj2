@@ -16,13 +16,14 @@ namespace WebService.Controller
 
         [HttpGet]
         public IList<QuestionShortDto> Get()
-        { 
+        {
             var question = _dataService.GetQuestions().Select(
                 q => new QuestionShortDto
                 {
-                    QuestionID = q.ID, 
+                    QuestionID = q.ID,
                     Title = q.Title,
-                    Score = q.Score, 
+                    Score = q.Score,
+                    //Answers = q.Answers
                 }
                 ).ToList();
            
@@ -41,14 +42,14 @@ namespace WebService.Controller
             }   
             QuestionDto model = new QuestionDto
             {
-                QuestionID = question.ID, 
-                //UserId = question.UserID, 
-                //AcceptedAnswerID = question.AcceptedAnswerID,
-                //Title = question.Title,
+                QuestionID = question.ID,
+                UserId = question.UserID,
+                AcceptedAnswer = question.AcceptedAnswer,
+                Title = question.Title,
                 Score = question.Score,
-                //Body = question.Body,
-                //Creationdate = question.CreationDate,
-                //ClosedDate = question.ClosedDate,
+               // Body = question.Body,
+                Creationdate = question.CreationDate,
+                ClosedDate = question.ClosedDate,
                 //Answers = question.Answers, 
             };
             return model;

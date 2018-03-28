@@ -7,14 +7,14 @@ using System.Text;
 
 namespace StackoverflowContext
 {
-    public class StackoverflowDbDataservice
+    public class StackoverflowDbDataservice : IStackoverflowDbDataservice
     {  
         public List<Question> GetQuestions()
         {
             using (var db = new StackoverflowDbContext())
             {
                 var result = db.Questions;
-                    //.Include(x => x.Answers);
+                   // .Include(x => x.Answers); 
                     //.Include(x => x.PostTags)
                     //.Include(x => x.Links);
                  
@@ -28,6 +28,7 @@ namespace StackoverflowContext
             {
                 var question = db.Questions
                              //.Include(a => a.Answers)
+                             .Include(a => a.AcceptedAnswer)
                              .FirstOrDefault(x => x.ID == id);
 
                 return question;

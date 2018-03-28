@@ -40,24 +40,25 @@ namespace StackoverflowContext
                 .HasValue<Question>(1)
                 .HasValue<Answer>(2);
 
-            //foreign keys 
+            //foreign keys  
             //modelBuilder.Entity<Answer>().Property(x => x.QuestionID).HasColumnName("parentid");
-           // modelBuilder.Entity<Answer>().Property(x => x.QuestionID).HasColumnName("parentid");
+            //modelBuilder.Entity<Question>().HasMany(o => o.Answers).WithOne()
+            //    .HasForeignKey(d => d.QuestionID);
 
-            modelBuilder.Entity<Search>().Property(x => x.ID).HasColumnName("userid");
+            modelBuilder.Entity<Question>()
+           .HasOne(p => p.AcceptedAnswer)
+           .WithOne(i => i.Parent)
+           .HasForeignKey<Answer>(b => b.ParentID);
+             
 
+
+            modelBuilder.Entity<Search>().Property(x => x.ID).HasColumnName("userid"); 
             modelBuilder.Entity<PostTag>().Property(x => x.ID).HasColumnName("postid");
             modelBuilder.Entity<Tag>().Property(x => x.ID).HasColumnName("postid"); 
             modelBuilder.Entity<Link>().Property(x => x.ID).HasColumnName("postid");
             modelBuilder.Entity<Comment>().Property(x => x.ID).HasColumnName("postid");
-
-            //one-to-many
-            //modelBuilder.Entity<Question>()
-            //.HasMany(c => c.Answers)
-            //.WithOne(e => e.Question)
-            //.IsRequired(); 
-
-            //modelBuilder.Entity<Question>().HasMany(o => o.Answers).WithOne().HasForeignKey(d => d.QuestionID).IsRequired();
+             
+            
 
             //many-to-many
             modelBuilder.Entity<Note>().HasKey(x => new { x.UserID, x.PostID });

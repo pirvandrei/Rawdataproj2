@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using DomainModel;
 
 namespace DataRepository.Dto.Post
 {
@@ -8,6 +9,7 @@ namespace DataRepository.Dto.Post
     {
         public int QuestionID { get; set; } 
         public string Title { get; set; }
-        public int Score { get; set; }  
+        public int Score { get; set; }
+        public IList<Answer> Answers { get; set; }
     }
 }
