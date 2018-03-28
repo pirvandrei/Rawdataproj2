@@ -1,16 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace DomainModel
 {
-    public class Question
-    {
-        public int Id { get; set; }
+    public class Question : Post
+    { 
         public string Title { get; set; } 
-        public DateTime Closeddate { get; set; }
+        public DateTime? Closeddate { get; set; } 
+        public int AcceptedanswerID { get; set; }  
 
-        public Answer AcceptedAnswer { get; set; }
-
-        public int PostId { get; set; }
-        public Post Post { get; set; }
+        //public IList<Answer> Answers { get; set; }
     }
 }

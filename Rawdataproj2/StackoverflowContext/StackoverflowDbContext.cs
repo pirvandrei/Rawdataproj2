@@ -9,7 +9,7 @@ namespace StackoverflowContext
     class StackoverflowDbContext : DbContext
     {
         public DbSet<Post> Posts { get; set; }
-        public DbSet<PostTag> Posttags { get; set; }
+        public DbSet<PostTag> PostTags { get; set; }
         public DbSet<Answer> Answers { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Comment> Comments { get; set; }
@@ -19,7 +19,7 @@ namespace StackoverflowContext
         public DbSet<Bookmark> Bookmarks { get; set; }
         public DbSet<Note> Notes { get; set; }
 
-        // public DbSet<Link> Links { get; set; }
+        public DbSet<Link> Links { get; set; }
         public DbSet<Search> Searches { get; set; }
 
 
@@ -31,24 +31,38 @@ namespace StackoverflowContext
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        {   
             base.OnModelCreating(modelBuilder);
 
-            //modelBuilder.Entity<Post>().Property(x => x.Id).HasColumnName("postid");
+            //inheritance
+            //modelBuilder.Entity<Answer>().HasBaseType<Post>();
+            //modelBuilder.Entity<Question>().HasBaseType<Post>();
+            //modelBuilder.Entity<Post>()
+                  //.HasDiscriminator<string>("PostType");
 
+ 
 
+            modelBuilder.Entity<Post>()
+                .HasDiscriminator<int>("PostType") 
+                .HasValue<Question>(1)
+                .HasValue<Answer>(2);
 
-            modelBuilder.Entity<Search>().HasKey(x => new { x.UserId });
-            modelBuilder.Entity<Note>().HasKey(x => new { x.UserId, x.PostId });
-            modelBuilder.Entity<Comment>().HasKey(x => new { x.UserId, x.PostId });
-            modelBuilder.Entity<Bookmark>().HasKey(x => new { x.UserId, x.PostId });
+            //modelBuilder.Entity<Question>().Property(x => x.PostType).HasColumnName("posttype");
+            //modelBuilder.Entity<Answer>().Property(x => x.PostType).HasColumnName("posttype");
 
+            //foreign keys
+            modelBuilder.Entity<Link>().Property(x => x.ID).HasColumnName("postid");
+            modelBuilder.Entity<Search>().Property(x => x.ID).HasColumnName("userid");
+            modelBuilder.Entity<PostTag>().Property(x => x.ID).HasColumnName("postid");
+            modelBuilder.Entity<Tag>().Property(x => x.ID).HasColumnName("postid");
+            modelBuilder.Entity<Comment>().Property(x => x.ID).HasColumnName("postid");
+              
+            //many-to-many
+            modelBuilder.Entity<Note>().HasKey(x => new { x.UserID, x.PostID });
+            modelBuilder.Entity<Comment>().HasKey(x => new { x.UserID, x.PostID });
+            modelBuilder.Entity<Bookmark>().HasKey(x => new { x.UserID, x.PostID });
+               
 
-            modelBuilder.Entity<PostTag>().HasKey(x => new { x.PostId });
-            modelBuilder.Entity<Answer>().HasKey(x => new { x.PostId });
-            modelBuilder.Entity<Question>().HasKey(x => new { x.PostId });
-            modelBuilder.Entity<Link>().HasKey(x => new { x.PostId });
-            modelBuilder.Entity<Tag>().HasKey(x => new { x.Name });
         }
     }
 }

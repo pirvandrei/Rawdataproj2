@@ -9,25 +9,23 @@ namespace StackoverflowContext
 {
     public class StackoverflowDbDataservice
     {
-        public Post CreatePost(int userId, string body, int score)
-        {
-            using (var db = new StackoverflowDbContext())
-            {
-                var newPost = new Post {UserId = userId, Body = body, Score = score };
-                newPost.Id = db.Posts.Max(p => p.Id) + 1;
-                db.Posts.Add(newPost);
-                db.SaveChanges();
-                return newPost;
-            }
-        }
+        //public Post CreatePost(int userId, string body, int score)
+        //{
+        //    using (var db = new StackoverflowDbContext())
+        //    {
+        //        var newPost = new Post {UserID = userId,   Score = score };
+        //        newPost.ID = db.Posts.Max(p => p.ID) + 1;
+        //        db.Posts.Add(newPost);
+        //        db.SaveChanges();
+        //        return newPost;
+        //    }
+        //}
 
-        public List<Post> GetPosts()
+        public List<Question> GetQuestions()
         {
             using (var db = new StackoverflowDbContext())
             {
-                var result = db.Posts;
-                result.Include(x => x.Answers);
-                result.Include(x => x.Questions);
+                var result = db.Questions; 
                 result.Include(x => x.PostTags);
                 result.Include(x => x.Links);
                 
@@ -36,45 +34,17 @@ namespace StackoverflowContext
             }
         }
 
-        public Post GetPost(int id)
+        public Question GetQuestion(int id)
         {
             using (var db = new StackoverflowDbContext())
             {
-                var post = db.Posts
-                        .Include(x => x.Answers)
-                             .Include(x => x.Questions)
-                                .Include(x => x.PostTags)
-                                     .Include(x => x.Links)
-                                        .FirstOrDefault(x => x.Id == id);
-                return post;
+                var question = db.Questions
+                             .FirstOrDefault(x => x.ID == id);
+                return question;
             }
         }
 
-        public bool DeletePost(int id)
-        {
-            using (var db = new StackoverflowDbContext())
-            {
-                var post = GetPost(id);
-                if (post == null) return false;
-                db.Posts.Remove(post);
-                db.SaveChanges();
-                return true;
-            }
-        }
 
-        public bool UpdateCategory(int id, string body, int score, DateTime creationDate)
-        {
-            using (var db = new StackoverflowDbContext())
-            {
-                var post = GetPost(id);
-                if (post == null) return false;
-                post.Body = body;
-                post.Score = score;
-                post.CreationDate = creationDate;
-                db.Posts.Update(post);
-                db.SaveChanges();
-                return true;
-            }
-        }
+         
     }
 }

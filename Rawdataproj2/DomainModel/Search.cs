@@ -7,7 +7,7 @@ namespace DomainModel
         public string Text { get; set; }
         public DateTime Date { get; set; }
 
-        public int UserId { get; set; }
+        public int ID { get; set; }
         public User User { get; set; }
 
     }

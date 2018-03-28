@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DataAccessLayer
+namespace DataRepository
 {
     public interface IDataRepository<TEntity, U> where TEntity : class
     {
