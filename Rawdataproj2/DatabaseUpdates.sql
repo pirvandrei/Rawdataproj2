@@ -32,6 +32,12 @@ select ID, Title, AcceptedAnswerID, ClosedDate from raw2.Posts;
 select ID, ClosedDate from raw2.Posts;
 
 
+select count(distinct ID) from raw2.Posts
+	 where AcceptedAnswerID is not null;
+     
+select count(distinct ID) from stackoverflow_sample_universal.posts
+	 where AcceptedAnswerID is not null;
+
 -- populate question related attributes
 USE raw2;
 UPDATE Posts INNER JOIN Questions ON Posts.ID = Questions.PostID 
@@ -43,6 +49,20 @@ UPDATE Posts INNER JOIN Questions ON Posts.ID = Questions.PostID
 UPDATE Posts INNER JOIN Answers ON Posts.ID = Answers.PostID SET Posts.ParentID = Answers.ParentID;
 
 
+select count(distinct ID) from raw2.Posts
+	 where AcceptedAnswerID is not null;
+     
+select count(distinct ID) from stackoverflow_sample_universal.posts
+	 where AcceptedAnswerID is not null;
+     
+select count(distinct ID) from raw2.Posts
+	 where Title is not null and ClosedDate is not null;
+     
+select count(distinct ID) from stackoverflow_sample_universal.posts
+	 where Title is not null and Closeddate is not null ;
+     
+     
+ 
  
 -- UPDATE table1 INNER JOIN table2 ON table1.id = table2.id SET table1.Price = table2.price
 -- 
