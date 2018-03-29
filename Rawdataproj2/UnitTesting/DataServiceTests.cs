@@ -9,7 +9,7 @@ namespace UnitTesting
     public class DataServiceTests { 
 
         [Fact]
-        public void GetAllPosts_NoArgument_ReturnsAllCategories()
+        public void GetAllPosts_NoArgument_ReturnsAllPosts()
         {
             var service = new StackoverflowDbDataservice();
             var questions = service.GetQuestions();
@@ -18,11 +18,22 @@ namespace UnitTesting
         }
 
         [Fact]
-        public void GetPost_ValidId_ReturnsCategoryObject()
+        public void GetPost_ValidId_ReturnsPostsObject()
         {
             var service = new StackoverflowDbDataservice();
             var question = service.GetQuestion(19);
             Assert.Equal(164, question.Score);
-        } 
+        }
+
+        [Fact]
+        public void GetPost_WithAnswerId()
+        {
+            var service = new StackoverflowDbDataservice();
+            var question = service.GetQuestion(19);
+            Assert.Equal(531, question.AcceptedAnswerID);
+            Assert.Equal(531, question.AcceptedAnswerID);
+        }
+
+
     }
 }

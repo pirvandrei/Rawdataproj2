@@ -10,7 +10,7 @@ namespace DataRepository.Dto.Post
         public int QuestionID { get; set; } 
         public string Title { get; set; }
         public int Score { get; set; }
-        public IList<Answer> Answers { get; set; }
-        public Answer AcceptedAnswer { get; set; }
+        //public IList<Answer> Answers { get; set; }
+        //public Answer AcceptedAnswer { get; set; }
     }
 }

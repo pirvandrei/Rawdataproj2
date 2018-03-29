@@ -24,7 +24,7 @@ namespace WebService.Controller
                     Title = q.Title,
                     Score = q.Score,
                     //Answers = q.Answers
-                    AcceptedAnswer = q.AcceptedAnswer
+                   // AcceptedAnswer = q.AcceptedAnswer
                 }
                 ).ToList();
            

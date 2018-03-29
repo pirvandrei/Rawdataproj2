@@ -13,11 +13,15 @@ namespace StackoverflowContext
         {
             using (var db = new StackoverflowDbContext())
             {
-                var result = db.Questions;
-                   // .Include(x => x.Answers); 
-                    //.Include(x => x.PostTags)
-                    //.Include(x => x.Links);
-                 
+                var result = db.Questions 
+                    //.Include(a => a.AcceptedAnswer) 
+                    ;
+
+                // .Include(x => x.Answers); 
+                //.Include(x => x.PostTags)
+                //.Include(x => x.Links);
+
+
                 return result.ToList();  
             }
         }
