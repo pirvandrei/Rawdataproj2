@@ -1,4 +1,4 @@
-﻿using DataRepository.Dto.Post;
+﻿using DataRepository.Dto.PostDto;
 using System;
 using System.Collections.Generic;
 using System.Text;

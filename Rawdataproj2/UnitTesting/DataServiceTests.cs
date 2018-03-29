@@ -43,5 +43,16 @@ namespace UnitTesting
             Assert.Equal(21, question.Answers.Count());
         }
 
+
+        //SELECT count(c.ID) FROM  Comments as c join Posts as p  on  c.PostID  =  p.Id where p.id = 19  ;
+        //16
+         
+        //public void GetPost_WithAnswersandComments()
+        //{
+        //    var service = new StackoverflowDbDataservice();
+        //    var question = service.GetQuestion(19);
+        //    Assert.Equal(21, question.Answers.Co);
+        //
+    
     }
 }

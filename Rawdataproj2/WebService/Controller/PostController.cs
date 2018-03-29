@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks; 
-using DataRepository.Dto.Post;
+using DataRepository.Dto.PostDto;
 
 namespace WebService.Controller
 {
@@ -49,16 +49,27 @@ namespace WebService.Controller
                 Score = question.Score,
                 // Body = question.Body,
                 Creationdate = question.CreationDate,
-                ClosedDate = question.ClosedDate,
+                ClosedDate = question.ClosedDate, 
+                AcceptedAnswerID = question.AcceptedAnswerID,
 
 
-                //AcceptedAnswerID = question.AcceptedAnswerID,
+                Comments = question.Comments
+                        .Select(c => new CommentDto
+                        {
+                            ID = c.ID,
+                            Score = c.Score,
+                            Text = c.Text,
+                            CreationDate = c.CreationDate
+                        }) 
+                    .ToList(),
+
                 Answers = question.Answers.Select(x =>
                 new AnswerDto {
                     ID = x.ID,
                     QuestionID = x.ParentID,
                     Score = x.Score,
-                    Title = x.Body
+                    Title = x.Body,
+                    
                 }).ToList(), 
             };
             return model;

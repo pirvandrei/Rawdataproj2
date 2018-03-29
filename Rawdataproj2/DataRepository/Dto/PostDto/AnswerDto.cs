@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataRepository.Dto.Post
+namespace DataRepository.Dto.PostDto
 {
     public class AnswerDto
     {
@@ -10,5 +10,6 @@ namespace DataRepository.Dto.Post
         public int? QuestionID { get; set; }
         public string Title { get; set; }
         public int Score { get; set; }
+        public List<CommentDto> Comments { get; set; }
     }
 }

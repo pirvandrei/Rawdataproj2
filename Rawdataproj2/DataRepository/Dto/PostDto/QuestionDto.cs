@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using DomainModel;
 
-namespace DataRepository.Dto.Post
+namespace DataRepository.Dto.PostDto
 {
     public class QuestionDto 
     { 
@@ -17,6 +17,7 @@ namespace DataRepository.Dto.Post
 
         public string Title { get; set; } 
         public DateTime? ClosedDate { get; set; }
-        public IList<AnswerDto> Answers { get; set; } 
+        public IList<AnswerDto> Answers { get; set; }
+        public IList<CommentDto> Comments { get; set; }
     }
 }
