@@ -11,6 +11,6 @@ namespace DataRepository.Dto.Post
         public string Title { get; set; }
         public int Score { get; set; }
         //public IList<Answer> Answers { get; set; }
-        //public Answer AcceptedAnswer { get; set; }
+        public int? AcceptedAnswerID { get; set; }
     }
 }

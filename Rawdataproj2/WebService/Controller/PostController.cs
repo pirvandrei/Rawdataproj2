@@ -44,13 +44,15 @@ namespace WebService.Controller
             QuestionDto model = new QuestionDto
             {
                 QuestionID = question.ID,
-                UserId = question.UserID,
-                AcceptedAnswer = question.AcceptedAnswer,
+                UserId = question.UserID, 
                 Title = question.Title,
                 Score = question.Score,
                // Body = question.Body,
                 Creationdate = question.CreationDate,
                 ClosedDate = question.ClosedDate,
+               
+
+                AcceptedAnswerID = question.AcceptedAnswerID,
                 //Answers = question.Answers, 
             };
             return model;

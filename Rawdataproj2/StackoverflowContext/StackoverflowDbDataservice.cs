@@ -31,8 +31,7 @@ namespace StackoverflowContext
             using (var db = new StackoverflowDbContext())
             {
                 var question = db.Questions
-                             //.Include(a => a.Answers)
-                             .Include(a => a.AcceptedAnswer)
+                             //.Include(a => a.Answers) 
                              .FirstOrDefault(x => x.ID == id);
 
                 return question;

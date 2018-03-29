@@ -10,7 +10,7 @@ namespace StackoverflowContext
     {
         public DbSet<Post> Posts { get; set; }
         public DbSet<PostTag> PostTags { get; set; }
-        public DbSet<Answer> Answers { get; set; }
+        public DbSet<Answer> Answers { get; set; } 
         public DbSet<Question> Questions { get; set; }
         public DbSet<Comment> Comments { get; set; }
 
@@ -32,7 +32,7 @@ namespace StackoverflowContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {   
-            base.OnModelCreating(modelBuilder); 
+            base.OnModelCreating(modelBuilder);
 
 
             modelBuilder.Entity<Post>()
@@ -40,16 +40,20 @@ namespace StackoverflowContext
                 .HasValue<Question>(1)
                 .HasValue<Answer>(2);
 
+             
+
+
+
+
             //foreign keys  
             //modelBuilder.Entity<Answer>().Property(x => x.QuestionID).HasColumnName("parentid");
             //modelBuilder.Entity<Question>().HasMany(o => o.Answers).WithOne()
             //    .HasForeignKey(d => d.QuestionID);
 
-            modelBuilder.Entity<Question>()
-           .HasOne(p => p.AcceptedAnswer)
-           .WithOne(i => i.Parent)
-           .HasForeignKey<Answer>(b => b.ParentID);
-             
+            // modelBuilder.Entity<Question>()
+            //.HasOne(p => p.AcceptedAnswer)
+            //.WithOne(i => i.Parent)
+            //.HasForeignKey<Answer>(b => b.ParentID);
 
 
             modelBuilder.Entity<Search>().Property(x => x.ID).HasColumnName("userid"); 

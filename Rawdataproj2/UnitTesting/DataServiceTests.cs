@@ -31,7 +31,6 @@ namespace UnitTesting
             var service = new StackoverflowDbDataservice();
             var question = service.GetQuestion(19);
             Assert.Equal(531, question.AcceptedAnswerID);
-            Assert.Equal(531, question.AcceptedAnswerID);
         }
 
 
