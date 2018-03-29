@@ -32,6 +32,7 @@ namespace StackoverflowContext
             {
                 var question = db.Questions
                              //.Include(a => a.Answers) 
+                             .Include(x => x.Answers)
                              .FirstOrDefault(x => x.ID == id);
 
                 return question;

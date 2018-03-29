@@ -40,20 +40,26 @@ namespace WebService.Controller
             if (question == null)
             {
                 return null;
-            }   
+            }
             QuestionDto model = new QuestionDto
             {
                 QuestionID = question.ID,
-                UserId = question.UserID, 
+                UserId = question.UserID,
                 Title = question.Title,
                 Score = question.Score,
-               // Body = question.Body,
+                // Body = question.Body,
                 Creationdate = question.CreationDate,
                 ClosedDate = question.ClosedDate,
-               
 
-                AcceptedAnswerID = question.AcceptedAnswerID,
-                //Answers = question.Answers, 
+
+                //AcceptedAnswerID = question.AcceptedAnswerID,
+                Answers = question.Answers.Select(x =>
+                new AnswerDto {
+                    ID = x.ID,
+                    QuestionID = x.ParentID,
+                    Score = x.Score,
+                    Title = x.Body
+                }).ToList(), 
             };
             return model;
         }

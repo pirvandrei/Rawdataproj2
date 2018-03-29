@@ -21,9 +21,7 @@ namespace StackoverflowContext
 
         public DbSet<Link> Links { get; set; }
         public DbSet<Search> Searches { get; set; }
-
-
-
+         
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -33,29 +31,18 @@ namespace StackoverflowContext
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {   
             base.OnModelCreating(modelBuilder);
-
-
+             
+            //inheritance
             modelBuilder.Entity<Post>()
                 .HasDiscriminator<int>("PostType")
                 .HasValue<Question>(1)
                 .HasValue<Answer>(2);
-
              
+            //many to one 
+            modelBuilder.Entity<Question>().HasMany(o => o.Answers).WithOne()
+                .HasForeignKey(d => d.ParentID); 
 
-
-
-
-            //foreign keys  
-            //modelBuilder.Entity<Answer>().Property(x => x.QuestionID).HasColumnName("parentid");
-            //modelBuilder.Entity<Question>().HasMany(o => o.Answers).WithOne()
-            //    .HasForeignKey(d => d.QuestionID);
-
-            // modelBuilder.Entity<Question>()
-            //.HasOne(p => p.AcceptedAnswer)
-            //.WithOne(i => i.Parent)
-            //.HasForeignKey<Answer>(b => b.ParentID);
-
-
+            //properties
             modelBuilder.Entity<Search>().Property(x => x.ID).HasColumnName("userid"); 
             modelBuilder.Entity<PostTag>().Property(x => x.ID).HasColumnName("postid");
             modelBuilder.Entity<Tag>().Property(x => x.ID).HasColumnName("postid"); 

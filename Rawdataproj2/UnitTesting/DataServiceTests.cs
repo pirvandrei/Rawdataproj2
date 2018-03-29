@@ -34,5 +34,14 @@ namespace UnitTesting
         }
 
 
+        //SELECT count(*) FROM raw2.Posts where ParentID = 19;
+        [Fact]
+        public void GetPost_WithAnswers()
+        {
+            var service = new StackoverflowDbDataservice();
+            var question = service.GetQuestion(19);
+            Assert.Equal(21, question.Answers.Count());
+        }
+
     }
 }

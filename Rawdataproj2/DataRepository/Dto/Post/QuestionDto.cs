@@ -16,10 +16,7 @@ namespace DataRepository.Dto.Post
         public DateTime Creationdate { get; set; }
 
         public string Title { get; set; } 
-        public DateTime? ClosedDate { get; set; } 
-       
-
-        //public IList<Answer> Answers { get; set; }
-        //public Answer AcceptedAnswer { get; set; }
+        public DateTime? ClosedDate { get; set; }
+        public IList<AnswerDto> Answers { get; set; } 
     }
 }
