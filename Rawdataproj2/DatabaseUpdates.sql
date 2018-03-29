@@ -62,8 +62,9 @@ select count(distinct ID) from stackoverflow_sample_universal.posts
 	 where Title is not null and Closeddate is not null ;
      
      
- 
- 
+ use raw2;
+ Drop table Questions;
+ Drop table Answers;
 -- UPDATE table1 INNER JOIN table2 ON table1.id = table2.id SET table1.Price = table2.price
 -- 
 
