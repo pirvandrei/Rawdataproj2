@@ -13,17 +13,44 @@ namespace WebService.Controller
     public class PostController
     {
         StackoverflowDbDataservice _dataService = new StackoverflowDbDataservice();
+
+        [HttpGet]
+        public IList<QuestionShortDto> Get()
+        {
+            var question = _dataService.GetQuestions().Select(
+                q => new QuestionShortDto
+                {
+                    QuestionID = q.ID,
+                    Title = q.Title,
+                    Score = q.Score,
+                    //Answers = q.Answers
+                }
+                ).ToList();
            
+            return question;
+        }
+
+
         [HttpGet("{id}")]
         public QuestionDto Get(int id)
         {
+
             var question = _dataService.GetQuestion(id);
+            if (question == null)
+            {
+                return null;
+            }   
             QuestionDto model = new QuestionDto
             {
-                //QuestionID = question.ID,
-                Creationdate = question.CreationDate,
+                QuestionID = question.ID,
+                UserId = question.UserID,
+                AcceptedAnswer = question.AcceptedAnswer,
+                Title = question.Title,
                 Score = question.Score,
-                //AcceptedanswerID = question.AcceptedanswerID
+               // Body = question.Body,
+                Creationdate = question.CreationDate,
+                ClosedDate = question.ClosedDate,
+                //Answers = question.Answers, 
             };
             return model;
         }

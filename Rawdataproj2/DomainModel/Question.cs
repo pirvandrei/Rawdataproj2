@@ -6,9 +6,11 @@ namespace DomainModel
     public class Question : Post
     { 
         public string Title { get; set; } 
-        public DateTime? Closeddate { get; set; } 
-        public int AcceptedanswerID { get; set; }  
+        public DateTime? ClosedDate { get; set; }
 
-        //public IList<Answer> Answers { get; set; }
+        public int? AcceptedAnswerID { get; set; }
+        public Answer AcceptedAnswer { get; set; }
+
+       // public IList<Answer> Answers { get; set; }
     }
 }

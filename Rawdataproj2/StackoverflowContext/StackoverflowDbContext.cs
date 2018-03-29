@@ -32,31 +32,34 @@ namespace StackoverflowContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {   
-            base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder); 
 
-            //inheritance
-            //modelBuilder.Entity<Answer>().HasBaseType<Post>();
-            //modelBuilder.Entity<Question>().HasBaseType<Post>();
-            //modelBuilder.Entity<Post>()
-                  //.HasDiscriminator<string>("PostType");
-
- 
 
             modelBuilder.Entity<Post>()
-                .HasDiscriminator<int>("PostType") 
+                .HasDiscriminator<int>("PostType")
                 .HasValue<Question>(1)
                 .HasValue<Answer>(2);
 
-            //modelBuilder.Entity<Question>().Property(x => x.PostType).HasColumnName("posttype");
-            //modelBuilder.Entity<Answer>().Property(x => x.PostType).HasColumnName("posttype");
+            //foreign keys  
+            //modelBuilder.Entity<Answer>().Property(x => x.QuestionID).HasColumnName("parentid");
+            //modelBuilder.Entity<Question>().HasMany(o => o.Answers).WithOne()
+            //    .HasForeignKey(d => d.QuestionID);
 
-            //foreign keys
-            modelBuilder.Entity<Link>().Property(x => x.ID).HasColumnName("postid");
-            modelBuilder.Entity<Search>().Property(x => x.ID).HasColumnName("userid");
+            modelBuilder.Entity<Question>()
+           .HasOne(p => p.AcceptedAnswer)
+           .WithOne(i => i.Parent)
+           .HasForeignKey<Answer>(b => b.ParentID);
+             
+
+
+            modelBuilder.Entity<Search>().Property(x => x.ID).HasColumnName("userid"); 
             modelBuilder.Entity<PostTag>().Property(x => x.ID).HasColumnName("postid");
-            modelBuilder.Entity<Tag>().Property(x => x.ID).HasColumnName("postid");
+            modelBuilder.Entity<Tag>().Property(x => x.ID).HasColumnName("postid"); 
+            modelBuilder.Entity<Link>().Property(x => x.ID).HasColumnName("postid");
             modelBuilder.Entity<Comment>().Property(x => x.ID).HasColumnName("postid");
-              
+             
+            
+
             //many-to-many
             modelBuilder.Entity<Note>().HasKey(x => new { x.UserID, x.PostID });
             modelBuilder.Entity<Comment>().HasKey(x => new { x.UserID, x.PostID });
