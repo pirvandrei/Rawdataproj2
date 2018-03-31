@@ -9,7 +9,7 @@ namespace DomainModel
         public int UserID { get; set; }
         public int Score { get; set; }
         public DateTime CreationDate { get; set; }
-        public string Body { get; set; }
+      //  public string Body { get; set; }
         public int PostType { get; set; }
            
         public IList<Link> Links { get; set; }  

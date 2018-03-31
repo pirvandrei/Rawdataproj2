@@ -11,26 +11,26 @@ namespace UnitTesting
         [Fact]
         public void GetAllPosts_NoArgument_ReturnsAllPosts()
         {
-            var service = new StackoverflowDbDataservice();
-            var questions = service.GetQuestions();
-            Assert.Equal(2237, questions.Count);
-            Assert.Equal(164, questions.First().Score);
+            var repo = new PostRepository();
+            var questions = repo.GetAll();
+            Assert.Equal(2237, questions.Result.Count());
+            Assert.Equal(164, questions.Result.First().Score);
         }
 
         [Fact]
         public void GetPost_ValidId_ReturnsPostsObject()
         {
-            var service = new StackoverflowDbDataservice();
-            var question = service.GetQuestion(19);
-            Assert.Equal(164, question.Score);
+            var repo = new PostRepository();
+            var question = repo.Get(19);
+            Assert.Equal(164, question.Result.Score);
         }
 
         [Fact]
         public void GetPost_WithAnswerId()
         {
-            var service = new StackoverflowDbDataservice();
-            var question = service.GetQuestion(19);
-            Assert.Equal(531, question.AcceptedAnswerID);
+            var repo = new PostRepository();
+            var question = repo.Get(19);
+            Assert.Equal(531, question.Result.AcceptedAnswerID);
         }
 
 
@@ -38,12 +38,12 @@ namespace UnitTesting
         [Fact]
         public void GetPost_WithAnswers()
         {
-            var service = new StackoverflowDbDataservice();
-            var question = service.GetQuestion(19);
-            Assert.Equal(21, question.Answers.Count());
+            var repo = new PostRepository();
+            var question = repo.Get(19);
+            Assert.Equal(21, question.Result.Answers.Count());
         }
 
-
+         
         //SELECT count(c.ID) FROM  Comments as c join Posts as p  on  c.PostID  =  p.Id where p.id = 19  ;
         //16
          
