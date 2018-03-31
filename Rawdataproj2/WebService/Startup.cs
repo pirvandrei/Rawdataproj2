@@ -16,6 +16,7 @@ namespace WebService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.RegisterServices();
           //  services.AddSingleton<IDataService, Stacjoverflowdbcontext>();
         }
 

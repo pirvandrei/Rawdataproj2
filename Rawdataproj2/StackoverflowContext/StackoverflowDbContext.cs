@@ -31,7 +31,9 @@ namespace StackoverflowContext
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {   
             base.OnModelCreating(modelBuilder);
-             
+
+            modelBuilder.Entity<Search>().ToTable("Search_history");
+
             //inheritance
             modelBuilder.Entity<Post>()
                 .HasDiscriminator<int>("PostType")
@@ -48,8 +50,10 @@ namespace StackoverflowContext
             modelBuilder.Entity<Tag>().Property(x => x.ID).HasColumnName("postid"); 
             modelBuilder.Entity<Link>().Property(x => x.ID).HasColumnName("postid");
             modelBuilder.Entity<Comment>().Property(x => x.ID).HasColumnName("postid");
-             
-            
+
+            modelBuilder.Entity<Search>().Property(x => x.Text).HasColumnName("SearchText");
+
+
 
             //many-to-many
             modelBuilder.Entity<Note>().HasKey(x => new { x.UserID, x.PostID });

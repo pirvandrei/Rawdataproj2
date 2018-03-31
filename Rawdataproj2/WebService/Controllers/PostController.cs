@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks; 
 using DataRepository.Dto.PostDto;
 
-namespace WebService.Controller
+namespace WebService.Controllers
 {
     [Route("api/posts")]
     public class PostController

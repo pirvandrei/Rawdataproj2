@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace DataRepository
 {
-    public interface IDataRepository<TEntity, U> where TEntity : class
+    public interface IDataRepository<TEntity, in TKey> where TEntity : class
     {
-        IEnumerable<TEntity> GetAll();
-        TEntity Get(U id);
-        int Add(TEntity b);
-        int Update(U id, TEntity b);
-        int Delete(U id);
+        Task<IEnumerable<TEntity>> GetAll();
+        Task<TEntity> Get(TKey id);
+        void Add(TEntity b);
+        Task<bool> Update(TKey id, TEntity b);
+        Task<bool> Delete(TKey id);
     }
 }
