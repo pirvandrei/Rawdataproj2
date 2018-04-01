@@ -24,16 +24,20 @@ namespace WebService.Controllers
             _Mapper = Mapper;
         }
 
-        [HttpGet(Name = nameof(GetAll))]
-        public async Task<ActionResult> GetAll(PagingInfo pagingInfo)
+        [HttpGet(Name = nameof(GetPosts))]
+        public async Task<ActionResult> GetPosts(PagingInfo pagingInfo)
         {
             var posts = await _PostRepository
-                .GetAll(pagingInfo)
-                .Select(CreatePostListModel);
+                .GetAll(pagingInfo);
+                //.Select(CreatePostListModel);
 
-            
+            IEnumerable<PostListModel> model = posts.Select(post => CreatePostListModel(post));
 
-            
+            return Ok(model);
+
+
+
+
             //var question = _PostRepository.GetAll().Select(
             //        async q => await new QuestionShortDto
             //        {
@@ -45,7 +49,7 @@ namespace WebService.Controllers
             //    }
             //        ).ToList();
 
-               
+
 
             //return Ok(await _PostRepository.GetAll());
         }
@@ -111,13 +115,13 @@ namespace WebService.Controllers
          * Helpers
          * *****************************************************/
 
-        private PostListModel CreatePostListModel(PostListDto post)
+        private PostListModel CreatePostListModel(Question post)
         {
             var model = new PostListModel
             {
-                Name = post.PostName
+                Name = post.Title
             };
-            model.Url = CreateLink(post.Id);
+            model.Url = CreateLink(post.ID);
             return model;
         }
 

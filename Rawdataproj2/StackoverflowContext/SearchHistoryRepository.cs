@@ -11,7 +11,7 @@ namespace StackoverflowContext
 {
     public class SearchHistoryRepository : ISearchHistoryRepository
     {
-        public async Task<IList<Search>> GetAll(PagingInfo pagingInfo)
+        public async Task<IEnumerable<Search>> GetAll(PagingInfo pagingInfo)
         {
             using (var db = new StackoverflowDbContext())
             {
