@@ -11,11 +11,11 @@ namespace StackoverflowContext
 {
     public class CommentRepository : ICommentRepository
     {
-        public async void Add(Comment b)
+        public async void Add(Comment comment)
         { 
             using (var db = new StackoverflowDbContext())
             {
-                await db.Comments.AddAsync(b);
+                await db.Comments.AddAsync(comment);
             }
         } 
 
@@ -35,13 +35,13 @@ namespace StackoverflowContext
             }
         }
 
-        public async Task<bool> Update(int id, Comment b)
+        public async Task<bool> Update(int id, Comment com)
         {
             using (var db = new StackoverflowDbContext())
             {
                 var comment = await Get(id);
                 if (comment == null) return false;
-                db.Comments.Update(comment);
+                db.Comments.Update(com);
                 await db.SaveChangesAsync();
                 return true;
             }
