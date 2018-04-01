@@ -7,23 +7,31 @@ using System.Linq;
 using System.Threading.Tasks; 
 using DataRepository.Dto.PostDto;
 using DataRepository;
+using WebService.Models.Post;
+using AutoMapper;
 
 namespace WebService.Controllers
 {
     [Route("api/posts")]
     public class PostController : Controller
     {
-        private readonly IPostRepository _PostRepository; 
+        private readonly IPostRepository _PostRepository;
+        private readonly IMapper _Mapper;
 
-        public PostController(IPostRepository PostRepository)
+        public PostController(IPostRepository PostRepository, IMapper Mapper)
         {
             _PostRepository = PostRepository;
+            _Mapper = Mapper;
         }
 
-        [HttpGet]
-        public async Task<ActionResult> Get()
+        [HttpGet(Name = nameof(GetAll))]
+        public async Task<ActionResult> GetAll(PagingInfo pagingInfo)
         {
-            // TODO: return SearchHistoryListModel instead.
+            var posts = await _PostRepository
+                .GetAll(pagingInfo)
+                .Select(CreatePostListModel);
+
+            
 
             
             //var question = _PostRepository.GetAll().Select(
@@ -39,13 +47,23 @@ namespace WebService.Controllers
 
                
 
-            return Ok(await _PostRepository.GetAll());
+            //return Ok(await _PostRepository.GetAll());
         }
 
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult> Get(int id)
+        [HttpGet("{id}", Name = nameof(GetPost))]
+        public async Task<ActionResult> GetPost(int id)
         {
+            var post = _PostRepository.Get(id);
+            if (post == null) return NotFound();
+
+            PostModel model = new PostModel
+            {
+                Url = CreateLink(post.Id)
+            };
+            model = _Mapper.Map<PostModel>(post);
+
+            return Ok(model);
 
             //var question = _dataService.Get(id);
             //if (question == null)
@@ -80,7 +98,7 @@ namespace WebService.Controllers
             //        QuestionID = x.ParentID,
             //        Score = x.Score,
             //        Title = x.Body,
-                    
+
             //    }).ToList(), 
             //};
             //return model;
@@ -88,5 +106,34 @@ namespace WebService.Controllers
 
             return Ok(await _PostRepository.Get(id));
         }
+
+        /*******************************************************
+         * Helpers
+         * *****************************************************/
+
+        private PostListModel CreatePostListModel(PostListDto post)
+        {
+            var model = new PostListModel
+            {
+                Name = post.PostName
+            };
+            model.Url = CreateLink(post.Id);
+            return model;
+        }
+
+        // not used at the moment
+        private PostModel CreatePostModel(DomainModel.Question post)
+        {
+            var model = _Mapper.Map<PostModel>(post);
+            model.Url = CreateLink(post.ID);
+            return model;
+        }
+        
+
+        private string CreateLink(int id)
+        {
+            return Url.Link(nameof(GetPost), new { id });
+        }
+
     } 
 }

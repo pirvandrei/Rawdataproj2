@@ -1,3 +1,4 @@
+using DataRepository;
 using DomainModel;
 using StackoverflowContext;
 using System;
@@ -12,7 +13,7 @@ namespace UnitTesting
         public void GetAllPosts_NoArgument_ReturnsAllPosts()
         {
             var repo = new PostRepository();
-            var questions = repo.GetAll();
+            var questions = repo.GetAll(new PagingInfo());
             Assert.Equal(2237, questions.Result.Count());
             Assert.Equal(164, questions.Result.First().Score);
         }

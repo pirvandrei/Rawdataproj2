@@ -6,7 +6,7 @@ namespace DataRepository
 {
     public interface IDataRepository<TEntity, in TKey> where TEntity : class
     {
-        Task<IEnumerable<TEntity>> GetAll();
+        Task<IEnumerable<TEntity>> GetAll(PagingInfo pagingInfo);
         Task<TEntity> Get(TKey id);
         void Add(TEntity b);
         Task<bool> Update(TKey id, TEntity b);

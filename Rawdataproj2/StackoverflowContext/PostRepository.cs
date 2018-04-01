@@ -1,4 +1,5 @@
 ﻿using DataRepository;
+using DataRepository.Dto.PostDto;
 using DomainModel;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -12,12 +13,14 @@ namespace StackoverflowContext
     public class PostRepository : IPostRepository
     {
           
-        public async Task<IEnumerable<Question>> GetAll()
+        public async Task<IEnumerable<Question>> GetAll(PagingInfo pagingInfo)
         {
             using (var db = new StackoverflowDbContext())
             {
                 return await db.Questions
                     .Include(x => x.Answers)
+                    .Skip(pagingInfo.Page * pagingInfo.PageSize)
+                    .Take(pagingInfo.PageSize)
                     .ToListAsync();
 
                 //.Include(x => x.PostTags)

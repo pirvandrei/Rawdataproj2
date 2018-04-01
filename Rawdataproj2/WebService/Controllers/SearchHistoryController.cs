@@ -24,7 +24,10 @@ namespace WebService.Controllers
         public async Task<IActionResult> Get()
         {
             // TODO: return SearchHistoryListModel instead.
-            return Ok(await _SearchHistoryRepository.GetAll());
+
+            //return Ok(await _SearchHistoryRepository.GetAll());
+
+            return Ok();
         }
 
         /*******************************************************
