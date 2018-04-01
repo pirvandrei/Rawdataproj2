@@ -29,7 +29,7 @@ namespace StackoverflowContext
                 {
                     return false;
                 }
-                db.Notes.Update(note);
+                db.Notes.Remove(note);
                 await db.SaveChangesAsync();
                 return true;
             } 
@@ -39,7 +39,7 @@ namespace StackoverflowContext
         {
             using (var db = new StackoverflowDbContext())
             {
-                return await db.Notes.FirstOrDefaultAsync(x => x.PostID == userId);
+                return await db.Notes.FirstOrDefaultAsync(x => x.UserID == userId);
             }
         }
 
