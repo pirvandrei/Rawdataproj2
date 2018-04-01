@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DataRepository.Dto.SearchDto.SearchDto">
+    <Position X="20" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAgAAAAAAAAAAAAAAAAAABAAAACAAAAAA=</HashCode>
+      <FileName>Dto\SearchDto\SearchDto.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataRepository.Dto.PostDto.AnswerDto">
+    <Position X="13" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAgEgAAAAAAAAAAAAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Dto\PostDto\AnswerDto.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataRepository.Dto.PostDto.CommentDto">
+    <Position X="14.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAgAkAAAAAAAAACAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Dto\PostDto\CommentDto.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataRepository.Dto.PostDto.QuestionDto">
+    <Position X="16.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>RAAAAAAAIAAAAEgAAAABAAgAAAAAAAAAQAAAAAAAYAA=</HashCode>
+      <FileName>Dto\PostDto\QuestionDto.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataRepository.Dto.PostDto.QuestionShortDto">
+    <Position X="18.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>Dto\PostDto\QuestionShortDto.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="DataRepository.IDataRepository&lt;TEntity, TKey&gt;">
+    <Position X="16.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAAAABAAAAAAAAAAAEAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>IDataRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="DataRepository.IPostRepository">
+    <Position X="15" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>IPostRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="DataRepository.ISearchHistoryRepository">
+    <Position X="17.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ISearchHistoryRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

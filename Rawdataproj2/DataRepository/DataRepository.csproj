@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ClassDiagram1.cd" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DomainModel\DomainModel.csproj" />
   </ItemGroup>
 </Project>
