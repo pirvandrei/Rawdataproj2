@@ -12,28 +12,16 @@ namespace StackoverflowContext
 {
     public class PostRepository : IPostRepository
     {
-        public async Task<PostDto> Get(int id)
+        public async Task<Post> Get(int id)
         {
             using (var db = new StackoverflowDbContext())
             {
-                return await db.Questions
-                    .Include(x => x.Answers)
-                    .Select(x => new PostDto
-                    {
-                        ID = x.ID,
-                        Name = x.Title,
-                        UserID = x.UserID,
-                        Score = x.Score,
-                        Body = x.Body,
-                        Creationdate = x.CreationDate,
-                        PostType = x.PostType
-                    })
-                    .Where(x => x.ID == id)
+                return await db.Posts
                     .FirstOrDefaultAsync();
             }
         }
 
-        public async Task<IEnumerable<PostDto>> GetAll(PagingInfo pagingInfo)
+        public async Task<IEnumerable<Post>> GetAll(PagingInfo pagingInfo)
         {
             using (var db = new StackoverflowDbContext())
             {
@@ -41,21 +29,9 @@ namespace StackoverflowContext
                     .Include(x => x.Answers)
                     .Skip(pagingInfo.Page * pagingInfo.PageSize)
                     .Take(pagingInfo.PageSize)
-                    .Select(x => new PostDto
-                    {
-                        ID = x.ID,
-                        Name = x.Title,
-                        UserID = x.UserID,
-                        Score = x.Score,
-                        Body = x.Body,
-                        Creationdate = x.CreationDate,
-                        PostType = x.PostType
-                    })
                     .ToListAsync(); 
             }
-        }
-
-
+        } 
 
         public int Count()
         {

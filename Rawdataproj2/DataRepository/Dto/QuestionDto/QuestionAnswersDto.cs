@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataRepository.Dto.PostDto
+namespace DataRepository.Dto.QuestionDto
 {
-    public class PostDto
+    public class QuestionAnswersDto
     {
-        public int ID { get; set; } 
-        public int UserID { get; set; }
         public int Score { get; set; }
         public string Body { get; set; }
         public DateTime Creationdate { get; set; }
-        public int PostType { get; set; }
+        public int ID { get; set; }
     }
 }

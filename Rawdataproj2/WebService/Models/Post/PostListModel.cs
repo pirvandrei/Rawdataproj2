@@ -9,5 +9,7 @@ namespace WebService.Models.Post
     {
         public string Url { get; set; }
         public string Name { get; set; }
+        public int Score { get; internal set; }
+        public int Type { get; internal set; }
     }
 }

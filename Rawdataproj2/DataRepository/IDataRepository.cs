@@ -6,11 +6,12 @@ namespace DataRepository
 {
     public interface IDataRepository<TEntity, in TKey> where TEntity : class
     {
-        Task<IEnumerable<TEntity>> GetAll(PagingInfo pagingInfo);
         Task<TEntity> Get(TKey id);
-        void Add(TEntity b);
+        Task<IEnumerable<TEntity>> GetAll(PagingInfo pagingInfo);
+        
         Task<bool> Update(TKey id, TEntity b);
         Task<bool> Delete(TKey id);
+        void Add(TEntity b);
         int Count();
     }
 }

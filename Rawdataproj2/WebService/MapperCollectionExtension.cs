@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DataRepository.Dto.PostDto;
+using DataRepository.Dto.QuestionDto;
 using DomainModel;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebService.Models.Post;
+using WebService.Models.Question;
 
 namespace WebService
 {
@@ -23,9 +25,9 @@ namespace WebService
         public static IMapper CreateMapper()
         {
             var config = new MapperConfiguration(cfg =>
-            {
-
-                cfg.CreateMap<PostDto, PostModel>().ReverseMap();
+            { 
+                cfg.CreateMap<Post, PostModel>().ReverseMap();
+                cfg.CreateMap<Question, QuestionModel>().ReverseMap();
 
             });
             return config.CreateMapper();

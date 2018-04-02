@@ -54,7 +54,7 @@ namespace WebService.Controllers
                 Next = next,
                 Total = total,
                 Pages = pages,
-                Questions = model
+                Posts = model
             };
 
 
@@ -82,11 +82,12 @@ namespace WebService.Controllers
          * Helpers
          * *****************************************************/
 
-        private PostListModel CreatePostListModel(PostDto post)
+        private PostListModel CreatePostListModel(Post post)
         {
             var model = new PostListModel
             {
-                Name = post.Name
+                Score = post.Score,
+                Type = post.PostType
             };
             model.Url = CreateLink(post.ID);
             return model;

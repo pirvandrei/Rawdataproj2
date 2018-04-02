@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataRepository
 {
-    public  interface IPostRepository : IDataRepository<PostDto, int>
+    public  interface IPostRepository : IDataRepository<Post, int>
     { 
         
     }
