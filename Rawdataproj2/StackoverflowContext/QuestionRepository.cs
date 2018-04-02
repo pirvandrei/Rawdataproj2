@@ -16,7 +16,7 @@ namespace StackoverflowContext
         {
             using (var db = new StackoverflowDbContext())
             {
-                return await db.Questions.FirstOrDefaultAsync();
+                return await db.Questions.FirstOrDefaultAsync(x => x.ID == id);
             }
         }
 

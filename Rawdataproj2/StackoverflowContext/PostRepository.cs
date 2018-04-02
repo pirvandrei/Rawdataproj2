@@ -17,7 +17,7 @@ namespace StackoverflowContext
             using (var db = new StackoverflowDbContext())
             {
                 return await db.Posts
-                    .FirstOrDefaultAsync();
+                    .FirstOrDefaultAsync(x => x.ID == id);
             }
         }
 
