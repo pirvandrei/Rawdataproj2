@@ -12,7 +12,7 @@ namespace UnitTesting
         [Fact]
         public void GetAllPosts_NoArgument_ReturnsAllPosts()
         {
-            var repo = new PostRepository();
+            var repo = new QuestionRepository();
             var questions = repo.GetAll(new PagingInfo());
             Assert.Equal(2237, questions.Result.Count());
             Assert.Equal(164, questions.Result.First().Score);
@@ -21,7 +21,7 @@ namespace UnitTesting
         [Fact]
         public void GetPost_ValidId_ReturnsPostsObject()
         {
-            var repo = new PostRepository();
+            var repo = new QuestionRepository();
             var question = repo.Get(19);
             Assert.Equal(164, question.Result.Score);
         }
@@ -29,7 +29,7 @@ namespace UnitTesting
         [Fact]
         public void GetPost_WithAnswerId()
         {
-            var repo = new PostRepository();
+            var repo = new QuestionRepository();
             var question = repo.Get(19);
             Assert.Equal(531, question.Result.AcceptedAnswerID);
         }
@@ -39,7 +39,7 @@ namespace UnitTesting
         [Fact]
         public void GetPost_WithAnswers()
         {
-            var repo = new PostRepository();
+            var repo = new QuestionRepository();
             var question = repo.Get(19);
             Assert.Equal(21, question.Result.Answers.Count());
         }

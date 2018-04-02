@@ -27,106 +27,44 @@ namespace WebService.Controllers
         [HttpGet(Name = nameof(GetPosts))]
         public async Task<ActionResult> GetPosts(PagingInfo pagingInfo)
         {
-            var posts = await _PostRepository
-                .GetAll(pagingInfo);
-                //.Select(CreatePostListModel);
-
+            var posts = await _PostRepository.GetAll(pagingInfo);  
             IEnumerable<PostListModel> model = posts.Select(post => CreatePostListModel(post));
 
-            return Ok(model);
-
-
-
-
-            //var question = _PostRepository.GetAll().Select(
-            //        async q => await new QuestionShortDto
-            //        {
-            //            QuestionID = q.ID,
-            //            Title = q.Title,
-            //            Score = q.Score,
-            //        //Answers = q.Answers
-            //        // AcceptedAnswer = q.AcceptedAnswer
-            //    }
-            //        ).ToList();
-
-
-
-            //return Ok(await _PostRepository.GetAll());
+            return Ok(model); 
         }
 
 
         [HttpGet("{id}", Name = nameof(GetPost))]
         public async Task<ActionResult> GetPost(int id)
         {
-            var post = _PostRepository.Get(id);
-            if (post == null) return NotFound();
+            var postDto = _PostRepository.Get(id);
+            if (postDto == null) return NotFound();
 
             PostModel model = new PostModel
             {
-                Url = CreateLink(post.Id)
+                Url = CreateLink(postDto.Id)
             };
-            model = _Mapper.Map<PostModel>(post);
+            model = _Mapper.Map<PostModel>(postDto.Result);
 
-            return Ok(model);
-
-            //var question = _dataService.Get(id);
-            //if (question == null)
-            //{
-            //    return null;
-            //}
-            //QuestionDto model = new QuestionDto
-            //{
-            //    QuestionID = question.ID,
-            //    UserId = question.UserID,
-            //    Title = question.Title,
-            //    Score = question.Score,
-            //    // Body = question.Body,
-            //    Creationdate = question.CreationDate,
-            //    ClosedDate = question.ClosedDate, 
-            //    AcceptedAnswerID = question.AcceptedAnswerID,
-
-
-            //    Comments = question.Comments
-            //            .Select(c => new CommentDto
-            //            {
-            //                ID = c.ID,
-            //                Score = c.Score,
-            //                Text = c.Text,
-            //                CreationDate = c.CreationDate
-            //            }) 
-            //        .ToList(),
-
-            //    Answers = question.Answers.Select(x =>
-            //    new AnswerDto {
-            //        ID = x.ID,
-            //        QuestionID = x.ParentID,
-            //        Score = x.Score,
-            //        Title = x.Body,
-
-            //    }).ToList(), 
-            //};
-            //return model;
-
-
-            return Ok(await _PostRepository.Get(id));
+            return Ok(model); 
         }
 
         /*******************************************************
          * Helpers
          * *****************************************************/
 
-        private PostListModel CreatePostListModel(Question post)
+        private PostListModel CreatePostListModel(PostDto post)
         {
             var model = new PostListModel
             {
-                Name = post.Title
+                Name = post.Name
             };
             model.Url = CreateLink(post.ID);
             return model;
         }
 
         // not used at the moment
-        private PostModel CreatePostModel(DomainModel.Question post)
+        private PostModel CreatePostModel(PostDto post)
         {
             var model = _Mapper.Map<PostModel>(post);
             model.Url = CreateLink(post.ID);

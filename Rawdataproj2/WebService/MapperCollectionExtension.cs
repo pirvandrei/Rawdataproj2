@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DataRepository.Dto.PostDto;
 using DomainModel;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -23,10 +24,8 @@ namespace WebService
         {
             var config = new MapperConfiguration(cfg =>
             {
-             
-                //cfg.CreateMap<Post, PostModel>()
-                //.ForMember(dest => dest.Name,
-                //    opt => opt.MapFrom(src => src.Category.Name));
+
+                cfg.CreateMap<PostDto, PostModel>().ReverseMap();
 
             });
             return config.CreateMapper();

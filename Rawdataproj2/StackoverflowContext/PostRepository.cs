@@ -1,9 +1,9 @@
 ﻿using DataRepository;
 using DataRepository.Dto.PostDto;
 using DomainModel;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,71 +12,76 @@ namespace StackoverflowContext
 {
     public class PostRepository : IPostRepository
     {
-          
-        public async Task<IEnumerable<Question>> GetAll(PagingInfo pagingInfo)
+        public async Task<PostDto> Get(int id)
         {
             using (var db = new StackoverflowDbContext())
             {
                 return await db.Questions
                     .Include(x => x.Answers)
-                    .Skip(pagingInfo.Page * pagingInfo.PageSize)
-                    .Take(pagingInfo.PageSize)
-                    .ToListAsync();
-
-                //.Include(x => x.PostTags)
-                //.Include(x => x.Links); 
+                    .Select(x =>  new PostDto {
+                    ID = x.ID,
+                    Name = x.Title,
+                    UserID = x.UserID,
+                    Score = x.Score,
+                    Body = x.Body,
+                    Creationdate = x.CreationDate,
+                    PostType = x.PostType 
+                }).Where(x => x.ID == id).FirstOrDefaultAsync();
             }
         }
 
-        public async Task<Question> Get(int id)
+        public async Task<IEnumerable<PostDto>> GetAll(PagingInfo pagingInfo)
         {
             using (var db = new StackoverflowDbContext())
             {
                 return await db.Questions
                     .Include(x => x.Answers)
-                    .Include(x => x.Comments)
-                    .FirstOrDefaultAsync(x => x.ID == id);
-
-                //.Include(x => x.PostTags)
-                //.Include(x => x.Links);
-
+                      .Select(x => new PostDto
+                      {
+                          ID = x.ID,
+                          Name = x.Title,
+                          UserID = x.UserID,
+                          Score = x.Score,
+                          Body = x.Body,
+                          Creationdate = x.CreationDate,
+                          PostType = x.PostType
+                      })
+                      .ToListAsync();
+                  
             }
         }
 
-        public async void Add(Question b)
+
+        
+         
+        public void Add(Post b)
         {
-            using (var db = new StackoverflowDbContext())
-            {
-                await db.Questions.AddAsync(b);
-            }
+            throw new NotImplementedException();
         }
 
-        public async Task<bool> Update(int id, Question quest)
+        public Task<bool> Delete(int id)
         {
-            using (var db = new StackoverflowDbContext())
-            {
-                var question = await Get(id);
-                if (question == null) return false;
-                //question.Body = quest.Body;
-                question.ClosedDate = quest.ClosedDate;
-                await db.SaveChangesAsync();
-                return true;
-            }
+            throw new NotImplementedException();
         }
 
-        public async Task<bool> Delete(int id)
+       
+
+        public Task<bool> Update(int id, Post b)
         {
-            using (var db = new StackoverflowDbContext())
-            {
-                var question = await Get(id);
-                if (question == null) return false;
-                db.Questions.Remove(question);
-                await db.SaveChangesAsync();
-                return true;
-            }
+            throw new NotImplementedException();
+        } 
+       
+
+        public void Add(PostDto b)
+        {
+            throw new NotImplementedException();
         }
 
- 
+        public Task<bool> Update(int id, PostDto b)
+        {
+            throw new NotImplementedException();
+        }
 
+       
     }
 }

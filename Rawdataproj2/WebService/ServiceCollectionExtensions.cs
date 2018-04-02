@@ -14,6 +14,7 @@ namespace WebService
         {
 
             services.AddSingleton<ISearchHistoryRepository, SearchHistoryRepository>();
+            services.AddSingleton<IQuestionRepository, QuestionRepository>();
             services.AddSingleton<IPostRepository, PostRepository>();
             return services;
         }

@@ -8,16 +8,13 @@ namespace DataRepository.Dto.PostDto
     public class QuestionDto 
     { 
         public int QuestionID { get; set; }
-        public int UserId { get; set; }
-        public int? AcceptedAnswerID { get; set; }
-
+        public int UserId { get; set; } 
         public int Score { get; set; }
         public string Body { get; set; } 
         public DateTime Creationdate { get; set; }
-
-        public string Title { get; set; } 
+          
+        public int? AcceptedAnswerID { get; set; }
+        public string Title { get; set; }
         public DateTime? ClosedDate { get; set; }
-        public IList<AnswerDto> Answers { get; set; }
-        public IList<CommentDto> Comments { get; set; }
     }
 }
