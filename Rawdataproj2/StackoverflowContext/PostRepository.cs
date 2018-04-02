@@ -27,7 +27,9 @@ namespace StackoverflowContext
                         Body = x.Body,
                         Creationdate = x.CreationDate,
                         PostType = x.PostType
-                    }).Where(x => x.ID == id).FirstOrDefaultAsync();
+                    })
+                    .Where(x => x.ID == id)
+                    .FirstOrDefaultAsync();
             }
         }
 
@@ -49,8 +51,7 @@ namespace StackoverflowContext
                         Creationdate = x.CreationDate,
                         PostType = x.PostType
                     })
-                    .ToListAsync();
-
+                    .ToListAsync(); 
             }
         }
 
