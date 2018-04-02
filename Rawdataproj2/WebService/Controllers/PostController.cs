@@ -30,7 +30,35 @@ namespace WebService.Controllers
             var posts = await _PostRepository.GetAll(pagingInfo);  
             IEnumerable<PostListModel> model = posts.Select(post => CreatePostListModel(post));
 
-            return Ok(model); 
+            //var products = _dataService
+            //   .GetProducts(pagingInfo)
+            //   .Select(CreateProductListModel);
+
+
+            var total = _PostRepository.Count();
+            var pages = (int)Math.Ceiling(total / (double)pagingInfo.PageSize);
+
+            var prev = pagingInfo.Page > 0
+                ? Url.Link(nameof(GetPosts),
+                    new { page = pagingInfo.Page - 1, pagingInfo.PageSize })
+                : null;
+
+            var next = pagingInfo.Page < pages - 1
+                ? Url.Link(nameof(GetPosts),
+                    new { page = pagingInfo.Page + 1, pagingInfo.PageSize })
+                : null;
+
+            var result = new
+            {
+                Prev = prev,
+                Next = next,
+                Total = total,
+                Pages = pages,
+                Questions = model
+            };
+
+
+            return Ok(result); 
         }
 
 
@@ -45,6 +73,7 @@ namespace WebService.Controllers
                 Url = CreateLink(postDto.Id)
             };
             model = _Mapper.Map<PostModel>(postDto.Result);
+
 
             return Ok(model); 
         }

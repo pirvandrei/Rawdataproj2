@@ -59,6 +59,14 @@ namespace StackoverflowContext
                 return true;
             }
         }
+
+        public int Count()
+        {
+            using (var db = new StackoverflowDbContext())
+            {
+                return   db.Comments.Count();
+            };
+        }
     }
 }
 

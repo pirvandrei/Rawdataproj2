@@ -18,15 +18,16 @@ namespace StackoverflowContext
             {
                 return await db.Questions
                     .Include(x => x.Answers)
-                    .Select(x =>  new PostDto {
-                    ID = x.ID,
-                    Name = x.Title,
-                    UserID = x.UserID,
-                    Score = x.Score,
-                    Body = x.Body,
-                    Creationdate = x.CreationDate,
-                    PostType = x.PostType 
-                }).Where(x => x.ID == id).FirstOrDefaultAsync();
+                    .Select(x => new PostDto
+                    {
+                        ID = x.ID,
+                        Name = x.Title,
+                        UserID = x.UserID,
+                        Score = x.Score,
+                        Body = x.Body,
+                        Creationdate = x.CreationDate,
+                        PostType = x.PostType
+                    }).Where(x => x.ID == id).FirstOrDefaultAsync();
             }
         }
 
@@ -36,24 +37,33 @@ namespace StackoverflowContext
             {
                 return await db.Questions
                     .Include(x => x.Answers)
-                      .Select(x => new PostDto
-                      {
-                          ID = x.ID,
-                          Name = x.Title,
-                          UserID = x.UserID,
-                          Score = x.Score,
-                          Body = x.Body,
-                          Creationdate = x.CreationDate,
-                          PostType = x.PostType
-                      })
-                      .ToListAsync();
-                  
+                    .Skip(pagingInfo.Page * pagingInfo.PageSize)
+                    .Take(pagingInfo.PageSize)
+                    .Select(x => new PostDto
+                    {
+                        ID = x.ID,
+                        Name = x.Title,
+                        UserID = x.UserID,
+                        Score = x.Score,
+                        Body = x.Body,
+                        Creationdate = x.CreationDate,
+                        PostType = x.PostType
+                    })
+                    .ToListAsync();
+
             }
         }
 
 
-        
-         
+
+        public int Count()
+        {
+            using (var db = new StackoverflowDbContext())
+            {
+                return db.Questions.Count();
+            }
+        }
+
         public void Add(Post b)
         {
             throw new NotImplementedException();
@@ -64,13 +74,13 @@ namespace StackoverflowContext
             throw new NotImplementedException();
         }
 
-       
+
 
         public Task<bool> Update(int id, Post b)
         {
             throw new NotImplementedException();
-        } 
-       
+        }
+
 
         public void Add(PostDto b)
         {
@@ -82,6 +92,5 @@ namespace StackoverflowContext
             throw new NotImplementedException();
         }
 
-       
     }
 }

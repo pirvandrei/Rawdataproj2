@@ -18,6 +18,11 @@ namespace StackoverflowContext
             }
         }
 
+        public int Count()
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<bool> Delete(int userId)
         {
             using (var db = new StackoverflowDbContext())

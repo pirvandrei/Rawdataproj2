@@ -20,6 +20,14 @@ namespace StackoverflowContext
             } 
         }
 
+        public int Count()
+        {
+            using (var db = new StackoverflowDbContext())
+            {
+                return  db.Notes.Count();
+            }
+        }
+
         public async Task<bool> Delete(int id)
         {
             using (var db = new StackoverflowDbContext())

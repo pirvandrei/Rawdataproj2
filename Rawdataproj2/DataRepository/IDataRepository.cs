@@ -11,5 +11,6 @@ namespace DataRepository
         void Add(TEntity b);
         Task<bool> Update(TKey id, TEntity b);
         Task<bool> Delete(TKey id);
+        int Count();
     }
 }

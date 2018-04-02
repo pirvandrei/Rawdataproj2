@@ -16,10 +16,7 @@ namespace StackoverflowContext
         {
             using (var db = new StackoverflowDbContext())
             {
-                return await db.Questions
-                    .Include(x => x.Answers)
-                    .Skip(pagingInfo.Page * pagingInfo.PageSize)
-                    .Take(pagingInfo.PageSize)
+                return await db.Questions 
                     .ToListAsync();
 
                 //.Include(x => x.PostTags)
@@ -74,7 +71,12 @@ namespace StackoverflowContext
             }
         }
 
- 
-
+        public int Count()
+        {
+            using (var db = new StackoverflowDbContext())
+            {
+                return db.Questions.Count();
+            }
+        }
     }
 }

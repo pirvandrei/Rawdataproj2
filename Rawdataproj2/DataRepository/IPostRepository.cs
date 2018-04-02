@@ -9,5 +9,6 @@ namespace DataRepository
 {
     public  interface IPostRepository : IDataRepository<PostDto, int>
     { 
+        
     }
 }
