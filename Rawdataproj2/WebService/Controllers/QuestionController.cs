@@ -24,24 +24,24 @@ namespace WebService.Controllers
         } 
 
         [HttpGet("{id}", Name = nameof(GetQuestion))]
-        public async Task<ActionResult> GetQuestion(int id)
+        public async Task<IActionResult> GetQuestion(int id)
         {
-            var question = _QuestionRepository.Get(id);
+            var question = await _QuestionRepository.Get(id);
             if (question == null) return NotFound();
 
             QuestionModel model = new QuestionModel
             {
-                Url = CreateLink(question.Id)
+                Url = CreateLink(question.ID)
             };
 
-            model = _Mapper.Map<QuestionModel>(question.Result);
+            model = _Mapper.Map<QuestionModel>(question);
 
 
             return Ok(model);
         }
 
         [HttpGet(Name = nameof(GetQuestions))]
-        public async Task<ActionResult> GetQuestions(PagingInfo pagingInfo)
+        public async Task<IActionResult> GetQuestions(PagingInfo pagingInfo)
         {
             var question = await _QuestionRepository.GetAll(pagingInfo);
             IEnumerable<QuestionListModel> model = question.Select(que => CreateQuestionListModel(que));
@@ -73,7 +73,7 @@ namespace WebService.Controllers
 
 
         [HttpGet("{id}/answers", Name = nameof(GetQuestionAnswers))]
-        public async Task<ActionResult> GetQuestionAnswers(int id)
+        public async Task<IActionResult> GetQuestionAnswers(int id)
         {
             var queAnswers = await _QuestionRepository.GetQuestionAnswers(id);
             if (queAnswers == null) return NotFound();
@@ -85,12 +85,12 @@ namespace WebService.Controllers
 
 
         [HttpGet("{id}/comments", Name = nameof(GetQuestionComments))]
-        public async Task<ActionResult> GetQuestionComments(int id)
+        public async Task<IActionResult> GetQuestionComments(int id)
         {
             var queCom = await _QuestionRepository.GetQuestionComments(id);
             if (queCom == null) return NotFound();
 
-            var model = queCom.Select(que => CreateQuestionCommnetssModel(que));
+            var model = queCom.Select(que => CreateQuestionCommnetsModel(que));
 
             return Ok(model);
         }
@@ -100,7 +100,7 @@ namespace WebService.Controllers
         /*******************************************************
          * Helpers
          * *****************************************************/
-        private QuestionCommentsModel CreateQuestionCommnetssModel(QuestionCommentsDto questionCom)
+        private QuestionCommentsModel CreateQuestionCommnetsModel(QuestionCommentsDto questionCom)
         {
             var model = new QuestionCommentsModel
             {

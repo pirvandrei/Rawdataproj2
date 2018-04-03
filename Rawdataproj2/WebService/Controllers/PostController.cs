@@ -25,15 +25,10 @@ namespace WebService.Controllers
         }
 
         [HttpGet(Name = nameof(GetPosts))]
-        public async Task<ActionResult> GetPosts(PagingInfo pagingInfo)
+        public async Task<IActionResult> GetPosts(PagingInfo pagingInfo)
         {
             var posts = await _PostRepository.GetAll(pagingInfo);  
             IEnumerable<PostListModel> model = posts.Select(post => CreatePostListModel(post));
-
-            //var products = _dataService
-            //   .GetProducts(pagingInfo)
-            //   .Select(CreateProductListModel);
-
 
             var total = _PostRepository.Count();
             var pages = (int)Math.Ceiling(total / (double)pagingInfo.PageSize);
@@ -57,22 +52,21 @@ namespace WebService.Controllers
                 Posts = model
             };
 
-
             return Ok(result); 
         }
 
 
         [HttpGet("{id}", Name = nameof(GetPost))]
-        public async Task<ActionResult> GetPost(int id)
+        public async Task<IActionResult> GetPost(int id)
         {
-            var postDto = _PostRepository.Get(id);
+            var postDto = await _PostRepository.Get(id);
             if (postDto == null) return NotFound();
 
             PostModel model = new PostModel
             {
-                Url = CreateLink(postDto.Id)
+                Url = CreateLink(postDto.ID)
             };
-            model = _Mapper.Map<PostModel>(postDto.Result);
+            model = _Mapper.Map<PostModel>(postDto);
 
 
             return Ok(model); 
