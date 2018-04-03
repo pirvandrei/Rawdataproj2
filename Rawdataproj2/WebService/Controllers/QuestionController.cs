@@ -95,6 +95,29 @@ namespace WebService.Controllers
             return Ok(model);
         }
 
+        //[HttpPost]
+        //public async Task<IActionResult> CreateQuestion([FromBody] CreateQuestionModel model)
+        //{
+        //    if (model == null) return BadRequest();
+
+        //    var newQuestion = await _QuestionRepository.Add(model);
+
+        //    return Ok(newQuestion);
+        //}
+
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> Put(int id, [FromBody]string value)
+        //{
+          
+
+        //}
+
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeleteQuestion(int id)
+        //{
+            
+        //}
+
 
 
         /*******************************************************

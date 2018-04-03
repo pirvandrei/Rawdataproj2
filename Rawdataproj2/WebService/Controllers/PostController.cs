@@ -62,12 +62,13 @@ namespace WebService.Controllers
             var postDto = await _PostRepository.Get(id);
             if (postDto == null) return NotFound();
 
-            PostModel model = new PostModel
-            {
-                Url = CreateLink(postDto.ID)
-            };
-            model = _Mapper.Map<PostModel>(postDto);
+            var model = CreatePostModel(postDto);
 
+            //PostModel model = new PostModel
+            //{
+            //    Url = CreateLink(postDto.ID)
+            //};
+            //model = _Mapper.Map<PostModel>(postDto);
 
             return Ok(model); 
         }
@@ -87,8 +88,7 @@ namespace WebService.Controllers
             return model;
         }
 
-        // not used at the moment
-        private PostModel CreatePostModel(PostDto post)
+        private PostModel CreatePostModel(Post post)
         {
             var model = _Mapper.Map<PostModel>(post);
             model.Url = CreateLink(post.ID);
