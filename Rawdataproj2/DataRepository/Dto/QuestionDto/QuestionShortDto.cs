@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DataRepository.Dto.QuestionDto
 {
-    public class QuestionDto
+    public class QuestionShortDto
     {
         public int ID { get; set; } 
         public string Title { get; set; } 

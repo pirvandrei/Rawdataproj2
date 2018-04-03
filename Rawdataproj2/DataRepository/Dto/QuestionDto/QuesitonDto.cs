@@ -1,13 +1,13 @@
-﻿using System;
+﻿using DataRepository.Dto.PostDto;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace WebService.Models.Question
+namespace DataRepository.Dto.QuestionDto
 {
-    public class QuestionModel 
+    public class QuestionDto
     {
-         
+        public int ID { get; set; }
         public string Title { get; set; }
         public int UserID { get; set; }
         public int Score { get; set; }
@@ -16,7 +16,8 @@ namespace WebService.Models.Question
         public DateTime? ClosedDate { get; set; }
         public int? AcceptedAnswerID { get; set; }
 
-        public IList<CommentModel> Comments { get; set; }
-        public IList<AnswerModel> Answers { get; set; }
+        public IList<CommentDto> Comments { get; set; }
+        public IList<AnswerDto> Answers { get; set; }
+        
     }
 }

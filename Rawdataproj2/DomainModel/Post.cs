@@ -14,11 +14,6 @@ namespace DomainModel
            
         public IList<Link> Links { get; set; }  
         public IList<PostTag> PostTags { get; set; }  
-        public IList<Comment> Comments { get; set; }
-
-
-        //public Question Question { get; set; }
-        //public IList<Answer> Answers { get; set; }
-        //public IList<Question> Questions { get; set; }
+        public IList<Comment> Comments { get; set; } 
     }
 }

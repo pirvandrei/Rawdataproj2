@@ -11,5 +11,7 @@ namespace DataRepository
     {
         Task<IEnumerable<QuestionAnswersDto>> GetQuestionAnswers(int id);
         Task<IEnumerable<QuestionCommentsDto>> GetQuestionComments(int id);
+
+        Task<Question> GetQuestion(int id);
     }
 }

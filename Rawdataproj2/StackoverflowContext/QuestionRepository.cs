@@ -16,6 +16,7 @@ namespace StackoverflowContext
         {
             using (var db = new StackoverflowDbContext())
             {
+                 
                 return await db.Questions.FirstOrDefaultAsync(x => x.ID == id);
             }
         }
@@ -27,7 +28,18 @@ namespace StackoverflowContext
                 return await db.Questions.ToListAsync();
             }
         }
- 
+
+        public async Task<Question> GetQuestion(int id)
+        {
+            using (var db = new StackoverflowDbContext())
+            {
+                return await db.Questions.
+                    Include(x => x.Comments)
+                    .Include(x=> x.Answers)
+                    .ThenInclude(x => x.Comments) 
+                 .FirstOrDefaultAsync(x => x.ID == id);
+            }
+        }
 
         public async Task<IEnumerable<QuestionCommentsDto>> GetQuestionComments(int id)
         {
@@ -63,12 +75,7 @@ namespace StackoverflowContext
                     .ToListAsync();
             }
         }
-
          
-
-
-
-
 
         public int Count()
         {

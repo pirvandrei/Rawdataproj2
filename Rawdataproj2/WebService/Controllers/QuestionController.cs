@@ -21,24 +21,36 @@ namespace WebService.Controllers
         {
             _QuestionRepository = QuestionRepository;
             _Mapper = Mapper;
-        } 
+        }
 
         [HttpGet("{id}", Name = nameof(GetQuestion))]
         public async Task<ActionResult> GetQuestion(int id)
-        {
-            var question = _QuestionRepository.Get(id);
-            if (question == null) return NotFound();
+        { 
 
-            QuestionModel model = new QuestionModel
-            {
-                Url = CreateLink(question.Id)
-            };
+            var question =  await _QuestionRepository.GetQuestion(id); 
+            if (question == null) return NotFound(); 
 
-            model = _Mapper.Map<QuestionModel>(question.Result);
-
-
-            return Ok(model);
+            var model = _Mapper.Map<QuestionModel>(question);
+             
+            return  Ok(model);
         }
+
+        //[HttpGet("{id}", Name = nameof(GetQuestion))]
+        //public async Task<ActionResult> GetQuestion(int id)
+        //{
+        //    var question = _QuestionRepository.Get(id);
+        //    if (question == null) return NotFound();
+
+        //    QuestionModel model = new QuestionModel
+        //    {
+        //        Url = CreateLink(question.Id)
+        //    };
+
+        //    model = _Mapper.Map<QuestionModel>(question.Result);
+
+
+        //    return Ok(model);
+        //}
 
         [HttpGet(Name = nameof(GetQuestions))]
         public async Task<ActionResult> GetQuestions(PagingInfo pagingInfo)
@@ -95,7 +107,20 @@ namespace WebService.Controllers
             return Ok(model);
         }
 
+        //private object GetAnswer()
+        //{
+        //    throw new NotImplementedException();
+        //}
 
+        //public async Task<ActionResult> GetAnswer(int id)
+        //{
+        //    var answer = await _QuestionRepository.GetAnswer(id);
+        //    if (answer == null) return NotFound();
+
+        //    var model = answer.Select(que => CreateQuestionAnswersModel(que));
+
+        //    return Ok(model);
+        //}
 
         /*******************************************************
          * Helpers
@@ -127,22 +152,22 @@ namespace WebService.Controllers
         {
             var model = new QuestionListModel
             {
-                 Name = question.Title, 
+                 Title = question.Title, 
             };
-            model.Url = CreateLink(question.ID);
+            model.Url = CreateQuestionLink(question.ID);
             return model;
         }
-         
-        private QuestionModel CreateQuestionModel(Question question)
-        {
-            var model = _Mapper.Map<QuestionModel>(question);
-            model.Url = CreateLink(question.ID);
-            return model;
-        }
-         
-        private string CreateLink(int id)
+          
+        private string CreateQuestionLink(int id)
         {
             return Url.Link(nameof(GetQuestion), new { id });
         }
+
+        //private string CreateAnswerLink(int id)
+        //{
+        //    return Url.Link(nameof(GetAnswer), new { id });
+        //}
+
+      
     }
 }

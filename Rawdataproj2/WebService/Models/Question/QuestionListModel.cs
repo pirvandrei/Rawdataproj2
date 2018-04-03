@@ -3,6 +3,6 @@
     public class QuestionListModel
     {
         public string Url { get; set; }
-        public string Name { get; set; }
+        public string Title { get; set; }
     }
 }

@@ -24,16 +24,16 @@ namespace UnitTesting
             var dataService = new Mock<IQuestionRepository>();
 
             dataService
-                .Setup(repo => repo.Get(testQuestionId))
+                .Setup(repo => repo.GetQuestion(testQuestionId))
                 .Returns(Task.FromResult((Question)null));
               
             var urlHelper = new Mock<IUrlHelper>();
-            var ctrl = new QuestionController(dataService.Object, mapper);
-            ctrl.Url = urlHelper.Object;
+            var controller = new QuestionController(dataService.Object, mapper);
+            controller.Url = urlHelper.Object;
 
-            var result = await ctrl.GetQuestion(testQuestionId); 
+            var result = await controller.GetQuestion(testQuestionId); 
             Assert.IsType<OkObjectResult>(result); 
-            dataService.Verify(x => x.Get(testQuestionId)); 
+            dataService.Verify(x => x.GetQuestion(testQuestionId)); 
 
 
 
@@ -46,17 +46,17 @@ namespace UnitTesting
             var mapper = MapperCollectionExtension.CreateMapper();
             var dataService = new Mock<IQuestionRepository>();
 
-            dataService
-               .Setup(repo => repo.Get(testQuestionId))
-               .Returns(Task.FromResult((Question)null));
+            //dataService
+            //   .Setup(repo => repo.GetQuestion(testQuestionId))
+            //   .Returns(Task.FromResult((Question)null));
 
             var urlHelper = new Mock<IUrlHelper>();
-            var ctrl = new QuestionController(dataService.Object, mapper);
-            ctrl.Url = urlHelper.Object;
+            var controller = new QuestionController(dataService.Object, mapper);
+            controller.Url = urlHelper.Object;
 
-            var result = await ctrl.GetQuestion(testQuestionId);
+            var result = await controller.GetQuestion(testQuestionId);
             Assert.IsType<NotFoundResult>(result);
-            dataService.Verify(x => x.Get(testQuestionId));
+            
         } 
     }
 }
