@@ -24,6 +24,7 @@ namespace WebService.Controllers
         }
 
         [HttpGet("{id}", Name = nameof(GetQuestion))]
+<<<<<<< HEAD
         public async Task<ActionResult> GetQuestion(int id)
         { 
 
@@ -40,6 +41,19 @@ namespace WebService.Controllers
         //{
         //    var question = _QuestionRepository.Get(id);
         //    if (question == null) return NotFound();
+=======
+        public async Task<IActionResult> GetQuestion(int id)
+        {
+            var question = await _QuestionRepository.Get(id);
+            if (question == null) return NotFound();
+
+            QuestionModel model = new QuestionModel
+            {
+                Url = CreateLink(question.ID)
+            };
+
+            model = _Mapper.Map<QuestionModel>(question);
+>>>>>>> c1dd4c8515d64ec8b881ce3d9f0e804f80fef1ab
 
         //    QuestionModel model = new QuestionModel
         //    {
@@ -53,7 +67,7 @@ namespace WebService.Controllers
         //}
 
         [HttpGet(Name = nameof(GetQuestions))]
-        public async Task<ActionResult> GetQuestions(PagingInfo pagingInfo)
+        public async Task<IActionResult> GetQuestions(PagingInfo pagingInfo)
         {
             var question = await _QuestionRepository.GetAll(pagingInfo);
             IEnumerable<QuestionListModel> model = question.Select(que => CreateQuestionListModel(que));
@@ -85,7 +99,7 @@ namespace WebService.Controllers
 
 
         [HttpGet("{id}/answers", Name = nameof(GetQuestionAnswers))]
-        public async Task<ActionResult> GetQuestionAnswers(int id)
+        public async Task<IActionResult> GetQuestionAnswers(int id)
         {
             var queAnswers = await _QuestionRepository.GetQuestionAnswers(id);
             if (queAnswers == null) return NotFound();
@@ -97,16 +111,17 @@ namespace WebService.Controllers
 
 
         [HttpGet("{id}/comments", Name = nameof(GetQuestionComments))]
-        public async Task<ActionResult> GetQuestionComments(int id)
+        public async Task<IActionResult> GetQuestionComments(int id)
         {
             var queCom = await _QuestionRepository.GetQuestionComments(id);
             if (queCom == null) return NotFound();
 
-            var model = queCom.Select(que => CreateQuestionCommnetssModel(que));
+            var model = queCom.Select(que => CreateQuestionCommnetsModel(que));
 
             return Ok(model);
         }
 
+<<<<<<< HEAD
         //private object GetAnswer()
         //{
         //    throw new NotImplementedException();
@@ -118,6 +133,31 @@ namespace WebService.Controllers
         //    if (answer == null) return NotFound();
 
         //    var model = answer.Select(que => CreateQuestionAnswersModel(que));
+=======
+        //[HttpPost]
+        //public async Task<IActionResult> CreateQuestion([FromBody] CreateQuestionModel model)
+        //{
+        //    if (model == null) return BadRequest();
+
+        //    var newQuestion = await _QuestionRepository.Add(model);
+
+        //    return Ok(newQuestion);
+        //}
+
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> Put(int id, [FromBody]string value)
+        //{
+          
+
+        //}
+
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeleteQuestion(int id)
+        //{
+            
+        //}
+
+>>>>>>> c1dd4c8515d64ec8b881ce3d9f0e804f80fef1ab
 
         //    return Ok(model);
         //}
@@ -125,7 +165,7 @@ namespace WebService.Controllers
         /*******************************************************
          * Helpers
          * *****************************************************/
-        private QuestionCommentsModel CreateQuestionCommnetssModel(QuestionCommentsDto questionCom)
+        private QuestionCommentsModel CreateQuestionCommnetsModel(QuestionCommentsDto questionCom)
         {
             var model = new QuestionCommentsModel
             {
