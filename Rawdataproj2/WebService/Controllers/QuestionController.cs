@@ -23,8 +23,7 @@ namespace WebService.Controllers
             _Mapper = Mapper;
         }
 
-        [HttpGet("{id}", Name = nameof(GetQuestion))]
-<<<<<<< HEAD
+        [HttpGet("{id}", Name = nameof(GetQuestion))] 
         public async Task<ActionResult> GetQuestion(int id)
         { 
 
@@ -40,21 +39,7 @@ namespace WebService.Controllers
         //public async Task<ActionResult> GetQuestion(int id)
         //{
         //    var question = _QuestionRepository.Get(id);
-        //    if (question == null) return NotFound();
-=======
-        public async Task<IActionResult> GetQuestion(int id)
-        {
-            var question = await _QuestionRepository.Get(id);
-            if (question == null) return NotFound();
-
-            QuestionModel model = new QuestionModel
-            {
-                Url = CreateLink(question.ID)
-            };
-
-            model = _Mapper.Map<QuestionModel>(question);
->>>>>>> c1dd4c8515d64ec8b881ce3d9f0e804f80fef1ab
-
+        //    if (question == null) return NotFound();  
         //    QuestionModel model = new QuestionModel
         //    {
         //        Url = CreateLink(question.Id)
@@ -121,46 +106,9 @@ namespace WebService.Controllers
             return Ok(model);
         }
 
-<<<<<<< HEAD
-        //private object GetAnswer()
-        //{
-        //    throw new NotImplementedException();
-        //}
+ 
 
-        //public async Task<ActionResult> GetAnswer(int id)
-        //{
-        //    var answer = await _QuestionRepository.GetAnswer(id);
-        //    if (answer == null) return NotFound();
 
-        //    var model = answer.Select(que => CreateQuestionAnswersModel(que));
-=======
-        //[HttpPost]
-        //public async Task<IActionResult> CreateQuestion([FromBody] CreateQuestionModel model)
-        //{
-        //    if (model == null) return BadRequest();
-
-        //    var newQuestion = await _QuestionRepository.Add(model);
-
-        //    return Ok(newQuestion);
-        //}
-
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> Put(int id, [FromBody]string value)
-        //{
-          
-
-        //}
-
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeleteQuestion(int id)
-        //{
-            
-        //}
-
->>>>>>> c1dd4c8515d64ec8b881ce3d9f0e804f80fef1ab
-
-        //    return Ok(model);
-        //}
 
         /*******************************************************
          * Helpers
