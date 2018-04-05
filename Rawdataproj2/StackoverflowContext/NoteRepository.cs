@@ -12,6 +12,28 @@ namespace StackoverflowContext
 {
     public class NoteRepository : INoteRepository
     {
+        public async Task<Note> Get(int userId, int postId)
+        {
+            using (var db = new StackoverflowDbContext())
+            {
+                return await db.Notes
+                    .FirstOrDefaultAsync(x => x.UserID == userId && x.PostID == postId);
+            }
+        }
+
+        public Task<Note> Get(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<Note>> GetAll(PagingInfo pagingInfo)
+        {
+            using (var db = new StackoverflowDbContext())
+            {
+                return await db.Notes.ToListAsync();
+            }
+        }
+
         public async void Add(Note note)
         {
             using (var db = new StackoverflowDbContext())
@@ -43,21 +65,7 @@ namespace StackoverflowContext
             } 
         }
          
-        public async Task<Note> Get(int userId)
-        {
-            using (var db = new StackoverflowDbContext())
-            {
-                return await db.Notes.FirstOrDefaultAsync(x => x.UserID == userId);
-            }
-        }
-
-        public async Task<IEnumerable<Note>> GetAll(PagingInfo pagingInfo)
-        {
-            using (var db = new StackoverflowDbContext())
-            {
-                return await db.Notes.ToListAsync();
-            }
-        }
+        
 
         public async Task<bool> Update(int userId, Note userNote)
         {

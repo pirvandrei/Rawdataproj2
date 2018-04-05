@@ -105,6 +105,9 @@ namespace StackoverflowContext
             throw new NotImplementedException();
         }
 
-        
+        public Task<Question> Get(int userId, int entityId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

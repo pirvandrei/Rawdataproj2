@@ -4,7 +4,7 @@ using StackoverflowContext;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks; 
+using System.Threading.Tasks;
 using DataRepository.Dto.PostDto;
 using DataRepository;
 using WebService.Models.Post;
@@ -19,6 +19,7 @@ namespace WebService.Controllers
         private readonly INoteRepository _NoteRepository;
         private readonly IMapper _Mapper;
 
+
         public NoteController(INoteRepository NoteRepository, IMapper Mapper)
         {
             _NoteRepository = NoteRepository;
@@ -28,7 +29,7 @@ namespace WebService.Controllers
         [HttpGet(Name = nameof(GetNotes))]
         public async Task<IActionResult> GetNotes(PagingInfo pagingInfo)
         {
-            var notes = await _NoteRepository.GetAll(pagingInfo);  
+            var notes = await _NoteRepository.GetAll(pagingInfo);
             IEnumerable<NoteListModel> model = notes.Select(note => CreateNoteListModel(note));
 
             var total = _NoteRepository.Count();
@@ -53,19 +54,23 @@ namespace WebService.Controllers
                 Notes = model
             };
 
-            return Ok(result); 
+            return Ok(result);
         }
 
 
         [HttpGet("{id}", Name = nameof(GetNote))]
         public async Task<IActionResult> GetNote(int id)
         {
-            var noteDto = await _NoteRepository.Get(id);
+            var user = new User
+            {
+                ID = 1,
+            };
+            var noteDto = await _NoteRepository.Get(user.ID,id);
             if (noteDto == null) return NotFound();
 
             var model = CreateNoteModel(noteDto);
 
-            return Ok(model); 
+            return Ok(model);
         }
 
         /*******************************************************
@@ -85,15 +90,15 @@ namespace WebService.Controllers
         private NoteModel CreateNoteModel(Note note)
         {
             var model = _Mapper.Map<NoteModel>(note);
-            model.Url = CreateLink(note.PostID);
+            //model.Url = CreateLink(note.UserID);
             return model;
         }
-        
+
 
         private string CreateLink(int id)
         {
             return Url.Link(nameof(GetNote), new { id });
         }
 
-    } 
+    }
 }

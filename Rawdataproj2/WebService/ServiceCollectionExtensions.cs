@@ -16,6 +16,7 @@ namespace WebService
             services.AddSingleton<IPostRepository, PostRepository>();
             services.AddSingleton<IQuestionRepository, QuestionRepository>();
             services.AddSingleton<INoteRepository, NoteRepository>();
+            services.AddSingleton<IBookmarkRepository, BookmarkRepository>();
             return services;
         }
     }

@@ -75,5 +75,10 @@ namespace StackoverflowContext
                 return db.Searches.Count();
             }
         }
+
+        public Task<Search> Get(int userId, int entityId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

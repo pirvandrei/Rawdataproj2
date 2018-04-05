@@ -69,5 +69,9 @@ namespace StackoverflowContext
             throw new NotImplementedException();
         }
 
+        public Task<Post> Get(int userId, int entityId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

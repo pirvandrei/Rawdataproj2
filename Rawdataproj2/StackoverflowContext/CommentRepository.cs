@@ -11,21 +11,18 @@ namespace StackoverflowContext
 {
     public class CommentRepository : ICommentRepository
     {
-        public async void Add(Comment comment)
-        { 
-            using (var db = new StackoverflowDbContext())
-            {
-                await db.Comments.AddAsync(comment);
-            }
-        } 
+        
 
-        public async Task<Comment> Get(int id)
+
+        public async Task<Comment> Get(int userId, int postId)
         {
-            using (var db = new StackoverflowDbContext())
+            using(var db = new StackoverflowDbContext())
             {
-                return await db.Comments.FirstOrDefaultAsync(x => x.ID == id);
+                return await db.Comments.FirstOrDefaultAsync(x => x.PostID == postId && x.UserID == userId);
             }
         }
+
+       
 
         public async Task<IEnumerable<Comment>> GetAll(PagingInfo pagingInfo)
         {
@@ -34,6 +31,16 @@ namespace StackoverflowContext
                 return await db.Comments.ToListAsync();
             }
         }
+
+        public async void Add(Comment comment)
+        { 
+            using (var db = new StackoverflowDbContext())
+            {
+                await db.Comments.AddAsync(comment);
+            }
+        } 
+
+       
 
         public async Task<bool> Update(int id, Comment com)
         {
@@ -66,6 +73,11 @@ namespace StackoverflowContext
             {
                 return   db.Comments.Count();
             };
+        }
+
+        public Task<Comment> Get(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

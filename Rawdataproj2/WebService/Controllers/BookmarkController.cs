@@ -25,9 +25,13 @@ namespace WebService.Controllers
 
         [HttpGet("{id}", Name = nameof(GetBookmark))] 
         public async Task<ActionResult> GetBookmark(int id)
-        { 
+        {
 
-            var question =  await _BookmarkRepository.Get(id); 
+            var user = new User
+            {
+                ID = 1,
+            };
+            var question =  await _BookmarkRepository.Get(user.ID, id);
             if (question == null) return NotFound(); 
 
             var model = _Mapper.Map<BookmarkModel>(question);
@@ -105,7 +109,7 @@ namespace WebService.Controllers
             {
                   PostID = bookmark.PostID, 
             };
-            model.Url = CreateBookmarkLink(bookmark.UserID);
+            model.Url = CreateBookmarkLink(bookmark.PostID);
             return model;
         }
           

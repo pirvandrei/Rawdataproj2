@@ -3,6 +3,7 @@ using DomainModel;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,9 +13,14 @@ namespace StackoverflowContext
     {
         public async Task<Bookmark> Get(int userId)
         {
+            throw new NotImplementedException();
+        }
+
+        public async Task<Bookmark> Get(int userId, int postId)
+        { 
             using (var db = new StackoverflowDbContext())
             {
-                return await db.Bookmarks.FirstOrDefaultAsync(x => x.UserID == userId);
+                return await db.Bookmarks.FirstOrDefaultAsync(x => x.UserID == userId && x.PostID == postId);
             }
         }
 
@@ -36,7 +42,10 @@ namespace StackoverflowContext
 
         public int Count()
         {
-            throw new NotImplementedException();
+            using (var db = new StackoverflowDbContext())
+            {
+                return db.Bookmarks.Count();
+            }
         }
 
         public async Task<bool> Delete(int userId)
@@ -65,5 +74,7 @@ namespace StackoverflowContext
                 return true;
             }
         }
+
+        
     }
 }
