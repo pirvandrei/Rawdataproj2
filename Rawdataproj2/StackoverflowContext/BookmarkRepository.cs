@@ -11,16 +11,12 @@ namespace StackoverflowContext
 {
     public class BookmarkRepository : IBookmarkRepository
     {
-        public async Task<Bookmark> Get(int userId)
+        public async Task<Bookmark> Get(int postId)
         {
-            throw new NotImplementedException();
-        }
-
-        public async Task<Bookmark> Get(int userId, int postId)
-        { 
+            var user = new User { ID = 1, };
             using (var db = new StackoverflowDbContext())
             {
-                return await db.Bookmarks.FirstOrDefaultAsync(x => x.UserID == userId && x.PostID == postId);
+                return await db.Bookmarks.FirstOrDefaultAsync(x => x.UserID == user.ID && x.PostID == postId);
             }
         }
 

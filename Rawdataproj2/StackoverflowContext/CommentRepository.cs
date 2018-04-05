@@ -14,11 +14,12 @@ namespace StackoverflowContext
         
 
 
-        public async Task<Comment> Get(int userId, int postId)
+        public async Task<Comment> Get(int postId)
         {
-            using(var db = new StackoverflowDbContext())
+            var user = new User { ID = 1, };
+            using (var db = new StackoverflowDbContext())
             {
-                return await db.Comments.FirstOrDefaultAsync(x => x.PostID == postId && x.UserID == userId);
+                return await db.Comments.FirstOrDefaultAsync(x => x.PostID == postId && x.UserID == user.ID);
             }
         }
 
@@ -75,10 +76,6 @@ namespace StackoverflowContext
             };
         }
 
-        public Task<Comment> Get(int id)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
 

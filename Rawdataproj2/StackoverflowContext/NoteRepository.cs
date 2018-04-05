@@ -12,18 +12,14 @@ namespace StackoverflowContext
 {
     public class NoteRepository : INoteRepository
     {
-        public async Task<Note> Get(int userId, int postId)
+        public async Task<Note> Get(int postId)
         {
+            var user = new User { ID = 1, };
             using (var db = new StackoverflowDbContext())
             {
                 return await db.Notes
-                    .FirstOrDefaultAsync(x => x.UserID == userId && x.PostID == postId);
+                    .FirstOrDefaultAsync(x => x.UserID == user.ID && x.PostID == postId);
             }
-        }
-
-        public Task<Note> Get(int id)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<IEnumerable<Note>> GetAll(PagingInfo pagingInfo)
@@ -71,7 +67,7 @@ namespace StackoverflowContext
         {
             using (var db = new StackoverflowDbContext())
             {
-                var note = await Get(userId, updateNote.PostID);
+                var note = await Get(updateNote.PostID);
                 if (note == null) return false;
                 //TODO: update note attributess
                 db.Notes.Update(updateNote);

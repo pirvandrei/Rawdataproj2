@@ -61,11 +61,7 @@ namespace WebService.Controllers
         [HttpGet("{id}", Name = nameof(GetNote))]
         public async Task<IActionResult> GetNote(int id)
         {
-            var user = new User
-            {
-                ID = 1,
-            };
-            var note = await _NoteRepository.Get(user.ID,id);
+            var note = await _NoteRepository.Get(id);
             if (note == null) return NotFound();
 
             var model = CreateNoteModel(note);
@@ -74,20 +70,28 @@ namespace WebService.Controllers
         }
 
         [HttpPut("{id}", Name = nameof(UpdateNote))]
-        public async Task<IActionResult> UpdateNote(int id, [FromBody] NoteModel updateNote)
+        public async Task<IActionResult> UpdateNote(int id, [FromBody] UpdateNoteModel updateNote)
         {
-            if (id == null || updateNote.PostID != id) return BadRequest();
+            if (updateNote == null || updateNote.PostID != id) return BadRequest();
 
             var user = new User { ID = 1, };
-            var note = await _NoteRepository.Get(user.ID, id);
+            var note = await _NoteRepository.Get(id);
             if (note == null) return NotFound();
-            note.Text = updateNote.Text;
-            var result = await _NoteRepository.Update(user.ID, note);
-            var model = CreateNoteModel(noteDto);
 
-            return Ok(model);
+            note.Text = updateNote.Text;
+            note.PostID = updateNote.PostID;
+            note.UserID = updateNote.UserID;
+            await _NoteRepository.Update(user.ID, note);
+
+            return Ok();
         }
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteCategory(int id)
+        {
+            if (! await _NoteRepository.Delete(id)) return NotFound();
+            return NoContent();
+        }
 
 
         /*******************************************************

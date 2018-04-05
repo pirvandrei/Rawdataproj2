@@ -26,12 +26,7 @@ namespace WebService.Controllers
         [HttpGet("{id}", Name = nameof(GetBookmark))] 
         public async Task<ActionResult> GetBookmark(int id)
         {
-
-            var user = new User
-            {
-                ID = 1,
-            };
-            var question =  await _BookmarkRepository.Get(user.ID, id);
+            var question =  await _BookmarkRepository.Get(id);
             if (question == null) return NotFound(); 
 
             var model = _Mapper.Map<BookmarkModel>(question);
@@ -78,11 +73,11 @@ namespace WebService.Controllers
         //}
 
         // DELETE api/Delete/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> Delete(int id)
+        //{
             
-        }
+        //}
 
 
         //[HttpGet("{id}/answers", Name = nameof(GetQuestionAnswers))]
