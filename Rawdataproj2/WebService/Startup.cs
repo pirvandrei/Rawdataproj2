@@ -17,12 +17,7 @@ namespace WebService
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(config =>
-            {
-                config.RespectBrowserAcceptHeader = true;
-                config.InputFormatters.Add(new XmlSerializerInputFormatter());
-                config.OutputFormatters.Add(new XmlSerializerOutputFormatter());
-            });
+            services.AddMvc().AddXmlSerializerFormatters();
 
             services.RegisterServices();
             services.RegisterMappers();
