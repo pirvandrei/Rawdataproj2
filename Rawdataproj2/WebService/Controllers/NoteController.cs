@@ -87,7 +87,7 @@ namespace WebService.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCategory(int id)
+        public async Task<IActionResult> DeleteNote(int id)
         {
             if (! await _NoteRepository.Delete(id)) return NotFound();
             return NoContent();
