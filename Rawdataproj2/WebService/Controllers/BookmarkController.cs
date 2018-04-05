@@ -103,9 +103,9 @@ namespace WebService.Controllers
         {
             var model = new BookmarkListModel
             {
-                 Title = question.Title, 
+                  PostID = bookmark.PostID, 
             };
-            model.Url = CreateBookmarkLink(question.ID);
+            model.Url = CreateBookmarkLink(bookmark.UserID);
             return model;
         }
           
