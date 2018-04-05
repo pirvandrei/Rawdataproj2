@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using WebService.Models.Post;
 using WebService.Models.Question;
 using WebService.Models.Note;
+using WebService.Models.Bookmark;
 
 namespace WebService
 {
@@ -24,6 +25,7 @@ namespace WebService
                 cfg.CreateMap<Post, PostModel>().ReverseMap();
                 cfg.CreateMap<Question, QuestionModel>().ReverseMap();
                 cfg.CreateMap<Note, NoteModel>().ReverseMap();
+                cfg.CreateMap<Bookmark, BookmarkModel>().ReverseMap();
 
             });
             return config.CreateMapper();
