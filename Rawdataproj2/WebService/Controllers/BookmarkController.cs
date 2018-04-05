@@ -65,52 +65,35 @@ namespace WebService.Controllers
             return Ok(result);
         }
 
-        // POST api/<controller>
-        //[HttpPost]
-        //public async Task<IActionResult>  Add([FromBody]string value)
-        //{
-            
-        //}
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteBookmark(int id)
+        {
+            if (!await _BookmarkRepository.Delete(id)) return NotFound();
+            return NoContent();
+        }
 
-        // DELETE api/Delete/5
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> Delete(int id)
-        //{
-            
-        //}
+        [HttpPost("{id}")]
+        public async Task<IActionResult> CreateBookmark([FromBody] CreateBookmarkModel model)
+        {
+            if (model == null) return BadRequest();
 
+            var bookmark = new Bookmark
+            { 
+                PostID = model.PostID,
+                UserID = model.UserID
+            };
 
-        //[HttpGet("{id}/answers", Name = nameof(GetQuestionAnswers))]
-        //public async Task<IActionResult> GetQuestionAnswers(int id)
-        //{
-        //    var queAnswers = await _BookmarkRepository.GetQuestionAnswers(id);
-        //    if (queAnswers == null) return NotFound();
+            var result = await _BookmarkRepository.Add(bookmark);
 
-        //    var model = queAnswers.Select(que => CreateQuestionAnswersModel(que)); 
-
-        //    return Ok(model);
-        //}
-
-
-        //[HttpGet("{id}/comments", Name = nameof(GetQuestionComments))]
-        //public async Task<IActionResult> GetQuestionComments(int id)
-        //{
-        //    var queCom = await _BookmarkRepository.GetQuestionComments(id);
-        //    if (queCom == null) return NotFound();
-
-        //    var model = queCom.Select(que => CreateQuestionCommnetsModel(que));
-
-        //    return Ok(model);
-        //}
-
- 
+            return Ok(result);
+        }
 
 
 
         /*******************************************************
          * Helpers
          * *****************************************************/
-       
+
 
         private BookmarkListModel CreateBookmarkListModel(Bookmark bookmark)
         {

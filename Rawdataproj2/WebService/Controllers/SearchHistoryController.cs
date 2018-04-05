@@ -7,6 +7,7 @@ using DataRepository.Dto.SearchDto;
 using DomainModel;
 using Microsoft.AspNetCore.Mvc;
 using WebService.Models;
+using WebService.Models.Search;
 
 namespace WebService.Controllers
 {
@@ -20,21 +21,69 @@ namespace WebService.Controllers
             _SearchHistoryRepository = SearchHistoryRepository;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Get()
+        [HttpGet("{id}", Name = nameof(GetHistory))]
+        public async Task<IActionResult> GetHistory(PagingInfo pagingInfo)
         {
-            // TODO: return SearchHistoryListModel instead.
+            var history = await _SearchHistoryRepository.GetAll(pagingInfo);
 
-            //return Ok(await _SearchHistoryRepository.GetAll());
+            IEnumerable<SearchHistoryListModel> model = history.Select(search => SearchHistoryListModel(search));
 
-            return Ok();
+            var total = _SearchHistoryRepository.Count();
+            var pages = (int)Math.Ceiling(total / (double)pagingInfo.PageSize);
+
+            var prev = pagingInfo.Page > 0
+                ? Url.Link(nameof(GetHistory),
+                    new { page = pagingInfo.Page - 1, pagingInfo.PageSize })
+                : null;
+
+            var next = pagingInfo.Page < pages - 1
+                ? Url.Link(nameof(GetHistory),
+                    new { page = pagingInfo.Page + 1, pagingInfo.PageSize })
+                : null;
+
+            var result = new
+            {
+                Prev = prev,
+                Next = next,
+                Total = total,
+                Pages = pages,
+                History = model
+            };
+
+            return Ok(result);  
+        } 
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteSearch(int id)
+        {
+            if (!await _SearchHistoryRepository.Delete(id)) return NotFound();
+            return NoContent();
         }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateSearch([FromBody]CreateHistoryModel model)
+        {
+            if (model == null) return BadRequest();
+
+            var search = new Search
+            {
+                Text = model.Text,
+                Date = model.Date, 
+                UserID = model.UserID
+            };
+
+            var result = await _SearchHistoryRepository.Add(search);
+
+            return Ok(result);
+        }
+
+
 
         /*******************************************************
          * Helpers
          * *****************************************************/
 
-        private SearchHistoryListModel CreateSearchHistoryListModel(SearchDto history)
+        private SearchHistoryListModel SearchHistoryListModel(Search history)
         {
             var model = new SearchHistoryListModel
             {
@@ -44,29 +93,7 @@ namespace WebService.Controllers
             return model;
         }
 
-        //// GET api/<controller>/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
+        
 
-        //// POST api/<controller>
-        //[HttpPost]
-        //public void Post([FromBody]string value)
-        //{
-        //}
-
-        //// PUT api/<controller>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody]string value)
-        //{
-        //}
-
-        //// DELETE api/<controller>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
     }
 }

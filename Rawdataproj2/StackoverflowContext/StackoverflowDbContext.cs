@@ -42,17 +42,18 @@ namespace StackoverflowContext
              
             //many to one 
             modelBuilder.Entity<Question>().HasMany(o => o.Answers).WithOne()
-                .HasForeignKey(d => d.ParentID); 
+                .HasForeignKey(d => d.ParentID);
+             
 
             //properties
-            modelBuilder.Entity<Search>().Property(x => x.ID).HasColumnName("userid"); 
             modelBuilder.Entity<PostTag>().Property(x => x.ID).HasColumnName("postid");
             modelBuilder.Entity<Tag>().Property(x => x.ID).HasColumnName("postid"); 
             modelBuilder.Entity<Link>().Property(x => x.ID).HasColumnName("postid");
-            modelBuilder.Entity<Comment>().Property(x => x.ID).HasColumnName("postid");
 
+             
             modelBuilder.Entity<Search>().Property(x => x.Text).HasColumnName("SearchText");
-
+            modelBuilder.Entity<Search>()
+           .HasKey(s => new { s.UserID, s.Date, s.Text });
 
 
             //many-to-many

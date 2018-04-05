@@ -12,13 +12,13 @@ namespace StackoverflowContext
 {
     public class NoteRepository : INoteRepository
     {
+        public User _user = new User { ID = 1, };
         public async Task<Note> Get(int postId)
-        {
-            var user = new User { ID = 1, };
+        { 
             using (var db = new StackoverflowDbContext())
             {
                 return await db.Notes
-                    .FirstOrDefaultAsync(x => x.UserID == user.ID && x.PostID == postId);
+                    .FirstOrDefaultAsync(x => x.UserID == _user.ID && x.PostID == postId);
             }
         }
 
@@ -28,14 +28,41 @@ namespace StackoverflowContext
             {
                 return await db.Notes.ToListAsync();
             }
-        }
-
-        public async void Add(Note note)
+        } 
+  
+        public async Task<bool> Delete(int id)
         {
             using (var db = new StackoverflowDbContext())
             {
-                  await db.Notes.AddAsync(note);
-            } 
+                var note = await Get(id);
+                if (note == null) return false;   
+                db.Notes.Remove(note);
+                await db.SaveChangesAsync();
+                return true;
+            }
+        }
+         
+        public async Task<bool> Update(int userId, Note updateNote)
+        {
+            using (var db = new StackoverflowDbContext())
+            {
+                var note = await Get(updateNote.PostID);
+                if (note == null) return false; 
+                db.Notes.Update(updateNote);
+                await db.SaveChangesAsync();
+                return true;
+            }
+        }
+
+        public async Task<Note> Add(Note note)
+        {
+            using (var db = new StackoverflowDbContext())
+            { 
+                await db.Notes.AddAsync(note);
+                db.SaveChanges();
+                return note;
+            }
+
         }
 
         public int Count()
@@ -44,36 +71,6 @@ namespace StackoverflowContext
             {
                 return  db.Notes.Count();
             }
-        }
-
-        public async Task<bool> Delete(int id)
-        {
-            using (var db = new StackoverflowDbContext())
-            {
-                var note = await Get(id);
-                if (note == null)
-                {
-                    return false;
-                }
-                db.Notes.Remove(note);
-                await db.SaveChangesAsync();
-                return true;
-            } 
-        }
-         
-        
-
-        public async Task<bool> Update(int userId, Note updateNote)
-        {
-            using (var db = new StackoverflowDbContext())
-            {
-                var note = await Get(updateNote.PostID);
-                if (note == null) return false;
-                //TODO: update note attributess
-                db.Notes.Update(updateNote);
-                await db.SaveChangesAsync();
-                return true;
-            }
-        }
+        } 
     }
 }

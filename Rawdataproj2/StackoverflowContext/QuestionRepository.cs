@@ -86,26 +86,17 @@ namespace StackoverflowContext
 
         }
 
-        public void Add(Question b)
+        public Task<Question> Add(Question b)
         {
             throw new NotImplementedException();
         }
-
-
-
-        public Task<bool> Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-
 
         public Task<bool> Update(int id, Question b)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Question> Get(int userId, int entityId)
+        public Task<bool> Delete(int id)
         {
             throw new NotImplementedException();
         }

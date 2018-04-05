@@ -2,6 +2,7 @@
 using DomainModel;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,7 +24,7 @@ namespace StackoverflowContext
         {
             using (var db = new StackoverflowDbContext())
             {
-                return await db.Searches.FirstOrDefaultAsync(x => x.ID == userid);
+                return await db.Searches.FirstOrDefaultAsync(x => x.UserID == userid);
             }
         }
 
@@ -31,42 +32,33 @@ namespace StackoverflowContext
         {
             using (var db = new StackoverflowDbContext())
             {
-                return await db.Searches.Where(x => x.ID == userid).ToListAsync();
+                return await db.Searches.Where(x => x.User.ID == userid).ToListAsync();
             }
         }
 
-        public async void Add(Search newSearch)
-        {
+        public async Task<Search> Add(Search newSearch)
+        { 
             using (var db = new StackoverflowDbContext())
             {
                 await db.Searches.AddAsync(newSearch);
+                db.SaveChanges();
+                return newSearch;
             }
         }
-
-        public async Task<bool> Delete(int userid)
-        {
+          
+        public async Task<bool> Delete(int userId)
+        {  
             using (var db = new StackoverflowDbContext())
             {
-                var history = await Get(userid);
-                if (history == null) return false;
-                db.Searches.Remove(history);
-                await db.SaveChangesAsync();
-                return true;
-            }
-        }
-
-        public async Task<bool> Update(int userid, Search updateSearch)
-        {
-            using (var db = new StackoverflowDbContext())
-            {
-                var search = await Get(userid);
+                var search = await Get(userId);
                 if (search == null) return false;
-                search.Text = updateSearch.Text;
-                search.Date = updateSearch.Date;
+                db.Searches.Remove(search);
                 await db.SaveChangesAsync();
                 return true;
             }
         }
+
+         
 
         public int Count()
         {
@@ -76,7 +68,7 @@ namespace StackoverflowContext
             }
         }
 
-        public Task<Search> Get(int userId, int entityId)
+        public Task<bool> Update(int id, Search b)
         {
             throw new NotImplementedException();
         }

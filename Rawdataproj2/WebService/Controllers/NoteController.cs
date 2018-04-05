@@ -87,10 +87,27 @@ namespace WebService.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCategory(int id)
+        public async Task<IActionResult> DeleteNote(int id)
         {
             if (! await _NoteRepository.Delete(id)) return NotFound();
             return NoContent();
+        }
+
+        [HttpPost("{id}")]
+        public async Task<IActionResult> CreateNote([FromBody] CreateNoteModel model)
+        {
+            if (model == null) return BadRequest();
+
+            var note = new Note
+            {
+                Text = model.Text,
+                PostID = model.PostId,
+                UserID = model.UserId
+            };
+
+              var result = await _NoteRepository.Add(note);
+
+            return Ok(result);
         }
 
 

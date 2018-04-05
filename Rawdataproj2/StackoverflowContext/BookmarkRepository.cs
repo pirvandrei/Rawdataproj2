@@ -11,12 +11,13 @@ namespace StackoverflowContext
 {
     public class BookmarkRepository : IBookmarkRepository
     {
+        public User _user = new User { ID = 1, };
         public async Task<Bookmark> Get(int postId)
-        {
-            var user = new User { ID = 1, };
+        { 
             using (var db = new StackoverflowDbContext())
             {
-                return await db.Bookmarks.FirstOrDefaultAsync(x => x.UserID == user.ID && x.PostID == postId);
+                return await db.Bookmarks
+                    .FirstOrDefaultAsync(x => x.UserID == _user.ID && x.PostID == postId);
             }
         }
 
@@ -28,19 +29,15 @@ namespace StackoverflowContext
             }
         }
 
-        public async void Add(Bookmark bookmark)
+        public async Task<Bookmark> Add(int id, Bookmark bookmark)
         {
             using (var db = new StackoverflowDbContext())
             {
+                bookmark.UserID = _user.ID;
+                bookmark.PostID = id;
                 await db.Bookmarks.AddAsync(bookmark);
-            }
-        }
-
-        public int Count()
-        {
-            using (var db = new StackoverflowDbContext())
-            {
-                return db.Bookmarks.Count();
+                db.SaveChanges();
+                return bookmark;
             }
         }
 
@@ -57,20 +54,28 @@ namespace StackoverflowContext
         }
 
 
-
-        public async Task<bool> Update(int userId, Bookmark userBookmark)
+        public async Task<Bookmark> Add(Bookmark bookmark)
         {
             using (var db = new StackoverflowDbContext())
             {
-                var bookmark = await Get(userId);
-                if (bookmark == null) return false;
-                //TODO: update bookmark attributes
-                db.Bookmarks.Update(userBookmark);
-                await db.SaveChangesAsync();
-                return true;
+                await db.Bookmarks.AddAsync(bookmark);
+                db.SaveChanges();
+                return bookmark;
+            }
+
+        }
+
+        public int Count()
+        {
+            using (var db = new StackoverflowDbContext())
+            {
+                return db.Bookmarks.Count();
             }
         }
 
-        
+        public Task<bool> Update(int id, Bookmark b)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
