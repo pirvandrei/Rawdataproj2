@@ -70,6 +70,20 @@ namespace WebService.Controllers
             return Ok(result);
         }
 
+        // POST api/<controller>
+        //[HttpPost]
+        //public async Task<IActionResult>  Add([FromBody]string value)
+        //{
+            
+        //}
+
+        // DELETE api/Delete/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            
+        }
+
 
         //[HttpGet("{id}/answers", Name = nameof(GetQuestionAnswers))]
         //public async Task<IActionResult> GetQuestionAnswers(int id)
