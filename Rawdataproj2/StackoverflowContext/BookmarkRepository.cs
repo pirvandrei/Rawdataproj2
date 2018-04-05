@@ -33,12 +33,7 @@ namespace StackoverflowContext
                 await db.Bookmarks.AddAsync(bookmark);
             }
         }
-
-        public int Count()
-        {
-            throw new NotImplementedException();
-        }
-
+         
         public async Task<bool> Delete(int userId)
         {
             using (var db = new StackoverflowDbContext())
@@ -51,19 +46,14 @@ namespace StackoverflowContext
             }
         }
 
-
-
-        public async Task<bool> Update(int userId, Bookmark userBookmark)
+        public Task<bool> Update(int id, Bookmark b)
         {
-            using (var db = new StackoverflowDbContext())
-            {
-                var bookmark = await Get(userId);
-                if (bookmark == null) return false;
-                //TODO: update bookmark attributes
-                db.Bookmarks.Update(userBookmark);
-                await db.SaveChangesAsync();
-                return true;
-            }
+            throw new NotImplementedException();
+        }
+
+        public int Count()
+        {
+            throw new NotImplementedException();
         }
     }
 }
