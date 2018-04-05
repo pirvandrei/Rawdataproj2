@@ -17,7 +17,7 @@ namespace UnitTesting
     public class QuestionTests
     {
         [Fact]
-        public async Task GetQuestion_ValidQuestionId_NotFound()
+        public async Task GetQuestion_ValidQuestionId_OkObjectResult()
         {
             int testQuestionId = 19;
             var mapper = MapperCollectionExtension.CreateMapper();
@@ -48,14 +48,14 @@ namespace UnitTesting
 
             dataService
                 .Setup(repo => repo.GetQuestion(testQuestionId))
-                .Returns(Task.FromResult((Question)new Question()));
+                .Returns(Task.FromResult((Question)null));
 
             var urlHelper = new Mock<IUrlHelper>();
             var controller = new QuestionController(dataService.Object, mapper);
             controller.Url = urlHelper.Object;
 
             var result = await controller.GetQuestion(testQuestionId);
-            Assert.IsType<OkObjectResult>(result);
+            Assert.IsType<NotFoundResult>(result);
             dataService.Verify(x => x.GetQuestion(testQuestionId));
 
         }
