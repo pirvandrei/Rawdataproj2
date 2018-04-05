@@ -33,7 +33,7 @@ namespace StackoverflowContext
             using (var db = new StackoverflowDbContext())
             {
                 var note = await Get(id);
-                if (note==null)
+                if (note == null)
                 {
                     return false;
                 }
