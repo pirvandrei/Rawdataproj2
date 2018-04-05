@@ -11,4 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DomainModel\DomainModel.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Dto\BookmarkDto\" />
+  </ItemGroup>
 </Project>
