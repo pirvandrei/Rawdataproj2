@@ -67,14 +67,14 @@ namespace StackoverflowContext
          
         
 
-        public async Task<bool> Update(int userId, Note userNote)
+        public async Task<bool> Update(int userId, Note updateNote)
         {
             using (var db = new StackoverflowDbContext())
             {
-                var note = await Get(userId);
+                var note = await Get(userId, updateNote.PostID);
                 if (note == null) return false;
                 //TODO: update note attributess
-                db.Notes.Update(userNote);
+                db.Notes.Update(updateNote);
                 await db.SaveChangesAsync();
                 return true;
             }

@@ -65,13 +65,30 @@ namespace WebService.Controllers
             {
                 ID = 1,
             };
-            var noteDto = await _NoteRepository.Get(user.ID,id);
-            if (noteDto == null) return NotFound();
+            var note = await _NoteRepository.Get(user.ID,id);
+            if (note == null) return NotFound();
 
+            var model = CreateNoteModel(note);
+
+            return Ok(model);
+        }
+
+        [HttpPut("{id}", Name = nameof(UpdateNote))]
+        public async Task<IActionResult> UpdateNote(int id, [FromBody] NoteModel updateNote)
+        {
+            if (id == null || updateNote.PostID != id) return BadRequest();
+
+            var user = new User { ID = 1, };
+            var note = await _NoteRepository.Get(user.ID, id);
+            if (note == null) return NotFound();
+            note.Text = updateNote.Text;
+            var result = await _NoteRepository.Update(user.ID, note);
             var model = CreateNoteModel(noteDto);
 
             return Ok(model);
         }
+
+
 
         /*******************************************************
          * Helpers
