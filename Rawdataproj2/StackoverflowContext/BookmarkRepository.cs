@@ -10,6 +10,22 @@ namespace StackoverflowContext
 {
     public class BookmarkRepository : IBookmarkRepository
     {
+        public async Task<Bookmark> Get(int userId)
+        {
+            using (var db = new StackoverflowDbContext())
+            {
+                return await db.Bookmarks.FirstOrDefaultAsync(x => x.UserID == userId);
+            }
+        }
+
+        public async Task<IEnumerable<Bookmark>> GetAll(PagingInfo pagingInfo)
+        {
+            using (var db = new StackoverflowDbContext())
+            {
+                return await db.Bookmarks.ToListAsync();
+            }
+        }
+
         public async void Add(Bookmark bookmark)
         {
             using (var db = new StackoverflowDbContext())
@@ -35,21 +51,7 @@ namespace StackoverflowContext
             }
         }
 
-        public async Task<Bookmark> Get(int userId)
-        {
-            using (var db = new StackoverflowDbContext())
-            {
-                return await db.Bookmarks.FirstOrDefaultAsync(x => x.UserID == userId);
-            }
-        }
 
-        public async Task<IEnumerable<Bookmark>> GetAll(PagingInfo pagingInfo)
-        {
-            using (var db = new StackoverflowDbContext())
-            {
-                return await db.Bookmarks.ToListAsync();
-            }
-        }
 
         public async Task<bool> Update(int userId, Bookmark userBookmark)
         {
