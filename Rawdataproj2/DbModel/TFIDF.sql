@@ -113,16 +113,16 @@ where wi.id=t2.id;
 
 -- step3 
 -- select wi.id, word, rank from wi,
-select word,sum(rank) from wi,
+select word,sum(rank) srank from wi,
 (select id, sum(score) rank from
 (select distinct id, 1 score from wi where word = 'using'
 union all
 select distinct id, 1 score from wi where word = 'regions'
 union all
 select distinct id, 1 score from wi where word = 'blocks') t1
-group by id) t2
-where wi.id=t2.id
-group by word;
+group by id ) t2
+where wi.id=t2.id 
+group by word order by srank desc;
 
 
 -- TF(d,t) = log(1+n(d,t)/n(d)) 
