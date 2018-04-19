@@ -4,21 +4,7 @@ SET SQL_SAFE_UPDATES = 0;
 
 
 -- 19/4 - TFIDF - Importance based on relevance 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 
 
 ALTER TABLE Posts
 CHANGE COLUMN 

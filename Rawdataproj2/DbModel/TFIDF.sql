@@ -1,5 +1,6 @@
 USE raw2;   
 select * from words;
+SET SQL_SAFE_UPDATES = 0;
 
 -- n(t)
 SET @nt = (SELECT count(distinct id) FROM raw2.words where word = 'value'
@@ -40,12 +41,7 @@ PREPARE stmt FROM @s;
 EXECUTE stmt;
 end //
 Delimiter ;
-CALL bestmatch('"sql", "html", "java"');
-
-
-
-
- 
+CALL bestmatch('"sql", "html", "java"'); 
 
 -- Importance based on relevance 
 
@@ -68,6 +64,19 @@ ALTER TABLE tfidf
     ADD rdt double(2,2);
 
 -- update tfidf with n(t), n(d,t), n(d), TF(d,t), IDF(t)
+Update tfidf as a
+INNER JOIN tfidf AS b ON a.word = b.word
+SET nt = (SELECT count(distinct b.document) 
+	FROM b
+    where a.word = b.word);
+            
+
+  
+SET @nt = (SELECT count(distinct id) FROM raw2.words where word = 'value'
+and tablename = 'posts'
+and (what = 'title' or what = 'body')) ; 
+
+
 Update tfidf 
 SET 
 	nt = @nt, 
@@ -81,12 +90,8 @@ Select distinct document, word, nt, ndt, nd, tf, idf, rdt from tfidf;
 
 
 -- Relevance weighted word list  
+   
  
-
-
-
-
-
 
 
 
@@ -122,7 +127,7 @@ union all
 select distinct id, 1 score from wi where word = 'blocks') t1
 group by id ) t2
 where wi.id=t2.id 
-group by word order by srank desc;
+group by word order by srank desc limit 10;
 
 
 -- TF(d,t) = log(1+n(d,t)/n(d)) 

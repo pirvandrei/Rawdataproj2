@@ -1,45 +1,13 @@
--- B3  
-use raw2;
-drop table if exists wi; 
-create table wi as select id, word from words  
-where word regexp '^[A-Za-z][A-Za-z0-9_]{1,}$' 
-and tablename = 'posts' 
-and (what='title' or what='body') 
-group by id,word;
-
- 
-drop procedure if exists bestmatch;
-delimiter //
-CREATE PROCEDURE bestmatch(param VARCHAR(1000))
-BEGIN
-SET @s = 'SELECT p.id, sum(t.score) rank FROM Posts p, (SELECT distinct id, 1 score from words where word = ';
-SET @s = concat(@s,replace(param, ',', ' UNION ALL SELECT distinct id, 1 score from wi where word ='));
-SET @s = concat(@s,') t WHERE p.id = t.id GROUP BY p.id ORDER BY rank desc;');
--- SELECT @s;
-PREPARE stmt FROM @s;
-EXECUTE stmt;
-end //
-Delimiter ;
-CALL bestmatch('"sql", "html", "java"');
- 
-select * from Posts where id =3537745;
- 
--- relevant words
-SELECT word, count(word) as score FROM raw2.words where id = 19 and word regexp '^[A-Za-z][A-Za-z0-9_]{1,}$' group by word order by score desc;
- SELECT * FROM raw2.words where id = 19;
- 
+--  todo 20/4:
+-- 		b1
+-- 		inverted weighted list based on ranking 
+-- 		stopword for b3 
+-- 		b5
+-- 		b6
  
 
-
-
-
-
-
-
-
-
-
-
+-- B3 
+ 
 
 
 
