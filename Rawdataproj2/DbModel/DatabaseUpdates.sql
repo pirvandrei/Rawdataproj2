@@ -8,6 +8,9 @@ CHANGE COLUMN
 ALTER TABLE Posts 
 ADD post_type varchar(1000) DEFAULT 'N';
 
+ALTER TABLE words 
+ADD score int(11);
+
  
 ALTER TABLE Posts 
 ADD Title mediumtext,
