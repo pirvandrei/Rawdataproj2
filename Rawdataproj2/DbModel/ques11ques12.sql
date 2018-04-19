@@ -1,4 +1,4 @@
--- QUESTION 11; 
+-- QUESTION 11; sss
 
 use raw2;
 SET SQL_SAFE_UPDATES = 0;
