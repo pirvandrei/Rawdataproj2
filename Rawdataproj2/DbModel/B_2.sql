@@ -7,6 +7,7 @@
  
 
 -- B3 
+
  
 
 
@@ -59,22 +60,27 @@ group by id,word;
  
 -- search all words given in the query, atm it doesn't take 
 -- records that contain all the words, but these that contain at least 1
-drop procedure if exists bestmatch;
+drop procedure if exists fixmatch;
 delimiter //
-CREATE PROCEDURE bestmatch(param VARCHAR(1000))
+CREATE PROCEDURE fixmatch(param VARCHAR(1000))
 BEGIN
-SET @s = 'SELECT p.id FROM Posts p, (SELECT distinct id from words where word = ';
-SET @s = concat(@s,replace(param, ',', ' UNION ALL SELECT distinct id from wi where word ='));
-SET @s = concat(@s,') t WHERE p.id = t.id GROUP BY p.id;');
+set @p = length(param) - length(replace(param, ',', '')) + 1;
+
+SET @s = 'SELECT p.id, SUM(t.score) rank FROM Posts p, (SELECT distinct id, 1 score from words where word = ';
+SET @s = concat(@s,replace(param, ',', ' UNION ALL SELECT distinct id, 1 score from wi where word ='));
+SET @s = concat(@s,') t WHERE p.id = t.id GROUP BY p.id HAVING rank =', @p);  
+
 -- SELECT @s;
 PREPARE stmt FROM @s;
 EXECUTE stmt;
 end //
 Delimiter ;
-CALL bestmatch('"sql", "html", "java"');
+CALL fixmatch('"sql", "html", "java", "form"');
 
 
-select * from Posts where id =1672;
+
+select * from Posts where id =3537745; 
+select * from words where  id = 3537745;
  
 -- relevant words
 SELECT word, count(word) as score FROM raw2.words where id = 19 and word regexp '^[A-Za-z][A-Za-z0-9_]{1,}$' group by word order by score desc;
@@ -88,15 +94,7 @@ SELECT word, count(word) as score FROM raw2.words where id = 19 and word regexp 
   
   
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
+   
   
   
   
