@@ -10,6 +10,7 @@ using DataRepository;
 using WebService.Models.Post;
 using AutoMapper;
 using WebService.Models.Note;
+using WebService.Models;
 
 namespace WebService.Controllers
 {
@@ -33,26 +34,9 @@ namespace WebService.Controllers
             IEnumerable<NoteListModel> model = notes.Select(note => CreateNoteListModel(note));
 
             var total = _NoteRepository.Count();
-            var pages = (int)Math.Ceiling(total / (double)pagingInfo.PageSize);
-
-            var prev = pagingInfo.Page > 0
-                ? Url.Link(nameof(GetNotes),
-                    new { page = pagingInfo.Page - 1, pagingInfo.PageSize })
-                : null;
-
-            var next = pagingInfo.Page < pages - 1
-                ? Url.Link(nameof(GetNotes),
-                    new { page = pagingInfo.Page + 1, pagingInfo.PageSize })
-                : null;
-
-            var result = new
-            {
-                Prev = prev,
-                Next = next,
-                Total = total,
-                Pages = pages,
-                Notes = model
-            };
+            var prev = Url.Link(nameof(GetNotes), new { page = pagingInfo.Page - 1, pagingInfo.PageSize });
+            var next = Url.Link(nameof(GetNotes), new { page = pagingInfo.Page + 1, pagingInfo.PageSize });
+            var result = PagingHelper.GetPagingResult(pagingInfo, total, model, "Note", prev, next);
 
             return Ok(result);
         }
@@ -72,16 +56,17 @@ namespace WebService.Controllers
         [HttpPut("{id}", Name = nameof(UpdateNote))]
         public async Task<IActionResult> UpdateNote(int id, [FromBody] UpdateNoteModel updateNote)
         {
-            if (updateNote == null || updateNote.PostID != id) return BadRequest();
+            if (updateNote == null || updateNote.PostID != id) return BadRequest("Id's do not match");
 
-            var user = new User { ID = 1, };
+            //var user = new User { ID = 1, };
             var note = await _NoteRepository.Get(id);
             if (note == null) return NotFound();
 
             note.Text = updateNote.Text;
-            note.PostID = updateNote.PostID;
             note.UserID = updateNote.UserID;
-            await _NoteRepository.Update(user.ID, note);
+            note.PostID = updateNote.PostID;           
+            var result = await _NoteRepository.Update(note);
+            if (result) { return Ok(); } else { BadRequest("something went wrong"); }
 
             return Ok();
         }
@@ -105,7 +90,7 @@ namespace WebService.Controllers
                 UserID = model.UserId
             };
 
-              var result = await _NoteRepository.Add(note);
+            var result = await _NoteRepository.Add(note);
 
             return Ok(result);
         }

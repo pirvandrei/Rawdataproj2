@@ -9,9 +9,9 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Xunit;
 
-namespace UnitTesting.Integrationtesting
+namespace UnitTesting.IntegrationTesting
 {
-    public class Integrationtesting
+    public class IntegrationTesting
     { 
         private const string NotesApi = " http://localhost:59831/api/notes";
         private const string BookmarkApi = " http://localhost:59831/api/notes";

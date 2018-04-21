@@ -46,7 +46,7 @@ namespace StackoverflowContext
             throw new NotImplementedException();
         }
 
-        public Task<bool> Update(int id, Post b)
+        public Task<bool> Update(Post b)
         {
             throw new NotImplementedException();
         }

@@ -15,8 +15,7 @@ namespace StackoverflowContext
         public async Task<Question> Get(int id)
         {
             using (var db = new StackoverflowDbContext())
-            {
-                 
+            {               
                 return await db.Questions.FirstOrDefaultAsync(x => x.ID == id);
             }
         }
@@ -25,7 +24,10 @@ namespace StackoverflowContext
         {
             using (var db = new StackoverflowDbContext())
             {
-                return await db.Questions.ToListAsync();
+                return await db.Questions
+                    .Skip(pagingInfo.Page * pagingInfo.PageSize)
+                    .Take(pagingInfo.PageSize)
+                    .ToListAsync();
             }
         }
 
@@ -33,8 +35,8 @@ namespace StackoverflowContext
         {
             using (var db = new StackoverflowDbContext())
             {
-                return await db.Questions.
-                    Include(x => x.Comments)
+                return await db.Questions
+                    .Include(x => x.Comments)
                     .Include(x=> x.Answers)
                     .ThenInclude(x => x.Comments) 
                  .FirstOrDefaultAsync(x => x.ID == id);
@@ -86,19 +88,37 @@ namespace StackoverflowContext
 
         }
 
-        public Task<Question> Add(Question b)
+        public async Task<bool> Delete(int id)
         {
-            throw new NotImplementedException();
+            using (var db = new StackoverflowDbContext())
+            {
+                var q = await Get(id);
+                if (q == null) return false;
+                db.Questions.Remove(q);
+                await db.SaveChangesAsync();
+                return true;
+            }
         }
 
-        public Task<bool> Update(int id, Question b)
+        public async Task<bool> Update(Question q)
         {
-            throw new NotImplementedException();
+            using (var db = new StackoverflowDbContext())
+            {
+                db.Questions.Update(q);
+                await db.SaveChangesAsync();
+                return true;
+            }
         }
 
-        public Task<bool> Delete(int id)
+        public async Task<Question> Add(Question q)
         {
-            throw new NotImplementedException();
+            using (var db = new StackoverflowDbContext())
+            {
+                await db.Questions.AddAsync(q);
+                db.SaveChanges();
+                return q;
+            }
+
         }
     }
 }

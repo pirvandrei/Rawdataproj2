@@ -7,6 +7,7 @@ using DataRepository;
 using DataRepository.Dto.QuestionDto;
 using DomainModel;
 using Microsoft.AspNetCore.Mvc;
+using WebService.Models;
 using WebService.Models.Question;
 
 namespace WebService.Controllers
@@ -23,34 +24,6 @@ namespace WebService.Controllers
             _Mapper = Mapper;
         }
 
-        [HttpGet("{id}", Name = nameof(GetQuestion))] 
-        public async Task<ActionResult> GetQuestion(int id)
-        { 
-
-            var question =  await _QuestionRepository.GetQuestion(id); 
-            if (question == null) return NotFound(); 
-
-            var model = _Mapper.Map<QuestionModel>(question);
-             
-            return  Ok(model);
-        }
-
-        //[HttpGet("{id}", Name = nameof(GetQuestion))]
-        //public async Task<ActionResult> GetQuestion(int id)
-        //{
-        //    var question = _QuestionRepository.Get(id);
-        //    if (question == null) return NotFound();  
-        //    QuestionModel model = new QuestionModel
-        //    {
-        //        Url = CreateLink(question.Id)
-        //    };
-
-        //    model = _Mapper.Map<QuestionModel>(question.Result);
-
-
-        //    return Ok(model);
-        //}
-
         [HttpGet(Name = nameof(GetQuestions))]
         public async Task<IActionResult> GetQuestions(PagingInfo pagingInfo)
         {
@@ -58,28 +31,22 @@ namespace WebService.Controllers
             IEnumerable<QuestionListModel> model = question.Select(que => CreateQuestionListModel(que));
 
             var total = _QuestionRepository.Count();
-            var pages = (int)Math.Ceiling(total / (double)pagingInfo.PageSize);
-
-            var prev = pagingInfo.Page > 0
-                ? Url.Link(nameof(GetQuestions),
-                    new { page = pagingInfo.Page - 1, pagingInfo.PageSize })
-                : null;
-
-            var next = pagingInfo.Page < pages - 1
-                ? Url.Link(nameof(GetQuestions),
-                    new { page = pagingInfo.Page + 1, pagingInfo.PageSize })
-                : null;
-
-            var result = new
-            {
-                Prev = prev,
-                Next = next,
-                Total = total,
-                Pages = pages,
-                Questions = model
-            }; 
+            var prev = Url.Link(nameof(GetQuestions), new { page = pagingInfo.Page - 1, pagingInfo.PageSize });
+            var next = Url.Link(nameof(GetQuestions), new { page = pagingInfo.Page + 1, pagingInfo.PageSize });
+            var result = PagingHelper.GetPagingResult(pagingInfo, total, model, "Question", prev, next);
 
             return Ok(result);
+        }
+
+        [HttpGet("{id}", Name = nameof(GetQuestion))]
+        public async Task<ActionResult> GetQuestion(int id)
+        {
+            var question = await _QuestionRepository.GetQuestion(id);
+            if (question == null) return NotFound();
+
+            var model = _Mapper.Map<QuestionModel>(question);
+
+            return Ok(model);
         }
 
 
@@ -106,8 +73,51 @@ namespace WebService.Controllers
             return Ok(model);
         }
 
- 
+        [HttpPut("{id}", Name = nameof(UpdateQuestion))]
+        public async Task<IActionResult> UpdateQuestion(int id, [FromBody] UpdateQuestionModel model)
+        {
+            if (model == null || model.ID != id) return BadRequest();
 
+            var q = await _QuestionRepository.Get(id);
+            if (q == null) return NotFound();
+
+            q.ID = model.ID;
+            q.Title = model.Title;
+            q.Body = model.Body;
+            //q.ClosedDate = model.ClosedDate;
+            q.Score = model.Score;
+            q.AcceptedAnswerID = model.AcceptedAnswerID;
+
+            await _QuestionRepository.Update(q);
+
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteQuestion(int id)
+        {
+            if (!await _QuestionRepository.Delete(id)) return NotFound();
+            return NoContent();
+        }
+
+        [HttpPost("{id}")]
+        public async Task<IActionResult> CreateQuestion([FromBody] QuestionModel model)
+        {
+            if (model == null) return BadRequest();
+
+            var q = new Question
+            {
+                Title = model.Title,
+                Body = model.Body,
+                UserID = model.UserID,
+                Score = model.Score,
+                CreationDate = model.Creationdate
+            };
+
+            var result = await _QuestionRepository.Add(q);
+
+            return Ok(result);
+        }
 
 
         /*******************************************************
@@ -150,12 +160,6 @@ namespace WebService.Controllers
         {
             return Url.Link(nameof(GetQuestion), new { id });
         }
-
-        //private string CreateAnswerLink(int id)
-        //{
-        //    return Url.Link(nameof(GetAnswer), new { id });
-        //}
-
-      
+    
     }
 }

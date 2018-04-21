@@ -55,12 +55,10 @@ namespace StackoverflowContext
             }
         }
 
-        public async Task<bool> Update(int id, Comment com)
+        public async Task<bool> Update(Comment com)
         {
             using (var db = new StackoverflowDbContext())
             {
-                var comment = await Get(id);
-                if (comment == null) return false;
                 db.Comments.Update(com);
                 await db.SaveChangesAsync();
                 return true;

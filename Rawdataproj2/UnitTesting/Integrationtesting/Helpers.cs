@@ -6,7 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 
-namespace UnitTesting.Integrationtesting
+namespace UnitTesting.IntegrationTesting
 {
     public static class Helpers
     {

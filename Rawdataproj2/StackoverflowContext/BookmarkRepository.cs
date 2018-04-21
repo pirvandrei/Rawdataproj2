@@ -73,7 +73,7 @@ namespace StackoverflowContext
             }
         }
 
-        public Task<bool> Update(int id, Bookmark b)
+        public Task<bool> Update(Bookmark b)
         {
             throw new NotImplementedException();
         }

@@ -36,28 +36,6 @@ namespace WebService.Controllers
             var next = Url.Link(nameof(GetPosts), new { page = pagingInfo.Page + 1, pagingInfo.PageSize });
             var result = PagingHelper.GetPagingResult(pagingInfo, total, model, "Post", prev, next);
 
-            
-            //var pages = (int)Math.Ceiling(total / (double)pagingInfo.PageSize);
-
-            //var prev = pagingInfo.Page > 0
-            //    ? Url.Link(nameof(GetPosts),
-            //        new { page = pagingInfo.Page - 1, pagingInfo.PageSize })
-            //    : null;
-
-            //var next = pagingInfo.Page < pages - 1
-            //    ? Url.Link(nameof(GetPosts),
-            //        new { page = pagingInfo.Page + 1, pagingInfo.PageSize })
-            //    : null;
-
-            //var result = new
-            //{
-            //    Prev = prev,
-            //    Next = next,
-            //    Total = total,
-            //    Pages = pages,
-            //    Posts = model
-            //};
-
             return Ok(result); 
         }
 
@@ -65,16 +43,10 @@ namespace WebService.Controllers
         [HttpGet("{id}", Name = nameof(GetPost))]
         public async Task<IActionResult> GetPost(int id)
         {
-            var postDto = await _PostRepository.Get(id);
-            if (postDto == null) return NotFound();
+            var p = await _PostRepository.Get(id);
+            if (p == null) return NotFound();
 
-            var model = CreatePostModel(postDto);
-
-            //PostModel model = new PostModel
-            //{
-            //    Url = CreateLink(postDto.ID)
-            //};
-            //model = _Mapper.Map<PostModel>(postDto);
+            var model = CreatePostModel(p);
 
             return Ok(model); 
         }

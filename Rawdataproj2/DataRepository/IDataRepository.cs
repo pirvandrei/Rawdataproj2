@@ -9,7 +9,7 @@ namespace DataRepository
         Task<TEntity> Get(TKey id);
         Task<IEnumerable<TEntity>> GetAll(PagingInfo pagingInfo);
         Task<TEntity> Add(TEntity b);
-        Task<bool> Update(TKey id, TEntity b);
+        Task<bool> Update(TEntity b);
         Task<bool> Delete(TKey id);
         int Count();
     }

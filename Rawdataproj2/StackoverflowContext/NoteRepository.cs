@@ -42,12 +42,10 @@ namespace StackoverflowContext
             }
         }
          
-        public async Task<bool> Update(int userId, Note updateNote)
+        public async Task<bool> Update(Note updateNote)
         {
             using (var db = new StackoverflowDbContext())
             {
-                var note = await Get(updateNote.PostID);
-                if (note == null) return false; 
                 db.Notes.Update(updateNote);
                 await db.SaveChangesAsync();
                 return true;

@@ -68,7 +68,7 @@ namespace StackoverflowContext
             }
         }
 
-        public Task<bool> Update(int id, Search b)
+        public Task<bool> Update(Search b)
         {
             throw new NotImplementedException();
         }
