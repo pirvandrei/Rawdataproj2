@@ -9,6 +9,7 @@ using DataRepository.Dto.PostDto;
 using DataRepository;
 using WebService.Models.Post;
 using AutoMapper;
+using WebService.Models;
 
 namespace WebService.Controllers
 {
@@ -31,26 +32,31 @@ namespace WebService.Controllers
             IEnumerable<PostListModel> model = posts.Select(post => CreatePostListModel(post));
 
             var total = _PostRepository.Count();
-            var pages = (int)Math.Ceiling(total / (double)pagingInfo.PageSize);
+            var prev = Url.Link(nameof(GetPosts), new { page = pagingInfo.Page - 1, pagingInfo.PageSize });
+            var next = Url.Link(nameof(GetPosts), new { page = pagingInfo.Page + 1, pagingInfo.PageSize });
+            var result = PagingHelper.GetPagingResult(pagingInfo, total, model, "Post", prev, next);
 
-            var prev = pagingInfo.Page > 0
-                ? Url.Link(nameof(GetPosts),
-                    new { page = pagingInfo.Page - 1, pagingInfo.PageSize })
-                : null;
+            
+            //var pages = (int)Math.Ceiling(total / (double)pagingInfo.PageSize);
 
-            var next = pagingInfo.Page < pages - 1
-                ? Url.Link(nameof(GetPosts),
-                    new { page = pagingInfo.Page + 1, pagingInfo.PageSize })
-                : null;
+            //var prev = pagingInfo.Page > 0
+            //    ? Url.Link(nameof(GetPosts),
+            //        new { page = pagingInfo.Page - 1, pagingInfo.PageSize })
+            //    : null;
 
-            var result = new
-            {
-                Prev = prev,
-                Next = next,
-                Total = total,
-                Pages = pages,
-                Posts = model
-            };
+            //var next = pagingInfo.Page < pages - 1
+            //    ? Url.Link(nameof(GetPosts),
+            //        new { page = pagingInfo.Page + 1, pagingInfo.PageSize })
+            //    : null;
+
+            //var result = new
+            //{
+            //    Prev = prev,
+            //    Next = next,
+            //    Total = total,
+            //    Pages = pages,
+            //    Posts = model
+            //};
 
             return Ok(result); 
         }
@@ -95,7 +101,6 @@ namespace WebService.Controllers
             return model;
         }
         
-
         private string CreateLink(int id)
         {
             return Url.Link(nameof(GetPost), new { id });
