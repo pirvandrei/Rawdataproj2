@@ -25,14 +25,19 @@ namespace WebService.Controllers
         }
          
         [HttpGet(Name = nameof(Bestmatch))]
-        public async Task<ActionResult> Bestmatch(string query)
+        public async Task<ActionResult> Bestmatch(string query, PagingInfo pagingInfo)
         {
-            var search = await _SearchRepository.Bestmatch(query);
-            if (search == null) return NotFound();
+            var search = await _SearchRepository.Bestmatch(query, pagingInfo);
+            if (search == null && search.Count <= 0) return NotFound();
 
-           //var model = _Mapper.Map<BestmatchModel>(search);
             var model = search.Select(s => CreateBestmatchModel(s));
-            return Ok(model);
+
+            var total = search.Count();
+            var prev = Url.Link(nameof(Bestmatch), new { page = pagingInfo.Page - 1, pagingInfo.PageSize });
+            var next = Url.Link(nameof(Bestmatch), new { page = pagingInfo.Page + 1, pagingInfo.PageSize });
+            var result = PagingHelper.GetPagingResult(pagingInfo, total, model, "Search on posts", prev, next);
+
+            return Ok(result);
         }
 
 

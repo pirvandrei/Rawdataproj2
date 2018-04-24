@@ -7,6 +7,6 @@ namespace DataRepository.Dto.SearchDto
     public class BestmatchDto
     {
         public int Id { get; set; }
-        public int Rank { get; set; }
+        public decimal Rank { get; set; }
     }
 }

@@ -8,6 +8,6 @@ namespace DataRepository
 {
     public interface ISearchRepository
     {
-        Task<IList<BestmatchDto>> Bestmatch(string query); 
+        Task<IList<BestmatchDto>> Bestmatch(string query, PagingInfo pagingInfo); 
     }
 }
