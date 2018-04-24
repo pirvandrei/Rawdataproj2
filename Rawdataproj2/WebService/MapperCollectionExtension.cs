@@ -5,6 +5,8 @@ using WebService.Models.Post;
 using WebService.Models.Question;
 using WebService.Models.Note;
 using WebService.Models.Bookmark;
+using WebService.Models.Search;
+using DataRepository.Dto.SearchDto;
 
 namespace WebService
 {
@@ -26,6 +28,7 @@ namespace WebService
                 cfg.CreateMap<Question, QuestionModel>().ReverseMap();
                 cfg.CreateMap<Note, NoteModel>().ReverseMap();
                 cfg.CreateMap<Bookmark, BookmarkModel>().ReverseMap();
+                //cfg.CreateMap<BestmatchDto, BestmatchModel>();
 
             });
             return config.CreateMapper();

@@ -1,6 +1,48 @@
 use raw2;
 SET SQL_SAFE_UPDATES = 0;
 
+DROP PROCEDURE IF EXISTS getposts;
+DELIMITER //
+CREATE PROCEDURE getposts(s varchar(100)) 
+BEGIN
+		select * from Posts
+		where body like concat('%', s, '%');
+END //
+DELIMITER ;
+CALL getposts('Hanselman');
+
+select * from Posts where body like '%Hanselman%';
+        
+DELIMITER //
+CREATE PROCEDURE bestmatch(param VARCHAR(1000))
+BEGIN
+    SET @s = 'SELECT p.id FROM Posts p, (SELECT distinct id from wi where word = ';
+    SET @s = concat(@s,replace(param, ',', ' UNION ALL SELECT distinct id from wi where word ='));
+    SET @s = concat(@s,') t WHERE p.id = t.id GROUP BY p.id;');
+    
+    PREPARE stmt FROM @s;
+    EXECUTE stmt;
+END //
+DELIMITER ;
+CALL bestmatch('"Hanselman"');
+
+drop table if exists temp1;
+create table temp1 ( id int(11), rank int (11));
+  -- helpers
+  drop procedure if exists bestmatch3; 
+delimiter // 
+create procedure bestmatch3 (in w1 varchar(100)) 
+begin 
+select Posts.id, sum(t.score) rank, body from Posts,
+	(select distinct id,wi.score from wi where word = w1 
+	union all 
+	select distinct id,wi.score from wi where word = w2 
+	union all 
+	select distinct id,wi.score from wi where word = w3) t 
+where t.id=Posts.id group by t.id order by rank desc into temp1 ; 
+end 
+// delimiter ; 
+CALL bestmatch3('Hanselman');
 
 
 -- 19/4 - TFIDF - Importance based on relevance 
