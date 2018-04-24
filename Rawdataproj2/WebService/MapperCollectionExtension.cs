@@ -28,7 +28,7 @@ namespace WebService
                 cfg.CreateMap<Question, QuestionModel>().ReverseMap();
                 cfg.CreateMap<Note, NoteModel>().ReverseMap();
                 cfg.CreateMap<Bookmark, BookmarkModel>().ReverseMap();
-                //cfg.CreateMap<BestmatchDto, BestmatchModel>();
+                //cfg.CreateMap<BestmatchDto, BestmatchModel>().ReverseMap();
 
             });
             return config.CreateMapper();

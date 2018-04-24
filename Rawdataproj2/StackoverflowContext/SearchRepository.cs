@@ -14,12 +14,11 @@ namespace StackoverflowContext
     public class SearchRepository : ISearchRepository
     {
         public async Task<IList<BestmatchDto>> Bestmatch(string query)
-        {
-            
+        {          
                 using (var db = new StackoverflowDbContext())
                 {
-                var result = new List<BestmatchDto>();
-                var conn = (MySqlConnection)db.Database.GetDbConnection();
+                    var result = new List<BestmatchDto>();
+                    var conn = (MySqlConnection)db.Database.GetDbConnection();
                     conn.Open();
                     var cmd = new MySqlCommand();
                     cmd.Connection = conn;
@@ -33,13 +32,12 @@ namespace StackoverflowContext
                     while (await reader.ReadAsync())
                     {
                         Console.WriteLine("{0}, {1}", reader.GetInt32(0), reader.GetInt32(1));
-                        result.Add( new BestmatchDto 
+                        result.Add(new BestmatchDto 
                         {
                             Id = reader.GetInt32(0),
                             Rank = reader.GetInt32(1)
                         });
                     }
-
                     return result; 
             }
         }

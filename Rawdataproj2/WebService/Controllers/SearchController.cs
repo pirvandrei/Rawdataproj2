@@ -24,14 +24,13 @@ namespace WebService.Controllers
             _Mapper = Mapper;
         }
          
-        [HttpGet("{query}", Name = nameof(Bestmatch))]
+        [HttpGet(Name = nameof(Bestmatch))]
         public async Task<ActionResult> Bestmatch(string query)
         {
-            //api/Search/'"","",""'
             var search = await _SearchRepository.Bestmatch(query);
             if (search == null) return NotFound();
 
-           // var model = _Mapper.Map<BestmatchModel>(search);
+           //var model = _Mapper.Map<BestmatchModel>(search);
             var model = search.Select(s => CreateBestmatchModel(s));
             return Ok(model);
         }
