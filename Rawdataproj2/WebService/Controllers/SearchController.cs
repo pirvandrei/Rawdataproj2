@@ -11,7 +11,7 @@ using WebService.Models;
 using WebService.Models.Search;
 
 namespace WebService.Controllers
-{ 
+{  
     [Route("api/Search")]
     public class SearchController : Controller
     {
@@ -24,7 +24,7 @@ namespace WebService.Controllers
             _Mapper = Mapper;
         }
          
-        [HttpGet(Name = nameof(Bestmatch))]
+        [HttpGet("bestmatch", Name = nameof(Bestmatch))]
         public async Task<ActionResult> Bestmatch(string query, PagingInfo pagingInfo)
         {
             var search = await _SearchRepository.Bestmatch(query, pagingInfo);
@@ -40,15 +40,82 @@ namespace WebService.Controllers
             return Ok(result);
         }
 
+        [HttpGet("matchall", Name = nameof(MatchAll))]
+        public async Task<ActionResult> MatchAll(string query)
+        {
+            var search = await _SearchRepository.MatchAll(query);
+            if (search == null && search.Count <= 0) return NotFound();
 
+            var model = search.Select(s => CreateMatchAllhModel(s));
+             
+            return Ok(model);
+        }
+
+        [HttpGet("bestmatchranked", Name = nameof(BestMatchRanked))]
+        public async Task<ActionResult> BestMatchRanked(string query)
+        {
+            var search = await _SearchRepository.BestMatchRanked(query);
+            if (search == null && search.Count <= 0) return NotFound();
+
+            var model = search.Select(s => CreateBestMatchRankedModel(s));
+
+            return Ok(model);
+        }
+
+        [HttpGet("bestmatchweighted", Name = nameof(BestMatchWeighted))]
+        public async Task<ActionResult> BestMatchWeighted(string query)
+        {
+            var search = await _SearchRepository.BestMatchWeighted(query);
+            if (search == null && search.Count <= 0) return NotFound();
+
+            var model = search.Select(s => CreateBestMatchWeightedModel(s));
+
+            return Ok(model);
+        }
+
+
+        //Helpers
         private BestmatchModel CreateBestmatchModel(BestmatchDto search)
         {
             var model = new BestmatchModel
+            {
+                Id = search.Id,
+                Rank = search.Rank
+            };
+            return model;
+        }
+
+
+        private MatchallModel CreateMatchAllhModel(MatchallDto search)
+        {
+            var model = new MatchallModel
+            {
+                Id = search.Id,
+                Rank = search.Rank,
+                Body = search.Body
+            };
+            return model;
+        }
+
+        private BestmatchRankedModel CreateBestMatchRankedModel(BestMatchRankedDto search)
+        {
+            var model = new BestmatchRankedModel
             {
                 Id = search.Id,
                 Rank = search.Rank 
             };
             return model;
         }
+
+        private BestMatchWeightedModel CreateBestMatchWeightedModel(BestMatchWeightedDto search)
+        {
+            var model = new BestMatchWeightedModel
+            {
+                Id = search.Id,
+                Rank = search.Rank 
+            };
+            return model;
+        }
+
     }
 }
