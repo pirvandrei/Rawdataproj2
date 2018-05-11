@@ -43,7 +43,7 @@ namespace StackoverflowContext
                         .ThenInclude(x => x.Comments)
                         .ThenInclude(x => x.User)
                     .Include(x => x.PostTags)
-                 //.ThenInclude(x => x.Tags)
+                        //.ThenInclude(x => x.Tags)
                  .FirstOrDefaultAsync(x => x.ID == id);
             }
         }

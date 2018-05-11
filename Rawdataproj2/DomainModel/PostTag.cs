@@ -4,9 +4,11 @@ namespace DomainModel
 {
     public class PostTag
     { 
-        public int ID { get; set; }
-        public Post Post { get; set; }
-        public IList<Tag> Tags { get; set; }
+        public int ID { get; set; }  
+        //public string Tag { get; set; }
+
+        //public int PostID { get; set; }
+        //public Post Post { get; set; }
 
     }
 }
