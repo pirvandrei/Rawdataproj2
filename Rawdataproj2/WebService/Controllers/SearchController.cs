@@ -12,7 +12,7 @@ using WebService.Models.Search;
 
 namespace WebService.Controllers
 {  
-    [Route("api/Search")]
+    [Route("api/search")]
     public class SearchController : Controller
     {
         private readonly ISearchRepository _SearchRepository;
@@ -32,7 +32,7 @@ namespace WebService.Controllers
                 return Ok("No query provided");
             }
             
-            var search = await UseFetchingMethod(method, query, pagingInfo);
+            var search = await UseFetchingMethod(query, pagingInfo, method, sortby, orderby);
 
             if (search == null && search.Count <= 0) return NotFound();
 
@@ -43,67 +43,34 @@ namespace WebService.Controllers
             var next = urls[1];
             var total = search.Count();
             var result = PagingHelper.GetPagingResult(pagingInfo, total, model, "Search on posts", prev, next);
-
+          
             return Ok(result);
         }
-
-        //[HttpGet("matchall", Name = nameof(MatchAll))]
-        //public async Task<ActionResult> MatchAll(string query)
-        //{
-        //    var search = await _SearchRepository.MatchAll(query);
-        //    if (search == null && search.Count <= 0) return NotFound();
-
-        //    var model = search.Select(s => CreateMatchAllhModel(s));
-             
-        //    return Ok(model);
-        //}
-
-        //[HttpGet("bestmatchranked", Name = nameof(BestMatchRanked))]
-        //public async Task<ActionResult> BestMatchRanked(string query)
-        //{
-        //    var search = await _SearchRepository.BestMatchRanked(query);
-        //    if (search == null && search.Count <= 0) return NotFound();
-
-        //    var model = search.Select(s => CreateBestMatchRankedModel(s));
-
-        //    return Ok(model);
-        //}
-
-        //[HttpGet("bestmatchweighted", Name = nameof(BestMatchWeighted))]
-        //public async Task<ActionResult> BestMatchWeighted(string query)
-        //{
-        //    var search = await _SearchRepository.BestMatchWeighted(query);
-        //    if (search == null && search.Count <= 0) return NotFound();
-
-        //    var model = search.Select(s => CreateBestMatchWeightedModel(s));
-
-        //    return Ok(model);
-        //}
 
 
         /*******************************************************
          * Helpers
          * *****************************************************/
 
-        private async Task<IList<SearchResultDto>> UseFetchingMethod(string method, string query, PagingInfo pagingInfo)
+        private async Task<IList<SearchResultDto>> UseFetchingMethod(string query, PagingInfo pagingInfo, string method, string sortby, string orderby)
         {
             IList<SearchResultDto> search = new List<SearchResultDto>();
             switch (method)
             {
                 case "\"\"":
-                    var option1 = await _SearchRepository.Bestmatch(query, pagingInfo);
+                    var option1 = await _SearchRepository.Bestmatch(query, pagingInfo, method, sortby, orderby);
                     option1.ToList().ForEach(s => { search.Add(s); });
                     break;
                 case "\"bestmatch\"":
-                    var option2 = await _SearchRepository.Bestmatch(query, pagingInfo);
+                    var option2 = await _SearchRepository.Bestmatch(query, pagingInfo, method, sortby, orderby);
                     option2.ToList().ForEach(s => { search.Add(s); });
                     break;
                 case "\"matchall\"":
-                    var option3 = await _SearchRepository.MatchAll(query);
+                    var option3 = await _SearchRepository.MatchAll(query, pagingInfo, method, sortby, orderby);
                     option3.ToList().ForEach(s => { search.Add(s); });
                     break;
                 default:
-                    var defaultOption = await _SearchRepository.Bestmatch(query, pagingInfo);
+                    var defaultOption = await _SearchRepository.Bestmatch(query, pagingInfo, method, sortby, orderby);
                     defaultOption.ToList().ForEach(s => { search.Add(s); });
                     break;
             }

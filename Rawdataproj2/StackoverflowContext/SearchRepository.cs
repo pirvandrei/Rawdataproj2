@@ -14,7 +14,7 @@ namespace StackoverflowContext
 {
     public class SearchRepository : ISearchRepository
     {
-        public async Task<IList<SearchResultDto>> MatchAll(string query)
+        public async Task<IList<SearchResultDto>> MatchAll(string query, PagingInfo pagingInfo, string method, string sortby, string orderby)
         {
             using (var db = new StackoverflowDbContext())
             {
@@ -41,12 +41,26 @@ namespace StackoverflowContext
                     });
                 }
 
+                // TODO: perhaps move to stored procedure AND/OR create helper for methods ? 
+                if(!string.IsNullOrEmpty(orderby) && orderby == "\"asc\"" || orderby == "\"desc\"")
+                {
+                    result = orderby == "\"desc\""
+                    ? result.OrderBy(x => x.Rank).ToList()
+                    : result.OrderBy(x => x.Rank).Reverse().ToList();
+                }
+
+                // TODO: fetch correct data and implement it
+                //if (!string.IsNullOrEmpty(sortby))
+                //{
+                //    result = result.Where(date is within sortby date);
+                //}
+                
                 return result;
             }
         }
 
 
-        public async Task<IList<SearchResultDto>> Bestmatch(string query, PagingInfo pagingInfo)
+        public async Task<IList<SearchResultDto>> Bestmatch(string query, PagingInfo pagingInfo, string method, string sortby, string orderby)
         {
             using (var db = new StackoverflowDbContext())
             {
@@ -79,6 +93,7 @@ namespace StackoverflowContext
                         Rank = (decimal)reader["rank"]
                     });
                 }
+                
 
                 return result;
             }
