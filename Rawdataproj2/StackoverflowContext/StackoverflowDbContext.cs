@@ -14,8 +14,7 @@ namespace StackoverflowContext
         public DbSet<Question> Questions { get; set; }
         public DbSet<Comment> Comments { get; set; }
 
-        public DbSet<User> Users { get; set; }
-        public DbSet<Tag> Tags { get; set; }
+        public DbSet<User> Users { get; set; } 
         public DbSet<Bookmark> Bookmarks { get; set; }
         public DbSet<Note> Notes { get; set; }
 
@@ -37,9 +36,7 @@ namespace StackoverflowContext
             //properties
 
             modelBuilder.Entity<Search>().Property(x => x.Text).HasColumnName("SearchText");
-            modelBuilder.Entity<PostTag>().Property(x => x.ID).HasColumnName("postid");
-           // modelBuilder.Entity<Tag>().Property(x => x.ID).HasColumnName("tag");
-            // modelBuilder.Entity<Link>().Property(x => x.ID).HasColumnName("postid");
+            modelBuilder.Entity<PostTag>().Property(x => x.ID).HasColumnName("postid"); 
 
             //inheritance
             modelBuilder.Entity<Post>()
