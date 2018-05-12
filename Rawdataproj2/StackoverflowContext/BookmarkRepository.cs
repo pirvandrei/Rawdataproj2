@@ -12,6 +12,7 @@ namespace StackoverflowContext
     public class BookmarkRepository : IBookmarkRepository
     {
         public User _user = new User { ID = 1, };
+
         public async Task<Bookmark> Get(int postId)
         { 
             using (var db = new StackoverflowDbContext())
@@ -29,23 +30,23 @@ namespace StackoverflowContext
             }
         }
 
-        public async Task<Bookmark> Add(int id, Bookmark bookmark)
-        {
-            using (var db = new StackoverflowDbContext())
-            {
-                bookmark.UserID = _user.ID;
-                bookmark.PostID = id;
-                await db.Bookmarks.AddAsync(bookmark);
-                db.SaveChanges();
-                return bookmark;
-            }
-        }
+        //public async Task<Bookmark> Add(int id, Bookmark bookmark)
+        //{
+        //    using (var db = new StackoverflowDbContext())
+        //    {
+        //        bookmark.UserID = _user.ID;
+        //        bookmark.PostID = id;
+        //        await db.Bookmarks.AddAsync(bookmark);
+        //        db.SaveChanges();
+        //        return bookmark;
+        //    }
+        //}
 
-        public async Task<bool> Delete(int userId)
+        public async Task<bool> Delete(int postId)
         {
             using (var db = new StackoverflowDbContext())
             {
-                var bookmark = await Get(userId);
+                var bookmark = await Get(postId);
                 if (bookmark == null) return false;
                 db.Bookmarks.Remove(bookmark);
                 await db.SaveChangesAsync();
