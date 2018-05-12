@@ -9,6 +9,7 @@ using DomainModel;
 using Microsoft.AspNetCore.Mvc;
 using WebService.Models;
 using WebService.Models.Question;
+using WebService.Models.Tag;
 
 namespace WebService.Controllers
 {
@@ -150,12 +151,16 @@ namespace WebService.Controllers
         {
             var model = new QuestionListModel
             {
-                 Title = question.Title, 
+                Title = question.Title,
+                PostTags = question.PostTags.Select(tag => new PostTagModel()
+                {
+                    Tag = tag.Tag,
+                }).ToList(),
             };
             model.Url = CreateQuestionLink(question.ID);
             return model;
         }
-          
+         
         private string CreateQuestionLink(int id)
         {
             return Url.Link(nameof(GetQuestion), new { id });

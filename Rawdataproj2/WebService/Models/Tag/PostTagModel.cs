@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 namespace WebService.Models.Tag
 {
     public class PostTagModel
-    {
-       // public int ID { get; set; }
-        public string Tag { get; set; } 
-
-
+    { 
+        public string Tag { get; set; }  
     }
 }
