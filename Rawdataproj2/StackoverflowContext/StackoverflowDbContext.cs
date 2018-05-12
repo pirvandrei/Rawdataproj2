@@ -14,7 +14,7 @@ namespace StackoverflowContext
         public DbSet<Question> Questions { get; set; }
         public DbSet<Comment> Comments { get; set; }
 
-        public DbSet<User> Users { get; set; } 
+        public DbSet<User> Users { get; set; }
         public DbSet<Bookmark> Bookmarks { get; set; }
         public DbSet<Note> Notes { get; set; }
 
@@ -33,10 +33,9 @@ namespace StackoverflowContext
 
             modelBuilder.Entity<Search>().ToTable("Search_history");
 
-            //properties
-
+            //properties 
             modelBuilder.Entity<Search>().Property(x => x.Text).HasColumnName("SearchText");
-            modelBuilder.Entity<PostTag>().Property(x => x.ID).HasColumnName("postid"); 
+            modelBuilder.Entity<PostTag>().Property(x => x.ID).HasColumnName("postid");
 
             //inheritance
             modelBuilder.Entity<Post>()
@@ -46,17 +45,19 @@ namespace StackoverflowContext
 
             //many to one 
             modelBuilder.Entity<Question>().HasMany(o => o.Answers).WithOne()
-                .HasForeignKey(d => d.ParentID); 
-             
-        //modelBuilder.Entity<Question>().HasMany(o => o.PostTags).WithOne()
-        //    .HasForeignKey(d => d.ID); 
+                .HasForeignKey(d => d.ParentID);
 
-        //many-to-many
-        modelBuilder.Entity<Note>().HasKey(x => new { x.UserID, x.PostID });
-            modelBuilder.Entity<Comment>().HasKey(x => new { x.UserID, x.PostID });
-            modelBuilder.Entity<Bookmark>().HasKey(x => new { x.UserID, x.PostID });
-            modelBuilder.Entity<Search>().HasKey(s => new { s.UserID, s.Date, s.Text });
-            modelBuilder.Entity<PostTag>().HasKey(x => new { x.ID, x.Tag });
+            //many-to-many
+            modelBuilder.Entity<Note>()
+                .HasKey(x => new { x.UserID, x.PostID });
+            modelBuilder.Entity<Comment>()
+                .HasKey(x => new { x.UserID, x.PostID });
+            modelBuilder.Entity<Bookmark>()
+                .HasKey(x => new { x.UserID, x.PostID });
+            modelBuilder.Entity<Search>()
+                .HasKey(s => new { s.UserID, s.Date, s.Text });
+            modelBuilder.Entity<PostTag>()
+                .HasKey(x => new { x.ID, x.Tag });
 
 
         }

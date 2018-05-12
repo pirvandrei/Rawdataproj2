@@ -89,8 +89,7 @@ namespace StackoverflowContext
             using (var db = new StackoverflowDbContext())
             {
                 return db.Questions.Count();
-            }
-
+            } 
         }
 
         public async Task<bool> Delete(int id)
