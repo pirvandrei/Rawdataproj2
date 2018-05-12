@@ -59,7 +59,7 @@ namespace WebService.Controllers
                 Next = next,
                 Total = total,
                 Pages = pages,
-                Questions = model
+                Bookmarks = model
             }; 
 
             return Ok(result);

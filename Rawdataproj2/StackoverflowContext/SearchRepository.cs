@@ -14,12 +14,11 @@ namespace StackoverflowContext
 {
     public class SearchRepository : ISearchRepository
     {
-        public async Task<IList<MatchallDto>> MatchAll(string query)
+        public async Task<IList<SearchResultDto>> MatchAll(string query)
         {
             using (var db = new StackoverflowDbContext())
             {
-
-                var result = new List<MatchallDto>();
+                var result = new List<SearchResultDto>();
 
                 var conn = (MySqlConnection)db.Database.GetDbConnection();
                 conn.Open();
@@ -34,7 +33,7 @@ namespace StackoverflowContext
 
                 while (await reader.ReadAsync())
                 {
-                    result.Add(new MatchallDto
+                    result.Add(new SearchResultDto
                     {
                         Id = (int)reader["id"],
                         Rank = (decimal)reader["rank"],
@@ -47,12 +46,11 @@ namespace StackoverflowContext
         }
 
 
-        public async Task<IList<BestmatchDto>> Bestmatch(string query, PagingInfo pagingInfo)
+        public async Task<IList<SearchResultDto>> Bestmatch(string query, PagingInfo pagingInfo)
         {
             using (var db = new StackoverflowDbContext())
             {
-
-                var result = new List<BestmatchDto>();
+                var result = new List<SearchResultDto>();
 
                 var conn = (MySqlConnection)db.Database.GetDbConnection();
                 conn.Open();
@@ -75,7 +73,7 @@ namespace StackoverflowContext
                 {
 
                     Console.WriteLine("{0}, {1}", reader.GetInt32(0), reader.GetInt32(1));
-                    result.Add(new BestmatchDto
+                    result.Add(new SearchResultDto
                     {
                         Id = (int)reader["id"],
                         Rank = (decimal)reader["rank"]
@@ -119,7 +117,6 @@ namespace StackoverflowContext
         {
             using (var db = new StackoverflowDbContext())
             {
-
                 var result = new List<BestMatchWeightedDto>();
 
                 var conn = (MySqlConnection)db.Database.GetDbConnection();
