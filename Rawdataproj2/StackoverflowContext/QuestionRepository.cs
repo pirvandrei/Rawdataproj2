@@ -26,6 +26,7 @@ namespace StackoverflowContext
             {
                 return await db.Questions
                     .Include(x => x.PostTags)
+                    .Include(x => x.User)
                     .Skip(pagingInfo.Page * pagingInfo.PageSize)
                     .Take(pagingInfo.PageSize)
                     .ToListAsync();

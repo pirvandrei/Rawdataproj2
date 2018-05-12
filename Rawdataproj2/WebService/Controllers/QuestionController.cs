@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using WebService.Models;
 using WebService.Models.Question;
 using WebService.Models.Tag;
+using WebService.Models.User;
 
 namespace WebService.Controllers
 {
@@ -150,8 +151,17 @@ namespace WebService.Controllers
         private QuestionListModel CreateQuestionListModel(Question question)
         {
             var model = new QuestionListModel
-            {
+            { 
                 Title = question.Title,
+                Body = question.Body.Substring(0, 100) + "...",
+                Score = question.Score,
+                CreationDate = question.CreationDate,
+
+                User = new UserModel()
+                {
+                    ID = question.User.ID,
+                    DisplayName = question.User.DisplayName,
+                },
                 PostTags = question.PostTags.Select(tag => new PostTagModel()
                 {
                     Tag = tag.Tag,
