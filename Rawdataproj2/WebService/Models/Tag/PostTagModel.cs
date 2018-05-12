@@ -7,8 +7,8 @@ namespace WebService.Models.Tag
 {
     public class PostTagModel
     {
-        public int ID { get; set; }
-        //public IList<TagModel> Tags { get; set; }
+       // public int ID { get; set; }
+        public string Tag { get; set; } 
 
 
     }

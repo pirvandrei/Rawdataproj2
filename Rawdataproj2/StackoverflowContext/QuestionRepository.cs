@@ -35,15 +35,13 @@ namespace StackoverflowContext
         {
             using (var db = new StackoverflowDbContext())
             {
-                return await db.Questions
-                    
+                return await db.Questions 
                     .Include(x => x.Comments)
                         .ThenInclude(x => x.User)
                     .Include(x=> x.Answers)
                         .ThenInclude(x => x.Comments)
-                        .ThenInclude(x => x.User)
-                    .Include(x => x.PostTags)
-                        //.ThenInclude(x => x.Tags)
+                        .ThenInclude(x => x.User) 
+                    .Include(x => x.PostTags) 
                  .FirstOrDefaultAsync(x => x.ID == id);
             }
         }
