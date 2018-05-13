@@ -16,15 +16,26 @@ namespace WebService.Models
         {
             SetPaging(pagingInfo, total, out int pages, ref prev, ref next);
 
-            return new
+            Dictionary<string, object> dictionary = new Dictionary<string, object>
             {
-                Prev = prev,
-                Next = next,
-                Total = total,
-                Pages = pages,
-                Type = returnType,
-                Elements = model
+                { "prev", prev },
+                { "next", next },
+                { "total", total },
+                { "pages", pages },
+                { returnType, model }
             };
+
+            return dictionary;
+
+            //return new
+            //{
+            //    Prev = prev,
+            //    Next = next,
+            //    Total = total,
+            //    Pages = pages,
+            //    Type = returnType,
+            //    Elements = model
+            //};
 
         }
 

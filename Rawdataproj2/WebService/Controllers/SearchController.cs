@@ -42,7 +42,8 @@ namespace WebService.Controllers
             var prev = urls[0];
             var next = urls[1];
             var total = search.Count();
-            var result = PagingHelper.GetPagingResult(pagingInfo, total, model, "Search on posts", prev, next);
+            const string returnType = "posts";
+            var result = PagingHelper.GetPagingResult(pagingInfo, total, model, returnType, prev, next);
           
             return Ok(result);
         }
