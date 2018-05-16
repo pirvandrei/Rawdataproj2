@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DomainModel;
 using WebService.Models.Tag;
 using WebService.Models.User;
 
@@ -16,5 +17,6 @@ namespace WebService.Models.Question
         public string Body { get; set; }
 
         public IList<PostTagModel> PostTags { get; set; }
+        
     }
 }
