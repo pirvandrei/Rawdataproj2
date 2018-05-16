@@ -1,6 +1,4 @@
 ﻿(function () {
-    console.log('test')
-
     require.config({
         baseUrl: 'bower_components',
         paths: {
