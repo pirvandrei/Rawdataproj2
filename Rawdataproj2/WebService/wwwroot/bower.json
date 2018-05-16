@@ -1,0 +1,15 @@
+{
+  "name": "webService",
+  "description": "Service",
+  "main": "",
+  "license": "MIT",
+  "dependencies": {
+    "requirejs": "2.3.5",
+    "knockout": "knockoutjs#v3.4.2",
+    "jQuery": "3.2.0",
+    "requirejs-text": "2.0.15",
+    "jqcloud2": "2.0.3",
+    "bootstrap": "v4.1.1",
+    "components-font-awesome": "^5.0.6"
+  }
+}
