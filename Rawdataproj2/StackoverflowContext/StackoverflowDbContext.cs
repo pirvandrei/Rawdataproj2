@@ -61,6 +61,7 @@ namespace StackoverflowContext
 
                 
 			modelBuilder.Entity<Bookmark>().HasQueryFilter(b => EF.Property<int>(b, "UserID") == 1);
+			modelBuilder.Entity<Note>().HasQueryFilter(b => EF.Property<int>(b, "UserID") == 1);
              
 
         }

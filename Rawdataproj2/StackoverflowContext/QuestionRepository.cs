@@ -45,6 +45,7 @@ namespace StackoverflowContext
     							    .ThenInclude(x => x.User)
     				   .Include(x => x.PostTags)
 					   .Include(x => x.Bookmarks)
+                       .Include(x => x.Notes)
 				   .FirstOrDefaultAsync(x => x.ID == id);    
 			}
 		}

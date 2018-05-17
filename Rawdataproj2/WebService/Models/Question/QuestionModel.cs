@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using WebService.Models.Bookmark;
 using WebService.Models.Tag;
 using WebService.Models.User;
+using WebService.Models.Note;
 
 namespace WebService.Models.Question
 {
@@ -14,7 +15,7 @@ namespace WebService.Models.Question
         public string Title { get; set; }
         public int UserID { get; set; }
         public UserModel User { get; set; } 
-
+        
 
         public int Score { get; set; }
         public string Body { get; set; }
@@ -26,5 +27,6 @@ namespace WebService.Models.Question
         public IList<CommentModel> Comments { get; set; }
         public IList<AnswerModel> Answers { get; set; }
 		public IList<BookmarkModel> Bookmarks { get; set; }
+		public IList<NoteModel> Notes { get; set; }
     }
 }

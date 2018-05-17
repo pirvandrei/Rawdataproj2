@@ -18,6 +18,7 @@ namespace DomainModel
         public IList<PostTag> PostTags { get; set; }  
         public IList<Comment> Comments { get; set; } 
 		public IList<Bookmark> Bookmarks { get; set; }
+		public IList<Note> Notes { get; set; }
 
     }
 }
