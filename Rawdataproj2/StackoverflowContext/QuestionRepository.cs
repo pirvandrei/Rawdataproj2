@@ -6,8 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using Z.EntityFramework; 
+using System.Threading.Tasks;  
 
 namespace StackoverflowContext
 {
@@ -45,8 +44,8 @@ namespace StackoverflowContext
     							.ThenInclude(x => x.Comments)
     							    .ThenInclude(x => x.User)
     				   .Include(x => x.PostTags)
-					           .Include(x => x.Bookmarks )
-				   .FirstOrDefaultAsync(x => x.ID == id);
+					   .Include(x => x.Bookmarks)
+				   .FirstOrDefaultAsync(x => x.ID == id);    
 			}
 		}
 

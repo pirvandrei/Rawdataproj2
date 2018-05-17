@@ -59,6 +59,9 @@ namespace StackoverflowContext
             modelBuilder.Entity<PostTag>()
                 .HasKey(x => new { x.ID, x.Tag });
 
+                
+			modelBuilder.Entity<Bookmark>().HasQueryFilter(b => EF.Property<int>(b, "UserID") == 1);
+             
 
         }
     }
