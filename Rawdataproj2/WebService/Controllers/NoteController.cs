@@ -104,7 +104,10 @@ namespace WebService.Controllers
         {
             var model = new NoteListModel
             {
-                Text = note.Text
+                Text = note.Text,
+                PostID = note.Post.ID,
+                UserID = note.User.ID,
+                UserName = note.User.DisplayName,
             };
             model.Url = CreateLink(note.PostID);
             return model;

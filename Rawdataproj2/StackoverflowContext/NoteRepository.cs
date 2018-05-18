@@ -26,7 +26,10 @@ namespace StackoverflowContext
         {
             using (var db = new StackoverflowDbContext())
             {
-                return await db.Notes.ToListAsync();
+                return await db.Notes 
+                    .Include(x => x.Post)
+                    .Include(x => x.User)
+                    .ToListAsync();
             }
         } 
   
