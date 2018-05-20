@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 
 namespace WebService.Models.Note
 {
-    public class NoteModel : NoteListModel
-    {
-        public int UserID { get; set; }
-        public int PostID { get; set; }
-
+    public class NoteModel  
+    {  
+        public string Text { get; set; }  
+         
     }
 }
