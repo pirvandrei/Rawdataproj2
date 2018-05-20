@@ -25,24 +25,25 @@ namespace WebService.Controllers
         }
 
         [HttpGet(Name = nameof(Search))]
-        public async Task<IActionResult> Search(string query, PagingInfo pagingInfo, string method = null, string sortby = null, string orderby = null)
+        public async Task<IActionResult> Search(string query, PagingInfo pagingInfo, string method = null, string startdate = null, string enddate = null)
         {
             if(string.IsNullOrEmpty(query))
             {
                 return Ok("No query provided");
             }
             
-            var search = await UseFetchingMethod(query, pagingInfo, method, sortby, orderby);
+            var search = await UseFetchingMethod(query, pagingInfo, method, startdate, enddate);
 
-            if (search == null && search.Count <= 0) return NotFound();
+            //if (search == null || search.Item2 <= 0) return NotFound("Nothing matched your query");
 
-            var model = search.Select(s => CreateSearchResultModel(s));
+            var model = search.Item1.Select(s => CreateSearchResultModel(s));
 
-            var urls = GetUrls(query, pagingInfo, method, sortby, orderby);
+            var urls = GetUrls(query, pagingInfo, method, startdate, enddate);
             var prev = urls[0];
             var next = urls[1];
-            var total = search.Count();
-            const string returnType = "posts";
+            var total = search.Item2;
+
+            var returnType = new ReturnTypeConstants("posts");
             var result = PagingHelper.GetPagingResult(pagingInfo, total, model, returnType, prev, next);
           
             return Ok(result);
@@ -53,39 +54,41 @@ namespace WebService.Controllers
          * Helpers
          * *****************************************************/
 
-        private async Task<IList<SearchResultDto>> UseFetchingMethod(string query, PagingInfo pagingInfo, string method, string sortby, string orderby)
+        private async Task<Tuple<IList<SearchResultDto>, int>> UseFetchingMethod(string query, PagingInfo pagingInfo, string method, string startDate, string endDate)
         {
             IList<SearchResultDto> search = new List<SearchResultDto>();
+            int numberOfRows = 0;
             switch (method)
             {
                 case "\"\"":
-                    var option1 = await _SearchRepository.Bestmatch(query, pagingInfo, method, sortby, orderby);
+                    var option1 = await _SearchRepository.Bestmatch(query, pagingInfo, method, startDate, endDate);
                     option1.ToList().ForEach(s => { search.Add(s); });
                     break;
                 case "\"bestmatch\"":
-                    var option2 = await _SearchRepository.Bestmatch(query, pagingInfo, method, sortby, orderby);
+                    var option2 = await _SearchRepository.Bestmatch(query, pagingInfo, method, startDate, endDate);
                     option2.ToList().ForEach(s => { search.Add(s); });
                     break;
                 case "\"matchall\"":
-                    var option3 = await _SearchRepository.MatchAll(query, pagingInfo, method, sortby, orderby);
-                    option3.ToList().ForEach(s => { search.Add(s); });
+                    var option3 = await _SearchRepository.MatchAll(query, pagingInfo, method, startDate, endDate);
+                    option3.Item1.ToList().ForEach(s => { search.Add(s); });
+                    numberOfRows = option3.Item2;
                     break;
                 default:
-                    var defaultOption = await _SearchRepository.Bestmatch(query, pagingInfo, method, sortby, orderby);
+                    var defaultOption = await _SearchRepository.Bestmatch(query, pagingInfo, method, startDate, endDate);
                     defaultOption.ToList().ForEach(s => { search.Add(s); });
                     break;
             }
-            return search;
+            return new Tuple<IList<SearchResultDto>, int>(search, numberOfRows);
         }
 
-        private string[] GetUrls(string query, PagingInfo pagingInfo, string method, string sortby, string orderby)
+        private string[] GetUrls(string query, PagingInfo pagingInfo, string method, string startDate, string endDate)
         {
             var prev = Url.Link(nameof(Search), new
             {
                 query,
                 method = string.IsNullOrEmpty(method) ? "" : method,
-                sortby = string.IsNullOrEmpty(sortby) ? "" : sortby,
-                orderby = string.IsNullOrEmpty(orderby) ? "" : orderby,
+                startdate = string.IsNullOrEmpty(startDate) ? "" : startDate,
+                orderby = string.IsNullOrEmpty(endDate) ? "" : endDate,
                 page = pagingInfo.Page - 1, pagingInfo.PageSize
             });
 
@@ -93,8 +96,8 @@ namespace WebService.Controllers
             {
                 query,
                 method = string.IsNullOrEmpty(method) ? "" : method,
-                sortby = string.IsNullOrEmpty(sortby) ? "" : sortby,
-                orderby = string.IsNullOrEmpty(orderby) ? "" : orderby,
+                sortby = string.IsNullOrEmpty(startDate) ? "" : startDate,
+                orderby = string.IsNullOrEmpty(endDate) ? "" : endDate,
                 page = pagingInfo.Page + 1, pagingInfo.PageSize
             });
 
@@ -108,6 +111,10 @@ namespace WebService.Controllers
             var model = new SearchResultModel
             {
                 Id = search.Id,
+                Title = search.Title,
+                PostType = search.PostType,
+                CreationDate = search.CreationDate,
+                AcceptedAnswerId = search.AcceptedAnswerId,
                 Rank = search.Rank,
                 Body = search.Body
             };

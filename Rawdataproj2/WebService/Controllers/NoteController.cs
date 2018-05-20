@@ -36,7 +36,9 @@ namespace WebService.Controllers
             var total = _NoteRepository.Count();
             var prev = Url.Link(nameof(GetNotes), new { page = pagingInfo.Page - 1, pagingInfo.PageSize });
             var next = Url.Link(nameof(GetNotes), new { page = pagingInfo.Page + 1, pagingInfo.PageSize });
-            var result = PagingHelper.GetPagingResult(pagingInfo, total, model, "Note", prev, next);
+
+            var returnType = new ReturnTypeConstants("notes");
+            var result = PagingHelper.GetPagingResult(pagingInfo, total, model, returnType, prev, next);
 
             return Ok(result);
         }

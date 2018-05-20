@@ -12,7 +12,7 @@ namespace WebService.Models
 {
     public static class PagingHelper
     {
-        public static object GetPagingResult(PagingInfo pagingInfo, int total, IEnumerable<object> model, string returnType, string prev, string next)
+        public static object GetPagingResult(PagingInfo pagingInfo, int total, IEnumerable<object> model, ReturnTypeConstants returnType, string prev, string next)
         {
             SetPaging(pagingInfo, total, out int pages, ref prev, ref next);
 
@@ -22,21 +22,10 @@ namespace WebService.Models
                 { "next", next },
                 { "total", total },
                 { "pages", pages },
-                { returnType, model }
+                { returnType.ToString(), model }
             };
 
             return dictionary;
-
-            //return new
-            //{
-            //    Prev = prev,
-            //    Next = next,
-            //    Total = total,
-            //    Pages = pages,
-            //    Type = returnType,
-            //    Elements = model
-            //};
-
         }
 
         private static void SetPaging(PagingInfo pagingInfo, int total, out int pages, ref string prev, ref string next)

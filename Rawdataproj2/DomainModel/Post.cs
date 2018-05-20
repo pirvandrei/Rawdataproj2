@@ -12,8 +12,6 @@ namespace DomainModel
         public string Body { get; set; }
         public int PostType { get; set; }
 
-
-
         public IList<Link> Links { get; set; }  
         public IList<PostTag> PostTags { get; set; }  
         public IList<Comment> Comments { get; set; } 

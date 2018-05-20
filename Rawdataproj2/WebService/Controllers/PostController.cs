@@ -34,7 +34,9 @@ namespace WebService.Controllers
             var total = _PostRepository.Count();
             var prev = Url.Link(nameof(GetPosts), new { page = pagingInfo.Page - 1, pagingInfo.PageSize });
             var next = Url.Link(nameof(GetPosts), new { page = pagingInfo.Page + 1, pagingInfo.PageSize });
-            var result = PagingHelper.GetPagingResult(pagingInfo, total, model, "Post", prev, next);
+
+            var returnType = new ReturnTypeConstants("posts");
+            var result = PagingHelper.GetPagingResult(pagingInfo, total, model, returnType, prev, next);
 
             return Ok(result); 
         }

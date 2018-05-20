@@ -1,20 +1,18 @@
 ﻿using DataRepository;
 using DataRepository.Dto.SearchDto;
-using DomainModel;
 using Microsoft.EntityFrameworkCore;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace StackoverflowContext
 {
     public class SearchRepository : ISearchRepository
     {
-        public async Task<IList<SearchResultDto>> MatchAll(string query, PagingInfo pagingInfo, string method, string sortby, string orderby)
+        public async Task<Tuple<IList<SearchResultDto>, int>> MatchAll(string query, PagingInfo pagingInfo, string method, string startDate, string endDate)
         {
             using (var db = new StackoverflowDbContext())
             {
@@ -24,10 +22,20 @@ namespace StackoverflowContext
                 conn.Open();
                 var cmd = new MySqlCommand();
                 cmd.Connection = conn;
-                cmd.Parameters.Add("@query", DbType.String);
-                cmd.Parameters["@query"].Value = query;
 
-                cmd.CommandText = "call MatchAll(@query)";
+                cmd.Parameters.Add("@pageSize", DbType.Int32);
+                cmd.Parameters.Add("@pageNumber", DbType.Int32);
+                cmd.Parameters.Add("@query", DbType.String);
+                cmd.Parameters.Add("@startDate", DbType.String);
+                cmd.Parameters.Add("@endDate", DbType.String);
+
+                cmd.Parameters["@pageSize"].Value = pagingInfo.PageSize;
+                cmd.Parameters["@pageNumber"].Value = pagingInfo.Page;
+                cmd.Parameters["@query"].Value = query;
+                cmd.Parameters["@startDate"].Value = startDate;
+                cmd.Parameters["@endDate"].Value = endDate;
+
+                cmd.CommandText = "call MatchAll(@query, @pageSize, @pageNumber, @startDate, @endDate)";
 
                 var reader = cmd.ExecuteReader();
 
@@ -36,29 +44,50 @@ namespace StackoverflowContext
                     result.Add(new SearchResultDto
                     {
                         Id = (int)reader["id"],
-                        Rank = (decimal)reader["rank"],
-                        Body = (string)reader["body"]
+                        Title = (reader["title"] == DBNull.Value) ? "" : (string)reader["title"],
+                        Body = (reader["body"] == DBNull.Value) ? "" : (string)reader["body"],
+                        PostType = (int)reader["PostType"],
+                        CreationDate = (DateTime)reader["CreationDate"],
+                        AcceptedAnswerId = (reader["AcceptedAnswerID"] == DBNull.Value) ? 0 : (int)reader["AcceptedAnswerID"],
+                        Rank = (decimal)reader["rank"]
+
                     });
                 }
 
-                // TODO: perhaps move to stored procedure AND/OR create helper for methods ? 
-                if(!string.IsNullOrEmpty(orderby) && orderby == "\"asc\"" || orderby == "\"desc\"")
+                string queryString = "SELECT FOUND_ROWS()";
+                int numberOfRows = 0;
+                var command = new MySqlCommand(queryString, conn);
+                using (conn)
                 {
-                    result = orderby == "\"desc\""
-                    ? result.OrderBy(x => x.Rank).ToList()
-                    : result.OrderBy(x => x.Rank).Reverse().ToList();
+                    // Create the Command and Parameter objects.
+                   
+                    //command.Parameters.AddWithValue("@pricePoint", paramValue);
+
+                    // Open the connection in a try/catch block. 
+                    // Create and execute the DataReader, writing the result
+                    // set to the console window.
+                    try
+                    {
+                        conn.Open();
+                        var r = command.ExecuteReader();
+                        while (r.Read())
+                        {
+                            Console.WriteLine("{0}",
+                                r[0]);
+                            numberOfRows = (int)r[0];
+                        }
+                        r.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    Console.ReadLine();
                 }
 
-                // TODO: fetch correct data and implement it
-                //if (!string.IsNullOrEmpty(sortby))
-                //{
-                //    result = result.Where(date is within sortby date);
-                //}
-                
-                return result;
+                return new Tuple<IList<SearchResultDto>, int> (result, numberOfRows);
             }
         }
-
 
         public async Task<IList<SearchResultDto>> Bestmatch(string query, PagingInfo pagingInfo, string method, string sortby, string orderby)
         {
@@ -79,17 +108,20 @@ namespace StackoverflowContext
                 cmd.Parameters["@pageNumber"].Value = pagingInfo.Page;
                 cmd.Parameters["@query"].Value = query;
 
-                cmd.CommandText = "call bestmatch(@query, @pageSize, @pageNumber)";
+                cmd.CommandText = "call BestMatchRanked(@query, @pageSize, @pageNumber)";
 
                 var reader = cmd.ExecuteReader();
 
                 while (await reader.ReadAsync())
                 {
-
-                    Console.WriteLine("{0}, {1}", reader.GetInt32(0), reader.GetInt32(1));
                     result.Add(new SearchResultDto
                     {
                         Id = (int)reader["id"],
+                        Title = (reader["title"] == DBNull.Value) ? "" : (string)reader["title"],
+                        Body = (reader["body"] == DBNull.Value) ? "" : (string)reader["body"],
+                        PostType = (int)reader["PostType"],
+                        CreationDate = (DateTime)reader["CreationDate"],
+                        AcceptedAnswerId = (reader["AcceptedAnswerId"] == DBNull.Value) ? 0 : (int)reader["AcceptedAnswerId"],
                         Rank = (decimal)reader["rank"]
                     });
                 }
