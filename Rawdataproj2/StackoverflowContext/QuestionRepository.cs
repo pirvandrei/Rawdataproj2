@@ -40,10 +40,10 @@ namespace StackoverflowContext
 				return await db.Questions   
     				   .Include(x => x.Comments)
     							.ThenInclude(x => x.User)
-    			       .Include(x => x.Answers)
-    							.ThenInclude(x => x.Comments)
-    							    .ThenInclude(x => x.User)
-    				   .Include(x => x.PostTags)
+    			       .Include(x => x.Answers) 
+    						.ThenInclude(x => x.Comments)
+                                .ThenInclude(x => x.User)
+                       .Include(x => x.PostTags)
 					   .Include(x => x.Bookmarks)
                        .Include(x => x.Notes)
 				   .FirstOrDefaultAsync(x => x.ID == id);    
