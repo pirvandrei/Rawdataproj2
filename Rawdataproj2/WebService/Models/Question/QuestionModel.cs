@@ -27,6 +27,6 @@ namespace WebService.Models.Question
         public IList<CommentModel> Comments { get; set; }
         public IList<AnswerModel> Answers { get; set; }
 		public IList<BookmarkModel> Bookmarks { get; set; }
-		public IList<NoteModel> Notes { get; set; }
+        public IList<NoteModel> Notes { get; set; }
     }
 }
