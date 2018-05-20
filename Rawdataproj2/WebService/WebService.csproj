@@ -5,6 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\Post\**" />
+    <Content Remove="Models\Post\**" />
+    <EmbeddedResource Remove="Models\Post\**" />
+    <None Remove="Models\Post\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controllers\PostController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="wwwroot\bower_components\bootstrap\.bower.json" />
     <Content Include="wwwroot\bower_components\bootstrap\.eslintrc.json" />
     <Content Include="wwwroot\bower_components\bootstrap\assets\brand\bootstrap-social-logo.png" />
@@ -245,7 +256,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\StackoverflowContext\StackoverflowContext.csproj" />
-    <ProjectReference Include="..\DataRepository\DataRepository.csproj" />
+    <ProjectReference Include="..\DataTransferObjects\DataTransferObjects.csproj" />
   </ItemGroup>
 
   <ItemGroup>

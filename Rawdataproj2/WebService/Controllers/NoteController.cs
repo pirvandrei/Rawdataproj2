@@ -1,13 +1,9 @@
 ﻿using DomainModel;
-using Microsoft.AspNetCore.Mvc;
-using StackoverflowContext;
-using System;
+using Microsoft.AspNetCore.Mvc; 
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using DataRepository.Dto.PostDto;
-using DataRepository;
-using WebService.Models.Post;
+using System.Threading.Tasks; 
+using DataRepository; 
 using AutoMapper;
 using WebService.Models.Note;
 using WebService.Models;

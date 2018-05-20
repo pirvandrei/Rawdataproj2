@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -33,9 +32,11 @@ namespace WebService.Controllers
             IEnumerable<QuestionListModel> model = question.Select(que => CreateQuestionListModel(que));
 
             var total = _QuestionRepository.Count();
-            var prev = Url.Link(nameof(GetQuestions), new { page = pagingInfo.Page - 1, pagingInfo.PageSize });
-            var next = Url.Link(nameof(GetQuestions), new { page = pagingInfo.Page + 1, pagingInfo.PageSize });
-            var result = PagingHelper.GetPagingResult(pagingInfo, total, model, "Question", prev, next);
+            var prev = Url.Link(nameof(GetQuestions),
+                new { page = pagingInfo.Page - 1, pagingInfo.PageSize });
+            var next = Url.Link(nameof(GetQuestions),
+                new { page = pagingInfo.Page + 1, pagingInfo.PageSize });
+            var result = PagingHelper.GetPagingResult(pagingInfo, total, model, "Questions", prev, next);
 
             return Ok(result);
         }
@@ -52,13 +53,57 @@ namespace WebService.Controllers
         }
 
 
+        /*******************************************************
+         * Helpers
+         * *****************************************************/
+
+
+        private QuestionListModel CreateQuestionListModel(Question question)
+        {
+            var model = new QuestionListModel
+            {
+                Title = question.Title,
+                Body = question.Body.Substring(0, 100) + "...",
+                Score = question.Score,
+                CreationDate = question.CreationDate,
+
+                User = new UserModel()
+                {
+                    ID = question.User.ID,
+                    DisplayName = question.User.DisplayName,
+                },
+                PostTags = question.PostTags.Select(tag => new PostTagModel()
+                {
+                    Tag = tag.Tag,
+                }).ToList()
+
+            };
+            model.Url = CreateQuestionLink(question.ID);
+            return model;
+        }
+
+        private string CreateQuestionLink(int id)
+        {
+            return Url.Link(nameof(GetQuestion), new { id });
+        }
+
+
+
+
+
+
+
+        /*******************************************************
+        * Additional
+        * *****************************************************/
+
         [HttpGet("{id}/answers", Name = nameof(GetQuestionAnswers))]
         public async Task<IActionResult> GetQuestionAnswers(int id)
         {
             var queAnswers = await _QuestionRepository.GetQuestionAnswers(id);
             if (queAnswers == null) return NotFound();
 
-            var model = queAnswers.Select(que => CreateQuestionAnswersModel(que)); 
+            var model = queAnswers.Select(que => CreateQuestionAnswersModel(que));
 
             return Ok(model);
         }
@@ -73,26 +118,6 @@ namespace WebService.Controllers
             var model = queCom.Select(que => CreateQuestionCommnetsModel(que));
 
             return Ok(model);
-        }
-
-        [HttpPut("{id}", Name = nameof(UpdateQuestion))]
-        public async Task<IActionResult> UpdateQuestion(int id, [FromBody] UpdateQuestionModel model)
-        {
-            if (model == null || model.ID != id) return BadRequest();
-
-            var q = await _QuestionRepository.Get(id);
-            if (q == null) return NotFound();
-
-            q.ID = model.ID;
-            q.Title = model.Title;
-            q.Body = model.Body;
-            //q.ClosedDate = model.ClosedDate;
-            q.Score = model.Score;
-            q.AcceptedAnswerID = model.AcceptedAnswerID;
-
-            await _QuestionRepository.Update(q);
-
-            return Ok();
         }
 
         [HttpDelete("{id}")]
@@ -122,9 +147,26 @@ namespace WebService.Controllers
         }
 
 
-        /*******************************************************
-         * Helpers
-         * *****************************************************/
+        [HttpPut("{id}", Name = nameof(UpdateQuestion))]
+        public async Task<IActionResult> UpdateQuestion(int id, [FromBody] UpdateQuestionModel model)
+        {
+            if (model == null || model.ID != id) return BadRequest();
+
+            var q = await _QuestionRepository.Get(id);
+            if (q == null) return NotFound();
+
+            q.ID = model.ID;
+            q.Title = model.Title;
+            q.Body = model.Body;
+            //q.ClosedDate = model.ClosedDate;
+            q.Score = model.Score;
+            q.AcceptedAnswerID = model.AcceptedAnswerID;
+
+            await _QuestionRepository.Update(q);
+
+            return Ok();
+        }
+
         private QuestionCommentsModel CreateQuestionCommnetsModel(QuestionCommentsDto questionCom)
         {
             var model = new QuestionCommentsModel
@@ -133,7 +175,7 @@ namespace WebService.Controllers
                 Score = questionCom.Score,
                 Creationdate = questionCom.Creationdate,
                 Test = questionCom.Text
-            }; 
+            };
             return model;
         }
 
@@ -141,41 +183,11 @@ namespace WebService.Controllers
         {
             var model = new QuestionAnswersModel
             {
-                 Body = question.Body,
-                 Creationdate = question.Creationdate,
-                 Score = question.Score
-            }; 
-            return model;
-        }
-
-        private QuestionListModel CreateQuestionListModel(Question question)
-        {
-			var model = new QuestionListModel
-			{
-				Title = question.Title,
-				Body = question.Body.Substring(0, 100) + "...",
-				Score = question.Score,
-				CreationDate = question.CreationDate,
-
-				User = new UserModel()
-				{
-					ID = question.User.ID,
-					DisplayName = question.User.DisplayName,
-				},
-				PostTags = question.PostTags.Select(tag => new PostTagModel()
-				{
-					Tag = tag.Tag,
-				}).ToList()  
-
+                Body = question.Body,
+                Creationdate = question.Creationdate,
+                Score = question.Score
             };
-            model.Url = CreateQuestionLink(question.ID);
             return model;
         }
-         
-        private string CreateQuestionLink(int id)
-        {
-            return Url.Link(nameof(GetQuestion), new { id });
-        }
-    
     }
 }

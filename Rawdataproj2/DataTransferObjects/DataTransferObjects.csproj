@@ -5,6 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Dto\PostDto\**" />
+    <EmbeddedResource Remove="Dto\PostDto\**" />
+    <None Remove="Dto\PostDto\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="IPostRepository.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DomainModel\DomainModel.csproj" />
   </ItemGroup>
   <ItemGroup>
