@@ -108,6 +108,7 @@ namespace WebService.Controllers
                 PostID = note.Post.ID,
                 UserID = note.User.ID,
                 UserName = note.User.DisplayName,
+                Title = note.Post.Title
             };
             model.Url = CreateLink(note.PostID);
             return model;

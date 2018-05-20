@@ -11,7 +11,7 @@ namespace DomainModel
         public DateTime CreationDate { get; set; }
         public string Body { get; set; }
         public int PostType { get; set; }
-
+        public string Title { get; set; }
 
 
         public IList<Link> Links { get; set; }  
