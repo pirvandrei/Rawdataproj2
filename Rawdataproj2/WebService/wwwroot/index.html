@@ -6,6 +6,57 @@
     <link rel="stylesheet" type="text/css" href="bower_components\bootstrap\dist\css\bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="bower_components\components-font-awesome\css\fontawesome.min.css">
 
+    <style>
+        div {
+            border: 1px solid black;
+        }
+
+        .container {
+            width: 800px;
+        }
+
+        .score {
+            display: flex;
+            position: relative;
+        }
+
+        .post-box {
+            padding: 20px;
+        }
+
+        .comment-section ul div {
+            display: inline-block;
+        }
+
+        ul {
+            padding-top: 10px;
+            list-style-type: none;
+        }
+
+        .comment-content span:last-child {
+            color: grey;
+        }
+
+        .search-bar {
+            display: flex;
+            padding: 5px;
+        }
+
+            .search-bar > input {
+                padding-right: .2rem;
+                width: 300px;
+                border: 1px solid black
+            }
+
+            .search-bar > button {
+                border-radius: initial;
+                border-top-right-radius: .2rem;
+                border-bottom-right-radius: .2rem;
+                padding: 1px .5rem;
+                background-color: transparent;
+                border: 1px solid black;
+            }
+    </style>
 </head>
 <body>
     <!--Navbar -->
@@ -13,7 +64,9 @@
 
     <!---Body -->
     <div class="container">
-
+        <div data-bind='component: "post-question"'></div>
+        <div data-bind='component: "display-search"'>
+    </div>
     </div>
     <!--Scripts-->
     <script src="bower_components\requirejs\require.js"></script>
