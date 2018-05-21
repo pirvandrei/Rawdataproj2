@@ -19,12 +19,12 @@ namespace StackoverflowContext
                 var conn = (MySqlConnection)db.Database.GetDbConnection();
                 conn.Open();
 
-                var cmd = InitCommand(conn, query, pagingInfo, endDate, startDate);
-                cmd.CommandText = "call BestMatchRanked(@query, @pageSize, @pageNumber)";
+                var cmd = InitCommand(conn, query, pagingInfo, startDate, endDate);
+                cmd.CommandText = "call BestMatchRanked(@query, @pageSize, @pageNumber, @startDate, @endDate)";
 
                 var result = await ReadFromDatabase(cmd);
 
-                var numberOfRows = await GetNumberOfRows(cmd, "call BestMatchRanked_Count(@query)");    
+                var numberOfRows = await GetNumberOfRows(cmd, "call BestMatchRanked_Count(@query, @startDate, @endDate)");    
                 
                 return new Tuple<IList<SearchResultDto>, int> (result, numberOfRows);
             }
@@ -37,12 +37,12 @@ namespace StackoverflowContext
                 var conn = (MySqlConnection)db.Database.GetDbConnection();
                 conn.Open();
 
-                var cmd = InitCommand(conn, query, pagingInfo, endDate, startDate);
-                cmd.CommandText = "call MatchAll(@query, @pageSize, @pageNumber)";
+                var cmd = InitCommand(conn, query, pagingInfo, startDate, endDate);
+                cmd.CommandText = "call MatchAll(@query, @pageSize, @pageNumber, @startDate, @endDate)";
 
                 var result = await ReadFromDatabase(cmd);
 
-                var numberOfRows = await GetNumberOfRows(cmd, "call MatchAll_Count(@query)");
+                var numberOfRows = await GetNumberOfRows(cmd, "call MatchAll_Count(@query, @startDate, @endDate)");
 
                 return new Tuple<IList<SearchResultDto>, int>(result, numberOfRows);
             }
@@ -55,12 +55,12 @@ namespace StackoverflowContext
                 var conn = (MySqlConnection)db.Database.GetDbConnection();
                 conn.Open();
 
-                var cmd = InitCommand(conn, query, pagingInfo, endDate, startDate);
-                cmd.CommandText = "call BestMatchWeighted(@query, @pageSize, @pageNumber)";
+                var cmd = InitCommand(conn, query, pagingInfo, startDate, endDate);
+                cmd.CommandText = "call BestMatchWeighted(@query, @pageSize, @pageNumber, @startDate, @endDate)";
 
                 var result = await ReadFromDatabase(cmd);
 
-                var numberOfRows = await GetNumberOfRows(cmd, "call BestMatchWeighted_Count(@query)");
+                var numberOfRows = await GetNumberOfRows(cmd, "call BestMatchWeighted_Count(@query, @startDate, @endDate)");
 
                 return new Tuple<IList<SearchResultDto>, int>(result, numberOfRows);
             }
@@ -69,6 +69,7 @@ namespace StackoverflowContext
         /*******************************************************
          * Helpers
          * *****************************************************/
+
         private async Task<int> GetNumberOfRows(MySqlCommand cmd, string cmdText)
         {
             var numberOfRows = 0;

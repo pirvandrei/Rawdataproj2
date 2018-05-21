@@ -32,13 +32,15 @@ namespace WebService.Controllers
                 return Ok("No query provided");
             }
             
-            var search = await UseFetchingMethod(query, pagingInfo, method, startdate, enddate);
+            var getStartDate = string.IsNullOrEmpty(startdate) ? startdate = "'1900-01-01'" : startdate;
+            var getEndDate = string.IsNullOrEmpty(enddate) ? enddate = "'" + DateTime.Today.ToString("yyyy-MM-dd") + "'" : enddate;
 
+            var search = await UseFetchingMethod(query, pagingInfo, method, getStartDate, getEndDate);
             if (search == null || search.Item2 <= 0) return NotFound("Nothing matched your query");
 
             var model = search.Item1.Select(s => CreateSearchResultModel(s));
 
-            var urls = GetUrls(query, pagingInfo, method, startdate, enddate);
+            var urls = GetUrls(query, pagingInfo, method, getStartDate, getEndDate);
             var prev = urls[0];
             var next = urls[1];
             var total = search.Item2;
@@ -98,18 +100,18 @@ namespace WebService.Controllers
                 query,
                 method = string.IsNullOrEmpty(method) ? "" : method,
                 startdate = string.IsNullOrEmpty(startDate) ? "" : startDate,
-                orderby = string.IsNullOrEmpty(endDate) ? "" : endDate,
+                enddate = string.IsNullOrEmpty(endDate) ? "" : endDate,
                 page = pagingInfo.Page - 1, pagingInfo.PageSize
-            });
+            }).ToLower();
 
             var next = Url.Link(nameof(Search), new
             {
                 query,
                 method = string.IsNullOrEmpty(method) ? "" : method,
-                sortby = string.IsNullOrEmpty(startDate) ? "" : startDate,
-                orderby = string.IsNullOrEmpty(endDate) ? "" : endDate,
+                startdate = string.IsNullOrEmpty(startDate) ? "" : startDate,
+                enddate = string.IsNullOrEmpty(endDate) ? "" : endDate,
                 page = pagingInfo.Page + 1, pagingInfo.PageSize
-            });
+            }).ToLower();
 
             var urls = new string[] { prev, next };
 
