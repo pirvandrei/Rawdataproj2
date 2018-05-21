@@ -13,7 +13,7 @@ namespace WebService
         public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
             services.AddSingleton<ISearchHistoryRepository, SearchHistoryRepository>();
-            services.AddSingleton<IPostRepository, PostRepository>();
+            //services.AddSingleton<IPostRepository, PostRepository>();
             services.AddSingleton<IQuestionRepository, QuestionRepository>();
             services.AddSingleton<INoteRepository, NoteRepository>();
             services.AddSingleton<IBookmarkRepository, BookmarkRepository>();

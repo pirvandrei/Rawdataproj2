@@ -13,24 +13,24 @@ namespace UnitTesting
         [Fact]
         public void GetAllPosts_NoArgument_ReturnsAllPosts()
         {
-            var repo = new PostRepository();
+            //var repo = new PostRepository();
 
             var info = new PagingInfo()
             {
                 PageSize = 2
             };
 
-            var questions = repo.GetAll(info);
-            Assert.Equal(2, questions.Result.Count());
+            //var questions = repo.GetAll(info);
+            //Assert.Equal(2, questions.Result.Count());
             // Assert.Equal(164, questions.Result.First().Score);
         }
 
         [Fact]
         public void GetPost_ValidId_ReturnsPostsObject()
         {
-            var repo = new PostRepository();
-            var question = repo.Get(19);
-            Assert.Equal(164, question.Result.Score);
+            //var repo = new PostRepository();
+            //var question = repo.Get(19);
+            //Assert.Equal(164, question.Result.Score);
         }
 
         [Fact]

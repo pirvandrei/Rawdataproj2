@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DataRepository.Dto.PostDto;
 using DataRepository;
-using WebService.Models.Post;
+
 using AutoMapper;
 using WebService.Models.Note;
 using WebService.Models;

@@ -34,7 +34,7 @@ namespace WebService.Controllers
             
             var search = await UseFetchingMethod(query, pagingInfo, method, startdate, enddate);
 
-            //if (search == null || search.Item2 <= 0) return NotFound("Nothing matched your query");
+            if (search == null || search.Item2 <= 0) return NotFound("Nothing matched your query");
 
             var model = search.Item1.Select(s => CreateSearchResultModel(s));
 
@@ -56,29 +56,39 @@ namespace WebService.Controllers
 
         private async Task<Tuple<IList<SearchResultDto>, int>> UseFetchingMethod(string query, PagingInfo pagingInfo, string method, string startDate, string endDate)
         {
-            IList<SearchResultDto> search = new List<SearchResultDto>();
-            int numberOfRows = 0;
+            IList<SearchResultDto> result = new List<SearchResultDto>();
+            var numberOfRows = 0;
+
             switch (method)
             {
                 case "\"\"":
-                    var option1 = await _SearchRepository.Bestmatch(query, pagingInfo, method, startDate, endDate);
-                    option1.ToList().ForEach(s => { search.Add(s); });
+                    var option1 = await _SearchRepository.BestMatchRanked(query, pagingInfo, startDate, endDate);
+                    option1.Item1.ToList().ForEach(s => { result.Add(s); });
+                    numberOfRows = option1.Item2;
                     break;
-                case "\"bestmatch\"":
-                    var option2 = await _SearchRepository.Bestmatch(query, pagingInfo, method, startDate, endDate);
-                    option2.ToList().ForEach(s => { search.Add(s); });
+                case "\"bestmatchranked\"":
+                    var option2 = await _SearchRepository.BestMatchRanked(query, pagingInfo, startDate, endDate);
+                    option2.Item1.ToList().ForEach(s => { result.Add(s); });
+                    numberOfRows = option2.Item2;
                     break;
                 case "\"matchall\"":
-                    var option3 = await _SearchRepository.MatchAll(query, pagingInfo, method, startDate, endDate);
-                    option3.Item1.ToList().ForEach(s => { search.Add(s); });
+                    var option3 = await _SearchRepository.MatchAll(query, pagingInfo, startDate, endDate);
+                    option3.Item1.ToList().ForEach(s => { result.Add(s); });
                     numberOfRows = option3.Item2;
                     break;
+                case "\"bestmatchweighted\"":
+                    var option4 = await _SearchRepository.BestMatchWeighted(query, pagingInfo, startDate, endDate);
+                    option4.Item1.ToList().ForEach(s => { result.Add(s); });
+                    numberOfRows = option4.Item2;
+                    break;
                 default:
-                    var defaultOption = await _SearchRepository.Bestmatch(query, pagingInfo, method, startDate, endDate);
-                    defaultOption.ToList().ForEach(s => { search.Add(s); });
+                    var defaultOption = await _SearchRepository.BestMatchRanked(query, pagingInfo, startDate, endDate);
+                    defaultOption.Item1.ToList().ForEach(s => { result.Add(s); });
+                    numberOfRows = defaultOption.Item2;
                     break;
             }
-            return new Tuple<IList<SearchResultDto>, int>(search, numberOfRows);
+
+            return new Tuple<IList<SearchResultDto>, int>(result, numberOfRows);
         }
 
         private string[] GetUrls(string query, PagingInfo pagingInfo, string method, string startDate, string endDate)

@@ -18,7 +18,7 @@ namespace WebService.Models
         }
 
         /// <summary>
-        /// Choose a string option available in the TypeConstants enum. The return types should never change.
+        /// Choose a string type matching any name available in the TypeConstants enum. The return types should never change.
         /// </summary>
         public ReturnTypeConstants(string type)
         {
