@@ -131,47 +131,5 @@ namespace WebService.Controllers
             return model;
         }
 
-        private BestmatchModel CreateBestmatchModel(BestmatchDto search)
-        {
-            var model = new BestmatchModel
-            {
-                Id = search.Id,
-                Rank = search.Rank
-            };
-            return model;
-        }
-
-
-        private MatchallModel CreateMatchAllhModel(MatchallDto search)
-        {
-            var model = new MatchallModel
-            {
-                Id = search.Id,
-                Rank = search.Rank,
-                Body = search.Body
-            };
-            return model;
-        }
-
-        private BestmatchRankedModel CreateBestMatchRankedModel(BestMatchRankedDto search)
-        {
-            var model = new BestmatchRankedModel
-            {
-                Id = search.Id,
-                Rank = search.Rank 
-            };
-            return model;
-        }
-
-        private BestMatchWeightedModel CreateBestMatchWeightedModel(BestMatchWeightedDto search)
-        {
-            var model = new BestMatchWeightedModel
-            {
-                Id = search.Id,
-                Rank = search.Rank 
-            };
-            return model;
-        }
-
     }
 }
