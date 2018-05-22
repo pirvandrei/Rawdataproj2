@@ -4,7 +4,7 @@
 
         // public part
         return {
-            searchedString
+            searchString
         };
     };
 });

@@ -25,24 +25,27 @@ namespace WebService.Controllers
         }
 
         [HttpGet(Name = nameof(Search))]
-        public async Task<IActionResult> Search(string query, PagingInfo pagingInfo, string method = null, string sortby = null, string orderby = null)
+        public async Task<IActionResult> Search(string query, PagingInfo pagingInfo, string method = null, string startdate = null, string enddate = null)
         {
             if(string.IsNullOrEmpty(query))
             {
                 return Ok("No query provided");
             }
             
-            var search = await UseFetchingMethod(query, pagingInfo, method, sortby, orderby);
+            var getStartDate = string.IsNullOrEmpty(startdate) ? startdate = "'1900-01-01'" : startdate;
+            var getEndDate = string.IsNullOrEmpty(enddate) ? enddate = "'" + DateTime.Today.ToString("yyyy-MM-dd") + "'" : enddate;
 
-            if (search == null && search.Count <= 0) return NotFound();
+            var search = await UseFetchingMethod(query, pagingInfo, method, getStartDate, getEndDate);
+            if (search == null || search.Item2 <= 0) return NotFound("Nothing matched your query");
 
-            var model = search.Select(s => CreateSearchResultModel(s));
+            var model = search.Item1.Select(s => CreateSearchResultModel(s));
 
-            var urls = GetUrls(query, pagingInfo, method, sortby, orderby);
+            var urls = GetUrls(query, pagingInfo, method, getStartDate, getEndDate);
             var prev = urls[0];
             var next = urls[1];
-            var total = search.Count();
-            const string returnType = "posts";
+            var total = search.Item2;
+
+            var returnType = new ReturnTypeConstants("posts");
             var result = PagingHelper.GetPagingResult(pagingInfo, total, model, returnType, prev, next);
           
             return Ok(result);
@@ -53,50 +56,62 @@ namespace WebService.Controllers
          * Helpers
          * *****************************************************/
 
-        private async Task<IList<SearchResultDto>> UseFetchingMethod(string query, PagingInfo pagingInfo, string method, string sortby, string orderby)
+        private async Task<Tuple<IList<SearchResultDto>, int>> UseFetchingMethod(string query, PagingInfo pagingInfo, string method, string startDate, string endDate)
         {
-            IList<SearchResultDto> search = new List<SearchResultDto>();
+            IList<SearchResultDto> result = new List<SearchResultDto>();
+            var numberOfRows = 0;
+
             switch (method)
             {
                 case "\"\"":
-                    var option1 = await _SearchRepository.Bestmatch(query, pagingInfo, method, sortby, orderby);
-                    option1.ToList().ForEach(s => { search.Add(s); });
+                    var option1 = await _SearchRepository.BestMatchRanked(query, pagingInfo, startDate, endDate);
+                    option1.Item1.ToList().ForEach(s => { result.Add(s); });
+                    numberOfRows = option1.Item2;
                     break;
-                case "\"bestmatch\"":
-                    var option2 = await _SearchRepository.Bestmatch(query, pagingInfo, method, sortby, orderby);
-                    option2.ToList().ForEach(s => { search.Add(s); });
+                case "\"bestmatchranked\"":
+                    var option2 = await _SearchRepository.BestMatchRanked(query, pagingInfo, startDate, endDate);
+                    option2.Item1.ToList().ForEach(s => { result.Add(s); });
+                    numberOfRows = option2.Item2;
                     break;
                 case "\"matchall\"":
-                    var option3 = await _SearchRepository.MatchAll(query, pagingInfo, method, sortby, orderby);
-                    option3.ToList().ForEach(s => { search.Add(s); });
+                    var option3 = await _SearchRepository.MatchAll(query, pagingInfo, startDate, endDate);
+                    option3.Item1.ToList().ForEach(s => { result.Add(s); });
+                    numberOfRows = option3.Item2;
+                    break;
+                case "\"bestmatchweighted\"":
+                    var option4 = await _SearchRepository.BestMatchWeighted(query, pagingInfo, startDate, endDate);
+                    option4.Item1.ToList().ForEach(s => { result.Add(s); });
+                    numberOfRows = option4.Item2;
                     break;
                 default:
-                    var defaultOption = await _SearchRepository.Bestmatch(query, pagingInfo, method, sortby, orderby);
-                    defaultOption.ToList().ForEach(s => { search.Add(s); });
+                    var defaultOption = await _SearchRepository.BestMatchRanked(query, pagingInfo, startDate, endDate);
+                    defaultOption.Item1.ToList().ForEach(s => { result.Add(s); });
+                    numberOfRows = defaultOption.Item2;
                     break;
             }
-            return search;
+
+            return new Tuple<IList<SearchResultDto>, int>(result, numberOfRows);
         }
 
-        private string[] GetUrls(string query, PagingInfo pagingInfo, string method, string sortby, string orderby)
+        private string[] GetUrls(string query, PagingInfo pagingInfo, string method, string startDate, string endDate)
         {
             var prev = Url.Link(nameof(Search), new
             {
                 query,
                 method = string.IsNullOrEmpty(method) ? "" : method,
-                sortby = string.IsNullOrEmpty(sortby) ? "" : sortby,
-                orderby = string.IsNullOrEmpty(orderby) ? "" : orderby,
+                startdate = string.IsNullOrEmpty(startDate) ? "" : startDate,
+                enddate = string.IsNullOrEmpty(endDate) ? "" : endDate,
                 page = pagingInfo.Page - 1, pagingInfo.PageSize
-            });
+            }).ToLower();
 
             var next = Url.Link(nameof(Search), new
             {
                 query,
                 method = string.IsNullOrEmpty(method) ? "" : method,
-                sortby = string.IsNullOrEmpty(sortby) ? "" : sortby,
-                orderby = string.IsNullOrEmpty(orderby) ? "" : orderby,
+                startdate = string.IsNullOrEmpty(startDate) ? "" : startDate,
+                enddate = string.IsNullOrEmpty(endDate) ? "" : endDate,
                 page = pagingInfo.Page + 1, pagingInfo.PageSize
-            });
+            }).ToLower();
 
             var urls = new string[] { prev, next };
 
@@ -108,50 +123,12 @@ namespace WebService.Controllers
             var model = new SearchResultModel
             {
                 Id = search.Id,
+                Title = search.Title,
+                PostType = search.PostType,
+                CreationDate = search.CreationDate,
+                AcceptedAnswerId = search.AcceptedAnswerId,
                 Rank = search.Rank,
                 Body = search.Body
-            };
-            return model;
-        }
-
-        private BestmatchModel CreateBestmatchModel(BestmatchDto search)
-        {
-            var model = new BestmatchModel
-            {
-                Id = search.Id,
-                Rank = search.Rank
-            };
-            return model;
-        }
-
-
-        private MatchallModel CreateMatchAllhModel(MatchallDto search)
-        {
-            var model = new MatchallModel
-            {
-                Id = search.Id,
-                Rank = search.Rank,
-                Body = search.Body
-            };
-            return model;
-        }
-
-        private BestmatchRankedModel CreateBestMatchRankedModel(BestMatchRankedDto search)
-        {
-            var model = new BestmatchRankedModel
-            {
-                Id = search.Id,
-                Rank = search.Rank 
-            };
-            return model;
-        }
-
-        private BestMatchWeightedModel CreateBestMatchWeightedModel(BestMatchWeightedDto search)
-        {
-            var model = new BestMatchWeightedModel
-            {
-                Id = search.Id,
-                Rank = search.Rank 
             };
             return model;
         }
