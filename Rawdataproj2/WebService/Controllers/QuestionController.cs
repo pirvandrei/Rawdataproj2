@@ -50,7 +50,31 @@ namespace WebService.Controllers
 
             return Ok(model);
         }
-       
+
+
+        [HttpGet("{id}/answers", Name = nameof(GetQuestionAnswers))]
+        public async Task<IActionResult> GetQuestionAnswers(int id)
+        {
+            var queAnswers = await _QuestionRepository.GetQuestionAnswers(id);
+            if (queAnswers == null) return NotFound();
+
+            var model = queAnswers.Select(que => CreateQuestionAnswersModel(que)); 
+
+            return Ok(model);
+        }
+
+
+        [HttpGet("{id}/comments", Name = nameof(GetQuestionComments))]
+        public async Task<IActionResult> GetQuestionComments(int id)
+        {
+            var queCom = await _QuestionRepository.GetQuestionComments(id);
+            if (queCom == null) return NotFound();
+
+            var model = queCom.Select(que => CreateQuestionCommnetsModel(que));
+
+            return Ok(model);
+        }
+
         [HttpPut("{id}", Name = nameof(UpdateQuestion))]
         public async Task<IActionResult> UpdateQuestion(int id, [FromBody] UpdateQuestionModel model)
         {
@@ -70,12 +94,48 @@ namespace WebService.Controllers
 
             return Ok();
         }
-         
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteQuestion(int id)
+        {
+            if (!await _QuestionRepository.Delete(id)) return NotFound();
+            return NoContent();
+        }
+
+        [HttpPost("{id}")]
+        public async Task<IActionResult> CreateQuestion([FromBody] QuestionModel model)
+        {
+            if (model == null) return BadRequest();
+
+            var q = new Question
+            {
+                Title = model.Title,
+                Body = model.Body,
+                UserID = model.UserID,
+                Score = model.Score,
+                CreationDate = model.Creationdate
+            };
+
+            var result = await _QuestionRepository.Add(q);
+
+            return Ok(result);
+        }
+
 
         /*******************************************************
          * Helpers
          * *****************************************************/
-        
+        private QuestionCommentsModel CreateQuestionCommnetsModel(QuestionCommentsDto questionCom)
+        {
+            var model = new QuestionCommentsModel
+            {
+                ID = questionCom.ID,
+                Score = questionCom.Score,
+                Creationdate = questionCom.Creationdate,
+                Test = questionCom.Text
+            }; 
+            return model;
+        }
 
         private QuestionAnswersModel CreateQuestionAnswersModel(QuestionAnswersDto question)
         {
@@ -117,79 +177,5 @@ namespace WebService.Controllers
             return Url.Link(nameof(GetQuestion), new { id });
         }
     
-
-
-
-
-
-
-
-
-
-
-		/*******************************************************
-       * Nice to have
-       * *****************************************************/       
-		private QuestionCommentsModel CreateQuestionCommnetsModel(QuestionCommentsDto questionCom)
-        {
-            var model = new QuestionCommentsModel
-            {
-                ID = questionCom.ID,
-                Score = questionCom.Score,
-                Creationdate = questionCom.Creationdate,
-                Test = questionCom.Text
-            };
-            return model;
-        }
-
-
-        [HttpGet("{id}/answers", Name = nameof(GetQuestionAnswers))]
-        public async Task<IActionResult> GetQuestionAnswers(int id)
-        {
-            var queAnswers = await _QuestionRepository.GetQuestionAnswers(id);
-            if (queAnswers == null) return NotFound();
-
-            var model = queAnswers.Select(que => CreateQuestionAnswersModel(que));
-
-            return Ok(model);
-        }
-
-
-        [HttpGet("{id}/comments", Name = nameof(GetQuestionComments))]
-        public async Task<IActionResult> GetQuestionComments(int id)
-        {
-            var queCom = await _QuestionRepository.GetQuestionComments(id);
-            if (queCom == null) return NotFound();
-
-            var model = queCom.Select(que => CreateQuestionCommnetsModel(que));
-
-            return Ok(model);
-        }
-
-		[HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteQuestion(int id)
-        {
-            if (!await _QuestionRepository.Delete(id)) return NotFound();
-            return NoContent();
-        }
-
-        [HttpPost("{id}")]
-        public async Task<IActionResult> CreateQuestion([FromBody] QuestionModel model)
-        {
-            if (model == null) return BadRequest();
-
-            var q = new Question
-            {
-                Title = model.Title,
-                Body = model.Body,
-                UserID = model.UserID,
-                Score = model.Score,
-                CreationDate = model.Creationdate
-            };
-
-            var result = await _QuestionRepository.Add(q);
-
-            return Ok(result);
-        }
     }
 }
