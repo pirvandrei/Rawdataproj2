@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DataTransferObjects\DataTransferObjects.csproj" />
+    <ProjectReference Include="..\DataService\DataService.csproj" />
     <ProjectReference Include="..\DomainModel\DomainModel.csproj" />
   </ItemGroup>
 

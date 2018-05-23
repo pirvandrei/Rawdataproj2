@@ -256,7 +256,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\StackoverflowContext\StackoverflowContext.csproj" />
-    <ProjectReference Include="..\DataTransferObjects\DataTransferObjects.csproj" />
+    <ProjectReference Include="..\DataService\DataService.csproj" />
   </ItemGroup>
 
   <ItemGroup>
