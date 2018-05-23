@@ -118,7 +118,7 @@ namespace StackoverflowContext
             }
         }
 
-        public async Task<StringBuilder> TermNetwork(string word, double grade)
+        public async Task<TermNetworkDto> TermNetwork(string word, double grade)
         {
             using (var db = new StackoverflowDbContext())
             {
@@ -137,19 +137,19 @@ namespace StackoverflowContext
 
                 cmd.CommandText = "call term_network(@w, @n)";
 
-                //var result = new TermNetworkDto();
-                var jsonResult = new StringBuilder();
+                var result = new TermNetworkDto();
+                var sb = new StringBuilder();
 
                 using (var reader = await cmd.ExecuteReaderAsync())
                 {
                     while (await reader.ReadAsync())
                     {
-                        jsonResult.Append((string)reader["var graph = "]);
-                        //result.Graph = (string)reader["var graph = "];
+                        sb.Append((string)reader["var graph = "]);
                     }
                 }
+                result.Graph = sb.ToString();
 
-                return jsonResult;
+                return result;
             }
         }
 

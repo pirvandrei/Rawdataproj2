@@ -76,9 +76,9 @@ namespace WebService.Controllers
             var graph = await _StatisticsRepository.TermNetwork(word, grade);
             if (graph == null) return NotFound("Nothing matched the query");
 
-            //var model = graph.Select(x => CreateAssociationsListModel(x));
+            var model = CreateTermNetworkModel(graph);
 
-            return Ok(graph);
+            return Ok(model);
         }
 
         /*******************************************************
@@ -102,6 +102,13 @@ namespace WebService.Controllers
         private AssociationsListModel CreateAssociationsListModel(AssociationsListDto dto)
         {
             var model = _Mapper.Map<AssociationsListModel>(dto);
+
+            return model;
+        }
+
+        private TermNetworkModel CreateTermNetworkModel(TermNetworkDto dto)
+        {
+            var model = _Mapper.Map<TermNetworkModel>(dto);
 
             return model;
         }

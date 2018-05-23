@@ -11,6 +11,6 @@ namespace DataService
         Task<IList<RankedWordListDto>> RankedWordList(string word);
         Task<IList<WeightedWordListDto>> WeightedWordList(string term);
         Task<IList<AssociationsListDto>> GetAssociations(string word);
-        Task<StringBuilder> TermNetwork(string word, double grade);
+        Task<TermNetworkDto> TermNetwork(string word, double grade);
     }
 }

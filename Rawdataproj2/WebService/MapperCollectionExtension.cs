@@ -34,6 +34,7 @@ namespace WebService
                 cfg.CreateMap<RankedWordListDto, RankedWordListModel>().ReverseMap();
                 cfg.CreateMap<WeightedWordListDto, WeightedWordListModel>().ReverseMap();
                 cfg.CreateMap<AssociationsListDto, AssociationsListModel>().ReverseMap();
+                cfg.CreateMap<TermNetworkDto, TermNetworkModel>().ReverseMap();
 
             });
             return config.CreateMapper();
