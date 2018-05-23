@@ -8,7 +8,7 @@ namespace DataService.Dto.StatisticsDto
     public class RankedWordListDto
     {
         public string Word { get; set; }
-        public int Rank { get; set; }
+        public decimal Rank { get; set; }
     }
 
 }

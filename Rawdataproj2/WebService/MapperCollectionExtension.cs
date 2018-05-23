@@ -7,6 +7,8 @@ using WebService.Models.Note;
 using WebService.Models.Bookmark;
 using WebService.Models.Search;
 using DataService.Dto.SearchDto;
+using WebService.Models.Statistics;
+using DataService.Dto.StatisticsDto;
 
 namespace WebService
 {
@@ -29,6 +31,9 @@ namespace WebService
                 cfg.CreateMap<Note, NoteModel>().ReverseMap();
                 cfg.CreateMap<Bookmark, BookmarkModel>().ReverseMap();
                 //cfg.CreateMap<BestmatchDto, BestmatchModel>().ReverseMap();
+                cfg.CreateMap<RankedWordListDto, RankedWordListModel>().ReverseMap();
+                cfg.CreateMap<WeightedWordListDto, WeightedWordListModel>().ReverseMap();
+                cfg.CreateMap<AssociationsListDto, AssociationsListModel>().ReverseMap();
 
             });
             return config.CreateMapper();

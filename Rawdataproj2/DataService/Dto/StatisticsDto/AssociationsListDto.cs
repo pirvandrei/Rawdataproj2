@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebService.Models.Statistics
+namespace DataService.Dto.StatisticsDto
 {
-    public class AssociationsModel
+    public class AssociationsListDto
     {
         public string Word { get; set; }
-        public int Grade { get; set; }
+        public decimal Grade { get; set; }
     }
 }

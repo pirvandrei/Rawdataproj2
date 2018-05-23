@@ -8,7 +8,7 @@ namespace WebService.Models.Statistics
     public class RankedWordListModel
     {
         public string Word { get; set; }
-        public int Rank { get; set; }
+        public decimal Rank { get; set; }
     }
 
 }

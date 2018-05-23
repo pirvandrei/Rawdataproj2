@@ -38,7 +38,7 @@ namespace StackoverflowContext
                         result.Add(new RankedWordListDto
                         {
                             Word = (string)reader["word"],
-                            Rank = (int)reader["rank"]
+                            Rank = (decimal)reader["rank"]
                         });
                     }
                 }
@@ -82,7 +82,7 @@ namespace StackoverflowContext
             }
         }
 
-        public async Task<IList<AssociationsDto>> GetAssociations(string word)
+        public async Task<IList<AssociationsListDto>> GetAssociations(string word)
         {
             using (var db = new StackoverflowDbContext())
             {
@@ -99,16 +99,16 @@ namespace StackoverflowContext
 
                 cmd.CommandText = "call GetAssociations(@param)";
 
-                var result = new List<AssociationsDto>();
+                var result = new List<AssociationsListDto>();
 
                 using (var reader = cmd.ExecuteReader())
                 {
                     while (await reader.ReadAsync())
                     {
-                        result.Add(new AssociationsDto
+                        result.Add(new AssociationsListDto
                         {
-                            Word = (string)reader["word"],
-                            Grade = (int)reader["grade"]
+                            Word = (string)reader["word2"],
+                            Grade = (decimal)reader["grade"]
                         });
                     }
                 }
@@ -142,7 +142,7 @@ namespace StackoverflowContext
                 {
                     while (await reader.ReadAsync())
                     {
-                        result.Graph = (string)reader["var graph ="];
+                        result.Graph = (string)reader["var graph = "];
                     }
                 }
 
