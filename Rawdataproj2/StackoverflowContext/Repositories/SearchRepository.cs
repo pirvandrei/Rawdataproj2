@@ -75,7 +75,7 @@ namespace StackoverflowContext
             var numberOfRows = 0;
             cmd.CommandText = cmdText;
 
-            using (var reader = cmd.ExecuteReader())
+            using (var reader = await cmd.ExecuteReaderAsync())
             {
                 while (await reader.ReadAsync())
                 {
@@ -111,7 +111,7 @@ namespace StackoverflowContext
         {
             var result = new List<SearchResultDto>();
 
-            using (var reader = cmd.ExecuteReader())
+            using (var reader = await cmd.ExecuteReaderAsync())
             {
                 while (await reader.ReadAsync())
                 {

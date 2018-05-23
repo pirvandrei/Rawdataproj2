@@ -138,7 +138,7 @@ namespace StackoverflowContext
 
                 var result = new TermNetworkDto();
 
-                using (var reader = cmd.ExecuteReader())
+                using (var reader = await cmd.ExecuteReaderAsync())
                 {
                     while (await reader.ReadAsync())
                     {
