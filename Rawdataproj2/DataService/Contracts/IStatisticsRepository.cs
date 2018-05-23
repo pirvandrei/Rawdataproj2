@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using DataService.Dto.StatisticsDto;
 
-namespace DataService.Repositories
+namespace DataService
 {
-    interface IStatisticsRepository
+    public interface IStatisticsRepository
     {
-        Task<IList<object>> RankedWordList(int id);
-        Task<IList<object>> WeightedWordList(int id);
-        Task<IList<object>> GetAssociations(int id);
-        Task<IList<object>> TermNetwork(int id);
+        Task<IList<RankedWordListDto>> RankedWordList(string word);
+        Task<IList<WeightedWordListDto>> WeightedWordList(string term);
+        Task<IList<AssociationsDto>> GetAssociations(string word);
+        Task<TermNetworkDto> TermNetwork(string word, double grade);
     }
 }

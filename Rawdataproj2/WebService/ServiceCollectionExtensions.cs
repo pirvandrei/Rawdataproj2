@@ -14,7 +14,7 @@ namespace WebService
             services.AddSingleton<INoteRepository, NoteRepository>();
             services.AddSingleton<IBookmarkRepository, BookmarkRepository>();
             services.AddSingleton<ISearchRepository, SearchRepository>();
-            //services.AddSingleton<IStatisticsRepository, SearchRepository>();
+            services.AddSingleton<IStatisticsRepository, StatisticsRepository>();
             return services;
         }
     }
