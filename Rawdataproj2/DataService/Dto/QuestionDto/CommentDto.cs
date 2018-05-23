@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using DomainModel;
 
-namespace DataRepository.Dto.PostDto
+namespace DataService.Dto.PostDto
 {
     public class CommentDto
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using DomainModel;
 
-namespace DataRepository.Dto.BookmarkDto
+namespace DataService.Dto.BookmarkDto
 {
     public class BookmarkDto
     {

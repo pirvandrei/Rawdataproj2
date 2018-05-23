@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DataRepository;
-using DataRepository.Dto.SearchDto;
+using DataService;
+using DataService.Dto.SearchDto;
 using DomainModel;
 using Microsoft.AspNetCore.Mvc;
 using WebService.Models;

@@ -5,8 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DataRepository.Dto.PostDto;
-using DataRepository;
+using DataService.Dto.PostDto;
+using DataService;
 
 using AutoMapper;
 using WebService.Models.Note;

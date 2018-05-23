@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using DomainModel;
 using WebService.Models.Bookmark;
-using DataRepository;
-using DataRepository.Dto.BookmarkDto;
+using DataService;
+using DataService.Dto.BookmarkDto;
 
 namespace WebService.Controllers
 {

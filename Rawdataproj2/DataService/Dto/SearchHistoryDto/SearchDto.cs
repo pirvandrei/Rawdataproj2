@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataRepository.Dto.SearchDto
+namespace DataService.Dto.SearchDto
 {
     public class SearchDto
     {

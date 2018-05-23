@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataRepository.Dto.PostDto
+namespace DataService.Dto.PostDto
 {
     public class AnswerDto
     {

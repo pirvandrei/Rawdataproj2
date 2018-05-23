@@ -1,4 +1,4 @@
-﻿using DataRepository;
+﻿using DataService;
 using Microsoft.Extensions.DependencyInjection;
 using StackoverflowContext;
 using System;
@@ -18,6 +18,7 @@ namespace WebService
             services.AddSingleton<INoteRepository, NoteRepository>();
             services.AddSingleton<IBookmarkRepository, BookmarkRepository>();
             services.AddSingleton<ISearchRepository, SearchRepository>();
+            //services.AddSingleton<IStatisticsRepository, SearchRepository>();
             return services;
         }
     }

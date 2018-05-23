@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataRepository.Dto.NoteDto
+namespace DataService.Dto.NoteDto
 {
     public class NoteDto
     {

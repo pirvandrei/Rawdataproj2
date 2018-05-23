@@ -6,7 +6,7 @@ using WebService.Models.Question;
 using WebService.Models.Note;
 using WebService.Models.Bookmark;
 using WebService.Models.Search;
-using DataRepository.Dto.SearchDto;
+using DataService.Dto.SearchDto;
 
 namespace WebService
 {

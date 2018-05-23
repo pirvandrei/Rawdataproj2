@@ -1,13 +1,13 @@
-﻿using DataRepository.Dto.QuestionDto;
+﻿using DataService.Dto.QuestionDto;
 using DomainModel;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataRepository
+namespace DataService
 {
-    public interface IQuestionRepository : IDataRepository<Question, int>
+    public interface IQuestionRepository : IDataService<Question, int>
     {
         Task<IEnumerable<QuestionAnswersDto>> GetQuestionAnswers(int id);
         Task<IEnumerable<QuestionCommentsDto>> GetQuestionComments(int id);

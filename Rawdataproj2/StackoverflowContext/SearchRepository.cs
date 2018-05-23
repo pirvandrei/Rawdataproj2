@@ -1,5 +1,5 @@
-﻿using DataRepository;
-using DataRepository.Dto.SearchDto;
+﻿using DataService;
+using DataService.Dto.SearchDto;
 using Microsoft.EntityFrameworkCore;
 using MySql.Data.MySqlClient;
 using System;

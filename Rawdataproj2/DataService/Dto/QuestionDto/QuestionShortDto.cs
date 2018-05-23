@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataRepository.Dto.QuestionDto
+namespace DataService.Dto.QuestionDto
 {
     public class QuestionShortDto
     {

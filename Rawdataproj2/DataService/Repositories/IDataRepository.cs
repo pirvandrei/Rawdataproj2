@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace DataRepository
+namespace DataService
 {
-    public interface IDataRepository<TEntity, in TKey> where TEntity : class
+    public interface IDataService<TEntity, in TKey> where TEntity : class
     {
         Task<TEntity> Get(TKey id);
         Task<IEnumerable<TEntity>> GetAll(PagingInfo pagingInfo);

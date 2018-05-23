@@ -1,10 +1,10 @@
 ﻿using DomainModel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using DataRepository.Dto.SearchDto;
+using DataService.Dto.SearchDto;
 using System;
 
-namespace DataRepository
+namespace DataService
 {
     public interface ISearchRepository
     {

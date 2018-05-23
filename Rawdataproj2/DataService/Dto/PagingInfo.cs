@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataRepository
+namespace DataService
 {
     public class PagingInfo
     {

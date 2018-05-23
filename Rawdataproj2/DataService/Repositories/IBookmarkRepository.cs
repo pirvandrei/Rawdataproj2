@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataRepository
+namespace DataService
 {
-    public interface IBookmarkRepository : IDataRepository<Bookmark, int>
+    public interface IBookmarkRepository : IDataService<Bookmark, int>
     {
 
     }

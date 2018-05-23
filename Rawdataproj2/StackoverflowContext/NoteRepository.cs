@@ -1,5 +1,5 @@
-﻿using DataRepository;
-using DataRepository.Dto.PostDto;
+﻿using DataService;
+using DataService.Dto.PostDto;
 using DomainModel;
 using Microsoft.EntityFrameworkCore;
 using System;

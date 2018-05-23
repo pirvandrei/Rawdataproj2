@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataRepository
+namespace DataService
 {
-    public interface INoteRepository : IDataRepository<Note, int>
+    public interface INoteRepository : IDataService<Note, int>
     {
        
     }

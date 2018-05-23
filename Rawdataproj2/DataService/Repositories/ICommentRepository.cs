@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataRepository
+namespace DataService
 {
-    public interface ICommentRepository : IDataRepository<Comment, int>
+    public interface ICommentRepository : IDataService<Comment, int>
     {
     }
 }
