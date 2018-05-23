@@ -26,7 +26,7 @@ namespace WebService.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return Ok("test");
+            return Ok("Use either the rankedwordlist, weightedwordlist, associations or termnetwork for retrieving statistics");
         }
 
         [HttpGet("rankedwordlist", Name = nameof(RankedWordList))] 
@@ -78,7 +78,7 @@ namespace WebService.Controllers
 
             //var model = graph.Select(x => CreateAssociationsListModel(x));
 
-            return Json(graph);
+            return Ok(graph);
         }
 
         /*******************************************************

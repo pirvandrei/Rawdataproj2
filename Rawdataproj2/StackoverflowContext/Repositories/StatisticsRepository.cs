@@ -7,6 +7,7 @@ using DataService;
 using DataService.Dto.StatisticsDto;
 using Microsoft.EntityFrameworkCore;
 using MySql.Data.MySqlClient;
+using Newtonsoft.Json;
 
 namespace StackoverflowContext
 {
@@ -117,7 +118,7 @@ namespace StackoverflowContext
             }
         }
 
-        public async Task<TermNetworkDto> TermNetwork(string word, double grade)
+        public async Task<StringBuilder> TermNetwork(string word, double grade)
         {
             using (var db = new StackoverflowDbContext())
             {
@@ -136,17 +137,19 @@ namespace StackoverflowContext
 
                 cmd.CommandText = "call term_network(@w, @n)";
 
-                var result = new TermNetworkDto();
+                //var result = new TermNetworkDto();
+                var jsonResult = new StringBuilder();
 
                 using (var reader = await cmd.ExecuteReaderAsync())
                 {
                     while (await reader.ReadAsync())
                     {
-                        result.Graph = (string)reader["var graph = "];
+                        jsonResult.Append((string)reader["var graph = "]);
+                        //result.Graph = (string)reader["var graph = "];
                     }
                 }
 
-                return result;
+                return jsonResult;
             }
         }
 
