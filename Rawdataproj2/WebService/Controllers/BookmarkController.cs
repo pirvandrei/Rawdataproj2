@@ -8,6 +8,7 @@ using DomainModel;
 using WebService.Models.Bookmark;
 using DataService;
 using DataService.Dto.BookmarkDto;
+using WebService.Models;
 
 namespace WebService.Controllers
 {
@@ -24,7 +25,7 @@ namespace WebService.Controllers
         }
 
         [HttpGet("{id}", Name = nameof(GetBookmark))] 
-        public async Task<ActionResult> GetBookmark(int id)
+        public async Task<IActionResult> GetBookmark(int id)
         {
             var question =  await _BookmarkRepository.Get(id);
             if (question == null) return NotFound(); 
@@ -38,29 +39,14 @@ namespace WebService.Controllers
         public async Task<IActionResult> GetBookmarks(PagingInfo pagingInfo)
         {
             var bookmark = await _BookmarkRepository.GetAll(pagingInfo);
-            IEnumerable<BookmarkListModel> model = bookmark.Select(que => CreateBookmarkListModel(que));
+            var model = bookmark.Select(que => CreateBookmarkListModel(que));
 
             var total = _BookmarkRepository.Count();
-            var pages = (int)Math.Ceiling(total / (double)pagingInfo.PageSize);
+            var prev = Url.Link(nameof(GetBookmarks), new { page = pagingInfo.Page - 1, pagingInfo.PageSize });
+            var next = Url.Link(nameof(GetBookmarks), new { page = pagingInfo.Page + 1, pagingInfo.PageSize });
 
-            var prev = pagingInfo.Page > 0
-                                 ? Url.Link(nameof(GetBookmark),
-                    new { page = pagingInfo.Page - 1, pagingInfo.PageSize })
-                : null;
-
-            var next = pagingInfo.Page < pages - 1
-                                 ? Url.Link(nameof(GetBookmark),
-                    new { page = pagingInfo.Page + 1, pagingInfo.PageSize })
-                : null;
-
-            var result = new
-            {
-                Prev = prev,
-                Next = next,
-                Total = total,
-                Pages = pages,
-                Bookmarks = model
-            }; 
+            var returnType = new ReturnTypeConstants("bookmarks");
+            var result = PagingHelper.GetPagingResult(pagingInfo, total, model, returnType, prev, next);
 
             return Ok(result);
         }
@@ -109,12 +95,6 @@ namespace WebService.Controllers
         {
             return Url.Link(nameof(GetBookmark), new { id });
         }
-
-        //private string CreateAnswerLink(int id)
-        //{
-        //    return Url.Link(nameof(GetAnswer), new { id });
-        //}
-
       
     }
 }

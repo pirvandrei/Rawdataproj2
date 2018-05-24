@@ -10,7 +10,9 @@ namespace WebService.Models
         {
             posts,
             questions,
-            notes
+            notes,
+            bookmarks,
+            searchhistory
         }
 
         /// <summary>
@@ -39,6 +41,12 @@ namespace WebService.Models
                     break;
                 case "notes":
                     value = TypeConstants.notes.ToString();
+                    break;
+                case "bookmarks":
+                    value = TypeConstants.bookmarks.ToString();
+                    break;
+                case "searchhistory":
+                    value = TypeConstants.searchhistory.ToString();
                     break;
             }
             return value;

@@ -38,7 +38,7 @@ namespace WebService.Controllers
             var getEndDate = string.IsNullOrEmpty(enddate) ? enddate = "'" + DateTime.Today.ToString("yyyy-MM-dd") + "'" : enddate;
 
             var search = await UseFetchingMethod(cleanedQuery, pagingInfo, method, getStartDate, getEndDate);
-            if (search == null || search.Item2 <= 0) return NotFound("Nothing matched your query");
+            if (search == null || search.Item2 <= 0) return NotFound("Nothing matched the query");
 
             var model = search.Item1.Select(s => CreateSearchResultModel(s));
 

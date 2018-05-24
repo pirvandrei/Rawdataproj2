@@ -30,7 +30,7 @@ namespace WebService.Controllers
         public async Task<IActionResult> GetQuestions(PagingInfo pagingInfo)
         {
             var question = await _QuestionRepository.GetAll(pagingInfo);
-            IEnumerable<QuestionListModel> model = question.Select(que => CreateQuestionListModel(que));
+            var model = question.Select(que => CreateQuestionListModel(que));
 
             var total = _QuestionRepository.Count();
             var prev = Url.Link(nameof(GetQuestions), new { page = pagingInfo.Page - 1, pagingInfo.PageSize });

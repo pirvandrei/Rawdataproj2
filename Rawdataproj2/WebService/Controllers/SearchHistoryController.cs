@@ -26,29 +26,14 @@ namespace WebService.Controllers
         {
             var history = await _SearchHistoryRepository.GetAll(pagingInfo);
 
-            IEnumerable<SearchHistoryListModel> model = history.Select(search => SearchHistoryListModel(search));
+            var model = history.Select(search => SearchHistoryListModel(search));
 
             var total = _SearchHistoryRepository.Count();
-            var pages = (int)Math.Ceiling(total / (double)pagingInfo.PageSize);
+            var prev = Url.Link(nameof(GetHistory), new { page = pagingInfo.Page - 1, pagingInfo.PageSize });
+            var next = Url.Link(nameof(GetHistory), new { page = pagingInfo.Page + 1, pagingInfo.PageSize });
 
-            var prev = pagingInfo.Page > 0
-                ? Url.Link(nameof(GetHistory),
-                    new { page = pagingInfo.Page - 1, pagingInfo.PageSize })
-                : null;
-
-            var next = pagingInfo.Page < pages - 1
-                ? Url.Link(nameof(GetHistory),
-                    new { page = pagingInfo.Page + 1, pagingInfo.PageSize })
-                : null;
-
-            var result = new
-            {
-                Prev = prev,
-                Next = next,
-                Total = total,
-                Pages = pages,
-                History = model
-            };
+            var returnType = new ReturnTypeConstants("searchhistory");
+            var result = PagingHelper.GetPagingResult(pagingInfo, total, model, returnType, prev, next);
 
             return Ok(result);  
         } 

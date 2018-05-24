@@ -31,7 +31,7 @@ namespace WebService.Controllers
         public async Task<IActionResult> GetNotes(PagingInfo pagingInfo)
         {
             var notes = await _NoteRepository.GetAll(pagingInfo);
-            IEnumerable<NoteListModel> model = notes.Select(note => CreateNoteListModel(note));
+            var model = notes.Select(note => CreateNoteListModel(note));
 
             var total = _NoteRepository.Count();
             var prev = Url.Link(nameof(GetNotes), new { page = pagingInfo.Page - 1, pagingInfo.PageSize });
