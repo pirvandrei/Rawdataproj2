@@ -73,7 +73,9 @@ namespace WebService.Controllers
         {
             if (string.IsNullOrEmpty(word)) return Ok("No word parameter");
 
-            var graph = await _StatisticsRepository.TermNetwork(word, grade);
+            var cleanWord = CleanString(word);
+
+            var graph = await _StatisticsRepository.TermNetwork(cleanWord, grade);
             if (graph == null) return NotFound("Nothing matched the query");
 
             var model = CreateTermNetworkModel(graph);
@@ -111,6 +113,16 @@ namespace WebService.Controllers
             var model = _Mapper.Map<TermNetworkModel>(dto);
 
             return model;
+        }
+
+        private string CleanString(string word)
+        {
+            var charsToRemove = new string[] { @"\", "\"" };
+            foreach (var c in charsToRemove)
+            {
+                word = word.Replace(c, string.Empty);
+            }
+            return word;
         }
 
 
