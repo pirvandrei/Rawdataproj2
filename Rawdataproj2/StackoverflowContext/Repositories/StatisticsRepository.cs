@@ -32,7 +32,7 @@ namespace StackoverflowContext
 
                 var result = new List<RankedWordListDto>();
 
-                using (var reader = cmd.ExecuteReader())
+                using (var reader = await cmd.ExecuteReaderAsync())
                 {
                     while (await reader.ReadAsync())
                     {
@@ -67,7 +67,7 @@ namespace StackoverflowContext
 
                 var result = new List<WeightedWordListDto>();
 
-                using (var reader = cmd.ExecuteReader())
+                using (var reader = await cmd.ExecuteReaderAsync())
                 {
                     while (await reader.ReadAsync())
                     {
@@ -102,7 +102,7 @@ namespace StackoverflowContext
 
                 var result = new List<AssociationsListDto>();
 
-                using (var reader = cmd.ExecuteReader())
+                using (var reader = await cmd.ExecuteReaderAsync())
                 {
                     while (await reader.ReadAsync())
                     {

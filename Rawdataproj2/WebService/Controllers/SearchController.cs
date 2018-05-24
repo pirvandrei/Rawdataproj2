@@ -137,25 +137,26 @@ namespace WebService.Controllers
             return model;
         }
 
-        private string CleanString(string word)
+        private string CleanString(string query)
         {
             var charsToRemove = new string[] { @"\", "\"" };
 
             foreach (var c in charsToRemove)
             {
-                word = word.Replace(c, string.Empty);
+                query = query.Replace(c, string.Empty);
             }
 
-            string baseString = word;
+            string baseString = query;
             var re = new Regex("(?<=\")[^\"]*(?=\")|[^\" ]+");
-            var strings = re.Matches(baseString).Cast<Match>().Select(m => m.Value).ToArray();
+            var words = re.Matches(baseString).Cast<Match>().Select(m => m.Value).ToArray();
 
             var sb = new StringBuilder();
-            string lastWord = strings[strings.Length - 1];
+            string lastWord = words[words.Length - 1];
 
-            foreach (var w in strings)
+            foreach (var w in words)
             {
                 sb.Append("'" + w + "'");
+
                 if(w != lastWord)
                 {
                     sb.Append(" ");
