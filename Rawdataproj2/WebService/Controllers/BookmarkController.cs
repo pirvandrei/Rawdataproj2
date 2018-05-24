@@ -24,17 +24,6 @@ namespace WebService.Controllers
             _Mapper = Mapper;
         }
 
-        [HttpGet("{id}", Name = nameof(GetBookmark))] 
-        public async Task<IActionResult> GetBookmark(int id)
-        {
-            var question =  await _BookmarkRepository.Get(id);
-            if (question == null) return NotFound(); 
-
-            var model = _Mapper.Map<BookmarkModel>(question);
-             
-            return  Ok(model);
-        }
-         
         [HttpGet(Name = nameof(GetBookmarks))]
         public async Task<IActionResult> GetBookmarks(PagingInfo pagingInfo)
         {
@@ -49,6 +38,17 @@ namespace WebService.Controllers
             var result = PagingHelper.GetPagingResult(pagingInfo, total, model, returnType, prev, next);
 
             return Ok(result);
+        }
+
+        [HttpGet("{id}", Name = nameof(GetBookmark))] 
+        public async Task<IActionResult> GetBookmark(int id)
+        {
+            var question =  await _BookmarkRepository.Get(id);
+            if (question == null) return NotFound(); 
+
+            var model = _Mapper.Map<BookmarkModel>(question);
+             
+            return  Ok(model);
         }
 
         [HttpDelete("{id}")]

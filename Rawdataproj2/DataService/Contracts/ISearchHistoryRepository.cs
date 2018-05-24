@@ -8,7 +8,7 @@ namespace DataService
 {
     public interface ISearchHistoryRepository : IDataService<Search, int>
     {
-        Task<IEnumerable<Search>> GetSearchHistory(int userid);
+        Task<IEnumerable<Search>> GetSearchHistory(int userid, PagingInfo pagingInfo);
         //bool DeletePeriodSearchHistory(DateTime from, DateTime to);
     }
 }

@@ -28,11 +28,14 @@ namespace StackoverflowContext
             }
         }
 
-        public async Task<IEnumerable<Search>> GetSearchHistory(int userid)
+        public async Task<IEnumerable<Search>> GetSearchHistory(int userid, PagingInfo pagingInfo)
         {
             using (var db = new StackoverflowDbContext())
             {
-                return await db.Searches.Where(x => x.User.ID == userid).ToListAsync();
+                return await db.Searches
+                    .Skip(pagingInfo.Page * pagingInfo.PageSize)
+                    .Take(pagingInfo.PageSize)
+                    .Where(x => x.User.ID == userid).ToListAsync();
             }
         }
 

@@ -21,10 +21,10 @@ namespace WebService.Controllers
             _SearchHistoryRepository = SearchHistoryRepository;
         }
 
-        [HttpGet("{id}", Name = nameof(GetHistory))]
-        public async Task<IActionResult> GetHistory(PagingInfo pagingInfo)
+        [HttpGet("{userid}", Name = nameof(GetHistory))]
+        public async Task<IActionResult> GetHistory(int userid, PagingInfo pagingInfo)
         {
-            var history = await _SearchHistoryRepository.GetAll(pagingInfo);
+            var history = await _SearchHistoryRepository.GetSearchHistory(userid, pagingInfo);
 
             var model = history.Select(search => SearchHistoryListModel(search));
 
@@ -38,10 +38,10 @@ namespace WebService.Controllers
             return Ok(result);  
         } 
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteSearch(int id)
+        [HttpDelete("{userid}")]
+        public async Task<IActionResult> DeleteSearch(int userid, string text)
         {
-            if (!await _SearchHistoryRepository.Delete(id)) return NotFound();
+            if (!await _SearchHistoryRepository.Delete(userid)) return NotFound();
             return NoContent();
         }
 
@@ -61,8 +61,6 @@ namespace WebService.Controllers
 
             return Ok(result);
         }
-
-
 
         /*******************************************************
          * Helpers
