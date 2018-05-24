@@ -142,6 +142,7 @@ namespace StackoverflowContext
 
                 using (var reader = await cmd.ExecuteReaderAsync())
                 {
+                    await reader.ReadAsync();
                     while (await reader.ReadAsync())
                     {
                         sb.Append((string)reader["var graph = "]);
