@@ -6,7 +6,10 @@
             jquery: 'bower_components/jQuery/dist/jquery.min',
             text: 'bower_components/requirejs-text/text',
             jqcloud: 'bower_components/jqcloud2/dist/jqcloud',
-            sammy: 'bower_components/sammy/lib/sammy'
+            sammy: 'bower_components/sammy/lib/sammy',
+            menu: 'js/services/menu',
+            request: 'js/services/request',
+            state: 'js/services/state'
         }
     });
    
@@ -41,54 +44,29 @@
         });
 
     });
-    require(['knockout','sammy'], function (ko,Sammy) {
-        var self = this;
-        self.locations = ['display-search'];
-        self.currentLocation = ko.observable();
+    // setup routing
+    require(['knockout', 'sammy', 'state', 'menu'], function (ko, sammy, state, menuDef) {
 
-        // setup routing
+        // create the router
+        var appRouter = sammy('#main', function () {
+            var router = this;
+            router.get("/#/history", function (context) {
+                var menu = menuDef.menuList.find(m => m.path === context.path);
+                state.dispatch(state.actions.changeMenu(menu));
+            });
+            router.get("/#/notes", function (context) {
+                var menu = menuDef.menuList.find(m => m.path === context.path);
+                state.dispatch(state.actions.changeMenu(menu));
+            });
+        });
 
-        self.changeLocation = function (locaiton) { self.chosenFolderId(folder); };
-        function vm() {
-            var self = this;
-            //Initially loaded comoponent
-            this.componentName = ko.observable("post-items");
-            this.searchString = ko.observable('');
-            //Available pages in the menu
-            this.menuItems = [
-                { 'name': 'History', 'component': 'history' },
-                { 'name': 'Notes', 'component': 'display-search' }
-            ];
-            this.pageId = ko.observable();
-            // Behaviours    
-            self.goToPage = function (item) {
-                self.currentLocation(item.component);
-                location.hash = item.component
-            };
-            //Execute this function to retrieve results for search
-            this.startSearch = function () {
-                
-            }
-            Sammy(function () {
-                this.get(':item', function () {
-                    console.log('sdas')
-                    self.componentName(this.);
-                    
-                });
-                this.notFound = function () {
-                    self.componentName('display-search');
-                }
+        ko.router = appRouter;
 
-
-
-                //this.get('#:folder/:mailId', function () {
-                //    self.chosenFolderId(this.params.folder);
-                //    self.chosenFolderData(null);
-                //    $.get("/mail", { mailId: this.params.mailId }, self.chosenMailData);
-                //});
-            }).run();
-        }
-        ko.applyBindings(new vm());
+        appRouter.run();
+    });
+    require(['knockout', 'sammy', 'menu', 'state','js/viewModel'], function (ko,Sammy,menu,state,vm) {
+          
+        ko.applyBindings(vm);
 
     })  
 

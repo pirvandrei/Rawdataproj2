@@ -13,6 +13,7 @@
                 params: { name: "Notes" },
                 path: '/#/notes'
             }
+
         ]
     }
 })

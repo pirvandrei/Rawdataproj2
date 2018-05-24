@@ -1,8 +1,9 @@
-﻿define(['knockout'],
-    function (ko, postman, store, config) {
-
-
-        var selectedElement = ko.observable();
+﻿define(['knockout', 'menu','state'],
+    function (ko, menuDef, state) {
+        this.searchString = ko.observable();
+        this.startSearch = function () {
+        }
+        var selecteMenu = ko.observable();
         var selectedComponent = ko.observable();
         var selectedParams = ko.observable();
 
@@ -12,13 +13,6 @@
             selectedComponent(menu.component);
         }
 
-        postman.subscribe("ChangeMenu", changeMenu);
-
-        //store.subscribe(function () {
-        //    selecteMenu(store.getState().selectedMenu);
-        //    selectedParams(store.getState().selectedParams);
-        //    selectedComponent(store.getState().selectedComponent);
-        //});
 
         var isActive = function (menu) {
             if (selecteMenu() === menu.name) {
@@ -28,13 +22,12 @@
         }
 
         // select this default menu
-        //store.dispatch(store.actions.changeMenu(config.menuList[0]));
-        changeMenu(config.menuList[0]);
+        changeMenu(menuDef.menuList[1]);
 
         return {
             selectedComponent,
             selectedParams,
-            menuList: config.menuList,
+            menuList: menuDef.menuList,
             isActive
         }
 
