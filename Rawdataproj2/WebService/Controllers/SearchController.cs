@@ -18,12 +18,10 @@ namespace WebService.Controllers
     public class SearchController : Controller
     {
         private readonly ISearchRepository _SearchRepository;
-        private readonly IMapper _Mapper;
 
         public SearchController(ISearchRepository SearchRepository, IMapper Mapper)
         {
             _SearchRepository = SearchRepository;
-            _Mapper = Mapper;
         }
 
         [HttpGet(Name = nameof(Search))]
@@ -69,27 +67,27 @@ namespace WebService.Controllers
             {
                 case "\"\"":
                     var option1 = await _SearchRepository.BestMatchRanked(query, pagingInfo, startDate, endDate);
-                    option1.Item1.ToList().ForEach(s => { result.Add(s); });
+                    result = option1.Item1;
                     numberOfRows = option1.Item2;
                     break;
                 case "\"bestmatchranked\"":
                     var option2 = await _SearchRepository.BestMatchRanked(query, pagingInfo, startDate, endDate);
-                    option2.Item1.ToList().ForEach(s => { result.Add(s); });
+                    result = option2.Item1;
                     numberOfRows = option2.Item2;
                     break;
                 case "\"matchall\"":
                     var option3 = await _SearchRepository.MatchAll(query, pagingInfo, startDate, endDate);
-                    option3.Item1.ToList().ForEach(s => { result.Add(s); });
+                    result = option3.Item1;
                     numberOfRows = option3.Item2;
                     break;
                 case "\"bestmatchweighted\"":
                     var option4 = await _SearchRepository.BestMatchWeighted(query, pagingInfo, startDate, endDate);
-                    option4.Item1.ToList().ForEach(s => { result.Add(s); });
+                    result = option4.Item1;
                     numberOfRows = option4.Item2;
                     break;
                 default:
                     var defaultOption = await _SearchRepository.BestMatchRanked(query, pagingInfo, startDate, endDate);
-                    defaultOption.Item1.ToList().ForEach(s => { result.Add(s); });
+                    result = defaultOption.Item1;
                     numberOfRows = defaultOption.Item2;
                     break;
             }
@@ -146,9 +144,8 @@ namespace WebService.Controllers
                 query = query.Replace(c, string.Empty);
             }
 
-            string baseString = query;
-            var re = new Regex("(?<=\")[^\"]*(?=\")|[^\" ]+");
-            var words = re.Matches(baseString).Cast<Match>().Select(m => m.Value).ToArray();
+            var regex = new Regex("(?<=\")[^\"]*(?=\")|[^\" ]+");
+            var words = regex.Matches(query).Cast<Match>().Select(m => m.Value).ToArray();
 
             var sb = new StringBuilder();
             string lastWord = words[words.Length - 1];
