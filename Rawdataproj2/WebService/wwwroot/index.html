@@ -60,13 +60,31 @@
 </head>
 <body>
     <!--Navbar -->
-    <div data-bind='component: "navigation"'></div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control" type="search" placeholder="Search" aria-label="Search" data-bind="value: searchString">
+            <div class="btn btn-outline-success my-2 my-sm-0" data-bind="click:startSearch"><i class="fas fa-search"></i></div>
+        </form>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto" data-bind="foreach: menuItems">
+                <li class="nav-item" data-bind="text: $data.name,
+                       css: { selected: $data.component == $root.pageId() },
+                       click: $root.goToPage">
+                    <a class="nav-link" href="#"> <span class="sr-only">(current)</span></a>
+                </li>
+
+            </ul>
+        </div>
+    </nav>
 
     <!---Body -->
     <div class="container">
+        <!--<div data-bind="component: { name: componentName, params: { value: $data } }"></div>-->
+
+        <div data-bind="component: { name: componentName }"></div>
         <div data-bind='component: "post-question"'></div>
         <div data-bind='component: "display-search"'>
-    </div>
+        </div>
     </div>
     <!--Scripts-->
     <script src="bower_components\requirejs\require.js"></script>
