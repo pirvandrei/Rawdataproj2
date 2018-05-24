@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using AutoMapper;
 using DataService; 
@@ -31,11 +33,13 @@ namespace WebService.Controllers
             {
                 return Ok("No query provided");
             }
+
+            var cleanedQuery = CleanString(query);
             
-            var getStartDate = string.IsNullOrEmpty(startdate) ? startdate = "'1900-01-01'" : startdate;
+            var getStartDate = string.IsNullOrEmpty(startdate) ? startdate = "'2000-01-01'" : startdate;
             var getEndDate = string.IsNullOrEmpty(enddate) ? enddate = "'" + DateTime.Today.ToString("yyyy-MM-dd") + "'" : enddate;
 
-            var search = await UseFetchingMethod(query, pagingInfo, method, getStartDate, getEndDate);
+            var search = await UseFetchingMethod(cleanedQuery, pagingInfo, method, getStartDate, getEndDate);
             if (search == null || search.Item2 <= 0) return NotFound("Nothing matched your query");
 
             var model = search.Item1.Select(s => CreateSearchResultModel(s));
@@ -131,6 +135,34 @@ namespace WebService.Controllers
                 Body = search.Body
             };
             return model;
+        }
+
+        private string CleanString(string word)
+        {
+            var charsToRemove = new string[] { @"\", "\"" };
+
+            foreach (var c in charsToRemove)
+            {
+                word = word.Replace(c, string.Empty);
+            }
+
+            string baseString = word;
+            var re = new Regex("(?<=\")[^\"]*(?=\")|[^\" ]+");
+            var strings = re.Matches(baseString).Cast<Match>().Select(m => m.Value).ToArray();
+
+            var sb = new StringBuilder();
+            string lastWord = strings[strings.Length - 1];
+
+            foreach (var w in strings)
+            {
+                sb.Append("'" + w + "'");
+                if(w != lastWord)
+                {
+                    sb.Append(" ");
+                }
+            }
+
+            return sb.ToString();
         }
 
     }
