@@ -80,8 +80,7 @@
         <!---Body -->
         <!--<div data-bind="component: { name: componentName, params: { value: $data } }"></div>-->
 
-        <div data-bind='component: "post-question"'></div>
-        <div data-bind='component: "display-search"'>
+    <div data-bind="component: { name: selectedComponent, params: selectedParams }"></div>
         </div>
     </div>
     <!--Scripts-->

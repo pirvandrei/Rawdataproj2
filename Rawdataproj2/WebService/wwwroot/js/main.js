@@ -42,32 +42,15 @@
             viewModel: { require: "js/components/history/history" },
             template: { require: "text!js/components/history/history.html" }
         });
-
-    });
-    // setup routing
-    require(['knockout', 'sammy', 'state', 'menu'], function (ko, sammy, state, menuDef) {
-
-        // create the router
-        var appRouter = sammy('#main', function () {
-            var router = this;
-            router.get("/#/history", function (context) {
-                var menu = menuDef.menuList.find(m => m.path === context.path);
-                state.dispatch(state.actions.changeMenu(menu));
-            });
-            router.get("/#/notes", function (context) {
-                var menu = menuDef.menuList.find(m => m.path === context.path);
-                state.dispatch(state.actions.changeMenu(menu));
-            });
+        ko.components.register("notes", {
+            viewModel: { require: "js/components/notes/notes" },
+            template: { require: "text!js/components/notes/notes.html" }
         });
 
-        ko.router = appRouter;
-
-        appRouter.run();
     });
-    require(['knockout', 'sammy', 'menu', 'state','js/viewModel'], function (ko,Sammy,menu,state,vm) {
-          
-        ko.applyBindings(vm);
 
+    require(['knockout', 'sammy', 'menu', 'state', 'js/viewModel'], function (ko, Sammy, menu, state, vm) {
+        ko.applyBindings(vm);
     })  
 
 })();
