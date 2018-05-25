@@ -12,6 +12,7 @@ using AutoMapper;
 using WebService.Models.Note;
 using WebService.Models;
 using WebService.Models.User;
+using Microsoft.Extensions.Logging;
 
 namespace WebService.Controllers
 {
@@ -20,17 +21,20 @@ namespace WebService.Controllers
     {
         private readonly INoteRepository _NoteRepository;
         private readonly IMapper _Mapper;
+        //private readonly ILogger _logger;
 
 
-        public NoteController(INoteRepository NoteRepository, IMapper Mapper)
+        public NoteController(INoteRepository NoteRepository, IMapper Mapper/*, ILogger<NoteController> logger*/)
         {
             _NoteRepository = NoteRepository;
             _Mapper = Mapper;
+            //_logger = logger;
         }
 
         [HttpGet(Name = nameof(GetNotes))]
         public async Task<IActionResult> GetNotes(PagingInfo pagingInfo)
         {
+            
             var notes = await _NoteRepository.GetAll(pagingInfo);
             var model = notes.Select(note => CreateNoteListModel(note));
 
@@ -48,9 +52,13 @@ namespace WebService.Controllers
         [HttpGet("{id}", Name = nameof(GetNote))]
         public async Task<IActionResult> GetNote(int id)
         {
+            //_logger.LogInformation(LoggingEvents.GetItem, "Getting item {ID}", id);
             var note = await _NoteRepository.Get(id);
-            if (note == null) return NotFound();
-
+            if (note == null)
+            {
+                //_logger.LogWarning(LoggingEvents.GetItemNotFound, "GetById({ID}) NOT FOUND", id);
+                return NotFound();
+            }
             var model = CreateNoteModel(note);
 
             return Ok(model);
@@ -142,5 +150,17 @@ namespace WebService.Controllers
             return Url.Link(nameof(GetNote), new { id });
         }
 
+        public class LoggingEvents
+        {
+            public const int GenerateItems = 1000;
+            public const int ListItems = 1001;
+            public const int GetItem = 1002;
+            public const int InsertItem = 1003;
+            public const int UpdateItem = 1004;
+            public const int DeleteItem = 1005;
+
+            public const int GetItemNotFound = 4000;
+            public const int UpdateItemNotFound = 4001;
+        }
     }
 }
