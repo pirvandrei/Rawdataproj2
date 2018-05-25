@@ -1,5 +1,6 @@
 ﻿using DomainModel;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -24,8 +25,13 @@ namespace StackoverflowContext
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseMySql("server=wt-220.ruc.dk;database=raw2;uid=aip;pwd=aip_325");
+            LoggerFactory loggerFactory = new LoggerFactory();
+            loggerFactory.AddProvider(new TraceLoggerProvider());
+            optionsBuilder
+                .UseLoggerFactory(loggerFactory)
+                .UseMySql("server=wt-220.ruc.dk;database=raw2;uid=aip;pwd=aip_325");
         }
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -65,5 +71,6 @@ namespace StackoverflowContext
              
 
         }
+       
     }
 }
