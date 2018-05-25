@@ -28,10 +28,15 @@ namespace WebService
             {
                 //cfg.CreateMap<Post, PostModel>().ReverseMap();
                 cfg.CreateMap<Question, QuestionModel>() 
-                            .ForMember(d => d.UserName, m => m.MapFrom(s => s.User.DisplayName)) 
+                            .ForMember(d => d.UserName, m => m.MapFrom(s => s.User.DisplayName))
+                            .ForMember(d => d.Body, m => m.MapFrom(s => s.Body.Substring(0, 100) + "..."))
                             .ReverseMap();
                 cfg.CreateMap<Comment, CommentModel>()
                             .ForMember(d => d.UserName, m => m.MapFrom(s => s.User.DisplayName))
+                            .ReverseMap();
+                cfg.CreateMap<Answer, AnswerModel>()
+                            .ForMember(d => d.UserName, m => m.MapFrom(s => s.User.DisplayName))
+                            .ForMember(d => d.Body, m => m.MapFrom(s => s.Body.Substring(0, 100) + "..."))
                             .ReverseMap();
                 cfg.CreateMap<Note, NoteModel>()
                             .ReverseMap();
