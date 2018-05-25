@@ -11,7 +11,10 @@ namespace WebService.Models.Question
         public int Score { get; set; }
         public string Text { get; set; }
          
-        public UserModel User { get; set; }
+       
+        public string UserName { get; set; }
+        //public UserModel User { get; set; }
+
 
         //public int PostID { get; set; }
         //public Post Post { get; set; }

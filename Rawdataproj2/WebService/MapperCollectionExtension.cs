@@ -28,6 +28,10 @@ namespace WebService
             {
                 //cfg.CreateMap<Post, PostModel>().ReverseMap();
                 cfg.CreateMap<Question, QuestionModel>() 
+                            .ForMember(d => d.UserName, m => m.MapFrom(s => s.User.DisplayName)) 
+                            .ReverseMap();
+                cfg.CreateMap<Comment, CommentModel>()
+                            .ForMember(d => d.UserName, m => m.MapFrom(s => s.User.DisplayName))
                             .ReverseMap();
                 cfg.CreateMap<Note, NoteModel>()
                             .ReverseMap();

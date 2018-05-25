@@ -114,7 +114,7 @@ namespace WebService.Controllers
             {
                 Title = model.Title,
                 Body = model.Body,
-                UserID = model.UserID,
+                //UserID = model.UserID,
                 Score = model.Score,
                 CreationDate = model.Creationdate
             };
