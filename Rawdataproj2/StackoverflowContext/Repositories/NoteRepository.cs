@@ -18,6 +18,8 @@ namespace StackoverflowContext
             using (var db = new StackoverflowDbContext())
             {
                 return await db.Notes
+                     .Include(x => x.Post)
+                    .Include(x => x.User)
                     .FirstOrDefaultAsync(x => x.UserID == _user.ID && x.PostID == postId);
             }
         }
@@ -28,6 +30,7 @@ namespace StackoverflowContext
             {
                 return await db.Notes
                     .Include(x => x.Post)
+                    .Include(x => x.User)
                     .ToListAsync();
             }
         } 

@@ -11,6 +11,7 @@ using DataService;
 using AutoMapper;
 using WebService.Models.Note;
 using WebService.Models;
+using WebService.Models.User;
 
 namespace WebService.Controllers
 {
@@ -89,7 +90,9 @@ namespace WebService.Controllers
             {
                 Text = model.Text,
                 PostID = model.PostId,
-                UserID = model.UserId
+                UserID = model.UserId,
+
+                
             };
 
             var result = await _NoteRepository.Add(note);
@@ -106,7 +109,16 @@ namespace WebService.Controllers
         {
             var model = new NoteListModel
             {
-                Text = note.Text
+                
+                Text = note.Text,
+                Type = note.Post.PostType == 1 ? "Question" : "Answer",
+                Title = note.Post.Title,
+                PostID = note.PostID,
+                User = new UserModel
+                {
+                    ID = note.User.ID,
+                    DisplayName = note.User.DisplayName 
+                } 
             };
             model.Url = CreateLink(note.PostID);
             return model;
@@ -114,8 +126,13 @@ namespace WebService.Controllers
 
         private NoteModel CreateNoteModel(Note note)
         {
-            var model = _Mapper.Map<NoteModel>(note);
-            //model.Url = CreateLink(note.UserID);
+            var model = _Mapper.Map<NoteModel>(note)
+                
+                
+                ;
+            model.Url = CreateLink(note.PostID);
+            model.Title = note.Post.Title;
+            model.Type = note.Post.PostType == 1 ? "Question": "Answer";
             return model;
         }
 
