@@ -27,6 +27,7 @@ namespace StackoverflowContext
 				return await db.Questions
 					.Include(x => x.PostTags)
 					.Include(x => x.User)
+                    //.Include(x => x.Notes)
 					.Skip(pagingInfo.Page * pagingInfo.PageSize)
 					.Take(pagingInfo.PageSize)
 					.ToListAsync();
@@ -39,13 +40,15 @@ namespace StackoverflowContext
 			{
 				return await db.Questions   
     				   .Include(x => x.Comments)
-    							.ThenInclude(x => x.User)
-    			       .Include(x => x.Answers)
+    							.ThenInclude(x => x.User) 
+                       .Include(x => x.Answers)
     							.ThenInclude(x => x.Comments)
     							    .ThenInclude(x => x.User)
-    				   .Include(x => x.PostTags)
+                        .Include(x => x.Answers)
+                                .ThenInclude(x => x.Notes) 
+                       .Include(x => x.PostTags)
 					   .Include(x => x.Bookmarks)
-                       .Include(x => x.Notes)
+                       .Include(x => x.Notes) 
 				   .FirstOrDefaultAsync(x => x.ID == id);    
 			}
 		}

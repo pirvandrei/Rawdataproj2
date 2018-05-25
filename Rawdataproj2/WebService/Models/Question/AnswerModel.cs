@@ -9,5 +9,6 @@ namespace WebService.Models.Question
         public string Body { get; set; }
         public int Score { get; set; }
         public List<CommentModel> Comments { get; set; }
+        public List<QuestionNoteModel> Notes { get; set; }
     }
 }

@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Collections.Generic; 
 using WebService.Models.Bookmark;
 using WebService.Models.Tag;
-using WebService.Models.User;
-using WebService.Models.Note;
+using WebService.Models.User; 
 
 namespace WebService.Models.Question
 {
@@ -27,6 +24,6 @@ namespace WebService.Models.Question
         public IList<CommentModel> Comments { get; set; }
         public IList<AnswerModel> Answers { get; set; }
 		public IList<BookmarkModel> Bookmarks { get; set; }
-		public IList<NoteModel> Notes { get; set; }
+		public IList<QuestionNoteModel> Notes { get; set; }
     }
 }

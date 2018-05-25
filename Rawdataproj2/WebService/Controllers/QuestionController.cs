@@ -8,6 +8,7 @@ using DataService.Dto.QuestionDto;
 using DomainModel;
 using Microsoft.AspNetCore.Mvc;
 using WebService.Models;
+using WebService.Models.Note;
 using WebService.Models.Question;
 using WebService.Models.Tag;
 using WebService.Models.User;
@@ -152,22 +153,29 @@ namespace WebService.Controllers
 
         private QuestionListModel CreateQuestionListModel(Question question)
         {
-			var model = new QuestionListModel
-			{
-				Title = question.Title,
-				Body = question.Body.Substring(0, 100) + "...",
-				Score = question.Score,
-				CreationDate = question.CreationDate,
+            var model = new QuestionListModel
+            {
+                Title = question.Title,
+                Body = question.Body.Substring(0, 100) + "...",
+                Score = question.Score,
+                CreationDate = question.CreationDate,
 
-				User = new UserModel()
-				{
-					ID = question.User.ID,
-					DisplayName = question.User.DisplayName,
-				},
-				PostTags = question.PostTags.Select(tag => new PostTagModel()
-				{
-					Tag = tag.Tag,
-				}).ToList()  
+                User = new UserModel()
+                {
+                    ID = question.User.ID,
+                    DisplayName = question.User.DisplayName,
+                },
+                PostTags = question.PostTags.Select(tag => new PostTagModel()
+                {
+                    Tag = tag.Tag,
+                }).ToList(),
+                //Notes = question.Notes.Select(note => new NoteModel()
+                //{ 
+                //    Text = note.Text,
+                //    Type = note.Post.PostType == 1 ? "Question" : "Answer",
+                //    Title = note.Post.Title,
+                //    PostID = note.PostID,
+                //}).ToList(),
 
             };
             model.Url = CreateQuestionLink(question.ID);
