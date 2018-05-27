@@ -1,16 +1,23 @@
 ﻿define(['knockout', 'menu', 'state', 'sammy'],
     function (ko, menuDef, state, sammy) {
         this.searchString = ko.observable();
+        var self = this;
         this.startSearch = function () {
         }
         var selectedMenu = ko.observable();
         var selectedComponent = ko.observable();
         var selectedParams = ko.observable();
+
+        //we use this funciton to manually load certain components
+        var loadComponent = function (data) {
+            
+            selectedComponent = ko.observable(data.component);
+            selectedParams = ko.observable(data.params);
+        }
         var changeMenu = function (menu) {
             selectedMenu(menu.name);
             selectedParams(menu.params);
             selectedComponent(menu.component);
-            console.log(menu)
         }
 
         var isActive = function (menu) {
@@ -25,23 +32,24 @@
 
             router.get("/#/history", function (context) {
                 var menu = menuDef.menuList.find(m => m.path == context.path);
-                console.log(menu)
                 changeMenu(menu);
 
             });
             router.get("/#/notes", function (context) {
                 var menu = menuDef.menuList.find(m => m.path == context.path);
-                console.log(menu)
                 changeMenu(menu);
             });
+            //Route to post display
+            router.get("/#/post/:id", function (context) {
+  
+                loadComponent({ component: 'post', params: context.params })
+            });
         });
-
+        
         ko.router = appRouter;
 
         appRouter.run();
         // select this default menu
-        changeMenu(menuDef.menuList[0]);
-        console.log(selectedComponent);
         return {
             selectedComponent,
             selectedParams,

@@ -18,9 +18,9 @@
             viewModel: { require: "js/components/navigation/navigation" },
             template: { require: "text!js/components/navigation/navigation.html" }
         });
-        ko.components.register("post-items", {
-            viewModel: { require: "js/components/display-post/postItems" },
-            template: { require: "text!js/components/display-post/postItems.html" }
+        ko.components.register("post", {
+            viewModel: { require: "js/components/display-post/post" },
+            template: { require: "text!js/components/display-post/post.html" }
         });
         ko.components.register("post-answer", {
             viewModel: { require: "js/components/display-post/postAnswer" },

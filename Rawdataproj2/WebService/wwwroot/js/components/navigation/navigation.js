@@ -7,33 +7,21 @@
             })
             .then(callback);
     };
-    var getPost = function (callback) {
-        fetch("api/persons")
+    var getPost = function (params,callback) {
+        fetch("api/questions/"+params.id)
             .then(function (response) {
                 return response.json();
             })
             .then(callback);
     };
-    var getResults = function (callback) {
-        fetch("api/persons")
-            .then(function (response) {
-                return response.json();
-            })
-            .then(callback);
-    };
-    var getResults = function (callback) {
-        fetch("api/persons")
-            .then(function (response) {
-                return response.json();
-            })
-            .then(callback);
-    };
+
 
 
 
 
     return {
-        getPosts
+        getPost,
+        getResults
     }
 
 

@@ -24,7 +24,9 @@
 
 
     return {
-        getPosts
+        getQuestion,
+        getSearchHistory,
+        searchResults
     }
 
 
