@@ -29,8 +29,8 @@
         //we use this funciton to manually load certain components
         var loadComponent = function (data) {
             console.log(data);
-            selectedComponent = ko.observable(data.component);
-            selectedParams = ko.observable(data.params);
+            selectedComponent (data.component);
+            selectedParams(data.params);
         }
         var changeMenu = function (menu) {
             selectedMenu(menu.name);
