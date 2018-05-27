@@ -1,4 +1,6 @@
 ﻿<div class="postView">
-    <div data-bind="component: { name: 'post-question', params:{post:questionData,test:test} }"></div>
-
+    <div data-bind=" component: { name: 'post-question', params:{body:qBody,comments:qComments,notes:qNotes,score:qScore,userName:qUserName,tags:qTags,title:qTitle} }"></div>
+    <div data-bind="foreach:answerData">
+        <div data-bind="component: { name: 'post-answer', params:{body:body,comments:comments,notes:notes,score:score,userName:userName} }"></div>
+    </div>
 </div>

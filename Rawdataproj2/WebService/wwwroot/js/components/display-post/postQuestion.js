@@ -1,25 +1,23 @@
 ﻿define(['knockout'], function (ko) {
     return function (params) {
         // public partv
-        var test = ko.observable(params.test());
-        var title = ko.observable();
-        var body = ko.observable();
-        var score = ko.observable();
-        var comments = ko.observable({});
-        setTimeout(
-            function () {
-                console.log(params.post())
-                title(params.post().title);
-                body(params.post().body);
-                score(params.post().score)
-                comments(params.post().comments)
-            },2000
-        )
+        console.log(params)
+        var score = ko.observable(params.score);
+        var userName = ko.observable(params.userName);
+        var notes = ko.observable(params.notes);
+        var body = ko.observable(params.body);
+        var score = ko.observable(params.score);
+        var comments = ko.observable(params.comments);
+        var title = ko.observable(params.title);
+        var tags = ko.observable();
+        console.log(ko.unwrap(params.comments()))
+
 
         return {
             title,
             body,
-            score,test,comments
+            score,
+            comments,tags
         };
     };
 });
