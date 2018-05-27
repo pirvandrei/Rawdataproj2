@@ -156,7 +156,7 @@ namespace WebService.Controllers
             var model = new QuestionListModel
             {
                 Title = question.Title,
-                Body = question.Body.Substring(0, 100) + "...",
+                Body = question.Body,
                 Score = question.Score,
                 CreationDate = question.CreationDate,
 
