@@ -14,8 +14,8 @@
             })
             .then(callback);
     };
-    var searchResults = function (data, callback) {
-        fetch("pi/search?query="+data.query)
+    var getSearchResults = function (data, callback) {
+        fetch("api/search?query=" + data.searchString + "&method=" + data.searchMethod)
             .then(function (response) {
                 return response.json();
             })
@@ -26,7 +26,7 @@
     return {
         getQuestion,
         getSearchHistory,
-        searchResults
+        getSearchResults
     }
 
 

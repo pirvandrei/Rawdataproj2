@@ -65,6 +65,13 @@
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control" type="search" placeholder="Search" aria-label="Search" data-bind="value: searchString">
                 <div class="btn btn-outline-success my-2 my-sm-0" data-bind="click:startSearch"><i class="fas fa-search"></i></div>
+                <select data-bind="
+                       options: availableMethods,
+                       optionsText:'text',
+                       optionsValue:'value',
+                       value:selectedMethod">
+                    <option value="value">text</option>
+                </select>  
             </form>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav" data-bind="foreach: menuList">

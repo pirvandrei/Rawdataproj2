@@ -13,8 +13,8 @@ define(['knockout', 'request'], function (ko, req) {
         var acceptedAnswer = ko.observable()
         var qNotes = ko.observableArray(null);
         var qUserName = ko.observable();
-        //First we need to load question data
 
+        //load question data
     ko.computed(function () {
         req.getQuestion(params, function (data) {
             console.log(data)

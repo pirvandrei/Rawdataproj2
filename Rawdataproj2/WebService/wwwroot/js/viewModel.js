@@ -7,10 +7,28 @@
         var selectedMenu = ko.observable();
         var selectedComponent = ko.observable();
         var selectedParams = ko.observable();
+        var selectedMethod = ko.observable();
+        
+        var Method = function (text, value) {
+            this.text = text;
+            this.value = value;
+        };
+         //Array containing available methods for search
+        var availableMethods = ko.observableArray([
+            new Method('Ranked', 'bestmatchranked'),
+            new Method('Weighted', 'bestmatchweighted'),
+            new Method('All', 'bestmatchall'),
+        ]);
+        var startSearch = function () {
+            console.log(selectedMethod());
+            console.log(searchString());
+            window.location = '#/search' + '?selectedMethod=' + selectedMethod()+'&searchString='+searchString();
 
+            
+        }
         //we use this funciton to manually load certain components
         var loadComponent = function (data) {
-            
+            console.log(data);
             selectedComponent = ko.observable(data.component);
             selectedParams = ko.observable(data.params);
         }
@@ -41,8 +59,12 @@
             });
             //Route to post display
             router.get("/#/post/:id", function (context) {
-  
                 loadComponent({ component: 'post', params: context.params })
+            });
+            router.get("/#/search", function (context) {
+                console.log(context.params)
+                loadComponent({ component: 'display-search', params: context.params })
+
             });
         });
         
@@ -54,7 +76,10 @@
             selectedComponent,
             selectedParams,
             menuList: menuDef.menuList,
-            isActive
+            isActive,
+            availableMethods,
+            selectedMethod,
+            startSearch
         }
 
 
