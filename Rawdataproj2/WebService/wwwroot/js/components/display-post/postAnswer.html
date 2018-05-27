@@ -1,17 +1,17 @@
 ﻿    <div class="row post-box">
-        <div class="col-sm-10">
-            <div data-bind="html:body"></div>
-            </div>
-        <div class="col-sm-2 score justify-content-center align-items-center">
-            <span class="center vote-count" data-bind="text:score"></span>
+        <div class="col-sm-1 score justify-content-center align-items-center">
+            <span class="center vote-count" data-bind="text:score" style="font-size:2rem;"></span>
         </div>
-     </div>
+        <div class="col-sm-11">
+            <div data-bind="html:body"></div>
+        </div>
+</div>
 <div class="row">
-        <div class="col-sm-10">
-                <table class="comment" data-bind="foreach: comments">
-                    <tr>
+        <div class="col-sm-12">
+                <table class="comment" data-bind="foreach: comments" style="max-width:80%;float: right;">
+                    <tr style="border-top:1px solid lightgrey;">
                         <td>
-                            <span data-bind="text:score"></span>
+                            <span data-bind="text:score"></span>&nbsp;&nbsp;
                         </td>
                         <td>
                             <span data-bind="html:text"> </span>

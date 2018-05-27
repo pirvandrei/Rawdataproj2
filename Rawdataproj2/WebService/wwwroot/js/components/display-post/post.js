@@ -13,6 +13,8 @@ define(['knockout', 'request'], function (ko, req) {
         var acceptedAnswer = ko.observable()
         var qNotes = ko.observableArray(null);
         var qUserName = ko.observable();
+        var qCreationDate = ko.observable();
+        var countAnswers = ko.observable();
         //First we need to load question data
 
     ko.computed(function () {
@@ -26,8 +28,10 @@ define(['knockout', 'request'], function (ko, req) {
             qComments(data.comments);
             qTags(data.postTags);
             qNotes(data.notes);
-            qUserName(data.UserName);
+            qUserName(data.userName);
             acceptedAnswer(data.acceptedAnswerID);
+            qCreationDate(data.creationdate);
+            countAnswers(data.comments.length);
 
             
             });
@@ -41,7 +45,9 @@ define(['knockout', 'request'], function (ko, req) {
         qComments,
         qTags,
         qNotes,
-        qUserName
+        qUserName,
+        qCreationDate,
+        countAnswers
         };
     };
 });
