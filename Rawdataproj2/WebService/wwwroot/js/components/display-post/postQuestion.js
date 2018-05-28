@@ -10,7 +10,6 @@
         var comments = ko.observable(params.comments);
         var title = ko.observable(params.title);
         var tags = ko.observable();
-        console.log(ko.unwrap(params.comments()))
 
 
         return {

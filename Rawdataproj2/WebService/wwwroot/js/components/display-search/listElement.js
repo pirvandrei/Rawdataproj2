@@ -1,7 +1,6 @@
 ﻿define(['knockout'], function (ko, param) {
     return function (params) {
         // public partv
-        console.log(params);
         var title = ko.observable(params.title);
         var score = ko.observable(params.score);
         var userName = ko.observable(params.userName);

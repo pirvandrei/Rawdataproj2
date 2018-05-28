@@ -63,6 +63,7 @@
                 loadComponent({ component: 'display-search', params: context.params })
 
             });
+
         });
         
         ko.router = appRouter;

@@ -1,7 +1,6 @@
 ﻿
 define(['knockout', 'request'], function (ko, req) {
     return function (params) {
-        var test = ko.observable('sdfsd');
         var self = this;
         var questionData = ko.observableArray();
         var answerData = ko.observableArray();

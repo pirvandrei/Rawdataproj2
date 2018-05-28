@@ -42,6 +42,10 @@
             viewModel: { require: "js/components/history/history" },
             template: { require: "text!js/components/history/history.html" }
         });
+        ko.components.register("history-item", {
+            viewModel: { require: "js/components/history/historyItem" },
+            template: { require: "text!js/components/history/historyItem.html" }
+        });
         ko.components.register("search-list-element", {
             viewModel: { require: "js/components/display-search/listElement" },
             template: { require: "text!js/components/display-search/listElement.html" }
