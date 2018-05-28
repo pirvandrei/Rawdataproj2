@@ -34,19 +34,24 @@ namespace WebService.Models
             switch (ReturnType)
             {
                 case "posts":
-                    value = TypeConstants.posts.ToString();
+                    //value = TypeConstants.posts.ToString();
+                    value = "items";
                     break;
                 case "questions":
-                    value = TypeConstants.questions.ToString();
+                    //value = TypeConstants.questions.ToString();
+                    value = "items";
                     break;
                 case "notes":
-                    value = TypeConstants.notes.ToString();
+                    //value = TypeConstants.notes.ToString();
+                    value = "items";
                     break;
                 case "bookmarks":
-                    value = TypeConstants.bookmarks.ToString();
+                    //value = TypeConstants.bookmarks.ToString();
+                    value = "items";
                     break;
                 case "searchhistory":
-                    value = TypeConstants.searchhistory.ToString();
+                    //value = TypeConstants.searchhistory.ToString();
+                    value = "items";
                     break;
             }
             return value;
