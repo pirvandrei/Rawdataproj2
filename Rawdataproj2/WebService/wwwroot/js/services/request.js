@@ -28,13 +28,22 @@
             })
             .then(callback);
     };
+    //POST requests
+    var saveSearch = function (data, callback) {
+        fetch('api/history', { method: 'POST', body: JSON.stringify(data)})
+            .then(function (response) {
+                return response.json();
+            })
+            .then(callback);
+    };
 
 
     return {
         getQuestion,
         getSearchHistory,
         getSearchResults,
-        getPage
+        getPage,
+        saveSearch
     }
 
 

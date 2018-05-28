@@ -54,6 +54,10 @@
             viewModel: { require: "js/components/notes/notes" },
             template: { require: "text!js/components/notes/notes.html" }
         });
+        ko.components.register("note-item", {
+            viewModel: { require: "js/components/notes/noteItem" },
+            template: { require: "text!js/components/notes/noteItem.html" }
+        });
 
     });
 

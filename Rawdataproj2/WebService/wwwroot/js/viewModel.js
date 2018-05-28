@@ -1,5 +1,5 @@
-﻿define(['knockout', 'menu', 'state', 'sammy'],
-    function (ko, menuDef, state, sammy) {
+﻿define(['knockout', 'menu', 'state', 'sammy','request'],
+    function (ko, menuDef, state, sammy,req) {
         this.searchString = ko.observable();
         var self = this;
         this.startSearch = function () {
@@ -21,6 +21,10 @@
         ]);
         //When searching we will navigate to this route
         var startSearch = function () {
+            console.log({ text: searchString(),user: 1 })
+            req.saveSearch({ text: searchString(), user:1 }, function (data) {
+                console.log('history saved');
+            });
             window.location = '#/search' + '?selectedMethod=' + selectedMethod()+'&searchString='+searchString();
         }
         //we use this funciton to manually load certain components
