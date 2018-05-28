@@ -45,7 +45,8 @@ define(['knockout', 'request'], function (ko, req) {
         qNotes,
         qUserName,
         qCreationDate,
-        countAnswers
+        countAnswers,
+        acceptedAnswer
         };
     };
 });

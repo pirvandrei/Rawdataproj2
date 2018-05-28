@@ -26,7 +26,6 @@ namespace WebService
         {
             var config = new MapperConfiguration(cfg =>
             {
-                //cfg.CreateMap<Post, PostModel>().ReverseMap();
                 cfg.CreateMap<Question, QuestionModel>() 
                             .ForMember(d => d.UserName, m => m.MapFrom(s => s.User.DisplayName))
                             //.ForMember(d => d.Body, m => m.MapFrom(s => s.Body.Substring(0, 100) + "..."))
@@ -41,7 +40,6 @@ namespace WebService
                 cfg.CreateMap<Note, NoteModel>()
                             .ReverseMap();
                 cfg.CreateMap<Bookmark, BookmarkModel>().ReverseMap();
-                //cfg.CreateMap<BestmatchDto, BestmatchModel>().ReverseMap();
                 cfg.CreateMap<RankedWordListDto, RankedWordListModel>().ReverseMap();
                 cfg.CreateMap<WeightedWordListDto, WeightedWordListModel>().ReverseMap();
                 cfg.CreateMap<AssociationsListDto, AssociationsListModel>().ReverseMap();

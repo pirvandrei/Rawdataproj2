@@ -4,7 +4,7 @@ namespace WebService.Models.Question
 {
     public class AnswerModel
     {
-        //public int ID { get; set; }
+        public int ID { get; set; }
         //public int? ParentID { get; set; }
         public string UserName { get; set; }
         public string Body { get; set; }
