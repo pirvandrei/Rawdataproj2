@@ -21,8 +21,8 @@
         ]);
         //When searching we will navigate to this route
         var startSearch = function () {
-            console.log({ text: searchString(),user: 1 })
-            req.saveSearch({ text: searchString(), user:1 }, function (data) {
+            console.log({ text: searchString(), userid: 1 })
+            req.saveSearch({ text: searchString(), userid:1 }, function (data) {
                 console.log('history saved');
             });
             window.location = '#/search' + '?selectedMethod=' + selectedMethod()+'&searchString='+searchString();

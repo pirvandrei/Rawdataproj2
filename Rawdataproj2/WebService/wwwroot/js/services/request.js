@@ -30,7 +30,14 @@
     };
     //POST requests
     var saveSearch = function (data, callback) {
-        fetch('api/history', { method: 'POST', body: JSON.stringify(data)})
+        console.log(data)
+        fetch('api/history', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'content-type': 'application/json'
+            }
+        })
             .then(function (response) {
                 return response.json();
             })

@@ -42,6 +42,7 @@
                 //Initialize and save object used for current page tracking
                 pData(new PageData(data));
                 currentPage(pData().posts)
+                console.log(currentPage());
             });
         });
 
