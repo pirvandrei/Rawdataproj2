@@ -22,7 +22,14 @@
             .then(callback);
     };
     var getPage = function (data, callback) {
-        fetch(data.pageAddress)
+        fetch(data.target)
+            .then(function (response) {
+                return response.json();
+            })
+            .then(callback);
+    };
+    var getNotes = function (data, callback) {
+        fetch('api/notes?userid='+data.id)
             .then(function (response) {
                 return response.json();
             })
@@ -30,7 +37,6 @@
     };
     //POST requests
     var saveSearch = function (data, callback) {
-        console.log(data)
         fetch('api/history', {
             method: 'POST',
             body: JSON.stringify(data),
@@ -50,7 +56,8 @@
         getSearchHistory,
         getSearchResults,
         getPage,
-        saveSearch
+        saveSearch,
+        getNotes
     }
 
 

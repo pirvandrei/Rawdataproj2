@@ -9,6 +9,7 @@
             sammy: 'bower_components/sammy/lib/sammy',
             menu: 'js/services/menu',
             request: 'js/services/request',
+            paginate: 'js/services/paginate',
             state: 'js/services/state'
         }
     });

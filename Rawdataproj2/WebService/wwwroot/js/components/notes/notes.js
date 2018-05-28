@@ -1,4 +1,4 @@
-﻿define(['knockout'], function (ko, param) {
+﻿define(['knockout','request'], function (ko, req) {
     return function (params) {
         var notes = ko.observableArray();
         var id = 1;

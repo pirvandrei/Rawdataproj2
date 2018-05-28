@@ -8,8 +8,8 @@
 
         ko.computed(function () {
             req.getSearchHistory({ id: id }, function (data) {
-                console.log(data)
                 historyItems(data.searchhistory);
+                console.log(historyItems())
             });
         });
         return {

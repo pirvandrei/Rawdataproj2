@@ -21,10 +21,11 @@
         ]);
         //When searching we will navigate to this route
         var startSearch = function () {
-            console.log({ text: searchString(), userid: 1 })
+            //Save search when executed
             req.saveSearch({ text: searchString(), userid:1 }, function (data) {
                 console.log('history saved');
             });
+            
             window.location = '#/search' + '?selectedMethod=' + selectedMethod()+'&searchString='+searchString();
         }
         //we use this funciton to manually load certain components

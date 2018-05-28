@@ -1,37 +1,16 @@
-﻿<div data-bind="foreach:currentPage">
+﻿<div data-bind="foreach:cPage">
     <div class="row" data-bind="component: { name: 'search-list-element',params:{body:$data.body,title:$data.title,creationDate:$data.creationDate,score:$data.score,id:$data.id}}">
     </div>
 </div>
 
-<nav aria-label="Page navigation example">
+<nav class="paginate">
     <ul class="pagination justify-content-center">
-        <li class="page-item" data-bind="click:changePage('prev')">
+        <li class="page-item" data-bind="click:changePagePrev">
             <span class="page-link">Previous</span>
         </li>
-        <li class="page-item"><a class="page-link" href="#">Current</a></li>
-        <li class="page-item" data-bind="click:changePage('next')">
+        <li class="page-item"><a href="#" data-bind="text:currentPagenr"></a></li>
+        <li class="page-item" data-bind="click:changePageNext">
             <span class="page-link">Next</span>
         </li>
     </ul>
 </nav>
-<!--<script type="text/html" id="single-result">
-    <div class="col-sm-12 result">
-        <div class="row">
-            <div class="col-sm-2 score justify-content-center align-items-center">
-                <span class="center vote-count" >10</span>
-            </div>
-            <div class="col-sm-8">
-                <section>
-                    <h2 data-bind="text:title"></h2>
-                    <div data-bind="html:body"></div>
-                </section>
-
-            </div>
-            <div class="col-sm-2">
-                <span>Asked on <span data-bind="text:creationDate"></span></span>
-                <span>:name</span>
-            </div>
-
-        </div>
-    </div>
-</script>-->
