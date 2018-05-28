@@ -14,6 +14,7 @@ namespace WebService.Models
             {
                 { "prev", prev },
                 { "next", next },
+                { "currentpage", pagingInfo.Page },
                 { "total", total },
                 { "pages", pages },
                 { returnType.ToString(), model }
