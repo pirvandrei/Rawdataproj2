@@ -21,12 +21,20 @@
             })
             .then(callback);
     };
+    var getPage = function (data, callback) {
+        fetch(data.pageAddress)
+            .then(function (response) {
+                return response.json();
+            })
+            .then(callback);
+    };
 
 
     return {
         getQuestion,
         getSearchHistory,
-        getSearchResults
+        getSearchResults,
+        getPage
     }
 
 

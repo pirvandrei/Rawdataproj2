@@ -13,7 +13,6 @@ define(['knockout', 'request'], function (ko, req) {
         var acceptedAnswer = ko.observable()
         var qNotes = ko.observableArray(null);
         var qUserName = ko.observable();
-
         var qCreationDate = ko.observable();
         var countAnswers = ko.observable();
         //First we need to load question data
@@ -33,9 +32,7 @@ define(['knockout', 'request'], function (ko, req) {
             qUserName(data.userName);
             acceptedAnswer(data.acceptedAnswerID);
             qCreationDate(data.creationdate);
-            countAnswers(data.comments.length);
-
-            
+            countAnswers(data.comments.length);            
             });
         });
     return {

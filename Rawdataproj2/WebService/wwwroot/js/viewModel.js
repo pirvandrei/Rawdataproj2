@@ -19,12 +19,9 @@
             new Method('Weighted', 'bestmatchweighted'),
             new Method('All', 'bestmatchall'),
         ]);
+        //When searching we will navigate to this route
         var startSearch = function () {
-            console.log(selectedMethod());
-            console.log(searchString());
             window.location = '#/search' + '?selectedMethod=' + selectedMethod()+'&searchString='+searchString();
-
-            
         }
         //we use this funciton to manually load certain components
         var loadComponent = function (data) {

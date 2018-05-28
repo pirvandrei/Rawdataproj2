@@ -1,37 +1,37 @@
-﻿<div class="row" data-bind="template: { name: 'single-result'}">
-
+﻿<div data-bind="foreach:currentPage">
+    <div class="row" data-bind="component: { name: 'search-list-element',params:{body:$data.body,title:$data.title,creationDate:$data.creationDate,score:$data.score,id:$data.id}}">
+    </div>
 </div>
+
 <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
-        <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1">Previous</a>
+        <li class="page-item" data-bind="click:changePage('prev')">
+            <span class="page-link">Previous</span>
         </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item">
-            <a class="page-link" href="#">Next</a>
+        <li class="page-item"><a class="page-link" href="#">Current</a></li>
+        <li class="page-item" data-bind="click:changePage('next')">
+            <span class="page-link">Next</span>
         </li>
     </ul>
 </nav>
-<script type="text/html" id="single-result">
+<!--<script type="text/html" id="single-result">
     <div class="col-sm-12 result">
         <div class="row">
             <div class="col-sm-2 score justify-content-center align-items-center">
-                <span class="center vote-count">12</span>
+                <span class="center vote-count" >10</span>
             </div>
             <div class="col-sm-8">
                 <section>
-                    <h2>Title</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna al</p>
+                    <h2 data-bind="text:title"></h2>
+                    <div data-bind="html:body"></div>
                 </section>
 
             </div>
             <div class="col-sm-2">
-                <span>Asked on :date</span>
+                <span>Asked on <span data-bind="text:creationDate"></span></span>
                 <span>:name</span>
             </div>
 
         </div>
     </div>
-</script>
+</script>-->
