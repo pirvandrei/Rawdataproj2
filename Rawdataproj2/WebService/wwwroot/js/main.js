@@ -63,6 +63,15 @@
             viewModel: { require: "js/components/bookmarks/bookmarks" },
             template: { require: "text!js/components/bookmarks/bookmarks.html" }
         });
+        ko.components.register("statistics", {
+            viewModel: { require: "js/components/statistics/statistics" },
+            template: { require: "text!js/components/bookmarks/statistics.html" }
+        });
+        ko.components.register("wordcloud", {
+            viewModel: { require: "js/components/statistics/wordcloud" },
+            template: { require: "text!js/components/bookmarks/wordcloud.html" }
+        });
+
 
     });
 

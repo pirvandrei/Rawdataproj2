@@ -1,6 +1,6 @@
 ﻿<div id="notes">
     <h2>Notes</h2>
     <div data-bind="foreach:cPage">
-        <div data-bind="component:{name:'note-item',params:{text:text,title:title,url:url}}"></div>
+        <div data-bind="component:{name:'note-item',params:{text:text,title:title,url:url,id:parentID?parentID:postID}}"></div>
     </div>
 </div>
