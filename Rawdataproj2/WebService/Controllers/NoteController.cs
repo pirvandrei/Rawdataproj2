@@ -94,19 +94,14 @@ namespace WebService.Controllers
         [HttpPost("{id}")]
         public async Task<IActionResult> CreateNote([FromBody] CreateNoteModel model)
         {
-            if (model == null) return BadRequest();
-
+            if (model == null) return BadRequest();          
             var note = new Note
             {
                 Text = model.Text,
                 PostID = model.PostId,
-                UserID = model.UserId,
-
-                
-            };
-
-            var result = await _NoteRepository.Add(note);
-
+                UserID = model.UserId, 
+            };          
+            var result = await _NoteRepository.Add(note);          
             return Ok(result);
         }
 
@@ -118,14 +113,12 @@ namespace WebService.Controllers
         private NoteListModel CreateNoteListModel(NoteDto note)
         {
             var model = new NoteListModel
-            {
-                
+            { 
                 Text = note.Text,
                 Type = note.Posttype,
                 Title = note.Title,
                 PostID = note.PostID,
-                ParentID = note.ParentID,
-                
+                ParentID = note.ParentID, 
             };
             model.Url = CreateLink(note.PostID);
             return model;
@@ -133,10 +126,7 @@ namespace WebService.Controllers
 
         private NoteModel CreateNoteModel(Note note)
         {
-            var model = _Mapper.Map<NoteModel>(note)
-                
-                
-                ;
+            var model = _Mapper.Map<NoteModel>(note);
             model.Url = CreateLink(note.PostID);
             model.Title = note.Post.Title;
             model.Type = note.Post.PostType == 1 ? "Question": "Answer";
@@ -156,8 +146,7 @@ namespace WebService.Controllers
             public const int GetItem = 1002;
             public const int InsertItem = 1003;
             public const int UpdateItem = 1004;
-            public const int DeleteItem = 1005;
-
+            public const int DeleteItem = 1005;          
             public const int GetItemNotFound = 4000;
             public const int UpdateItemNotFound = 4001;
         }

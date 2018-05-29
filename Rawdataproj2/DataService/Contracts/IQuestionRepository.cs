@@ -9,9 +9,10 @@ namespace DataService
 {
     public interface IQuestionRepository : IDataService<Question, int>
     {
-        Task<IEnumerable<QuestionAnswersDto>> GetQuestionAnswers(int id);
-        Task<IEnumerable<QuestionCommentsDto>> GetQuestionComments(int id);
-
+           
         Task<Question> GetQuestion(int id);
+
+		//Task<IEnumerable<QuestionAnswersDto>> GetQuestionAnswers(int id);
+        //Task<IEnumerable<QuestionCommentsDto>> GetQuestionComments(int id);    
     }
 }

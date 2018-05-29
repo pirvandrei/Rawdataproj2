@@ -52,31 +52,7 @@ namespace WebService.Controllers
             var model = _Mapper.Map<QuestionModel>(question);
 
             return Ok(model);
-        }
-
-
-        [HttpGet("{id}/answers", Name = nameof(GetQuestionAnswers))]
-        public async Task<IActionResult> GetQuestionAnswers(int id)
-        {
-            var queAnswers = await _QuestionRepository.GetQuestionAnswers(id);
-            if (queAnswers == null) return NotFound();
-
-            var model = queAnswers.Select(que => CreateQuestionAnswersModel(que)); 
-
-            return Ok(model);
-        }
-
-
-        [HttpGet("{id}/comments", Name = nameof(GetQuestionComments))]
-        public async Task<IActionResult> GetQuestionComments(int id)
-        {
-            var queCom = await _QuestionRepository.GetQuestionComments(id);
-            if (queCom == null) return NotFound();
-
-            var model = queCom.Select(que => CreateQuestionCommnetsModel(que));
-
-            return Ok(model);
-        }
+        } 
 
         [HttpPut("{id}", Name = nameof(UpdateQuestion))]
         public async Task<IActionResult> UpdateQuestion(int id, [FromBody] UpdateQuestionModel model)
@@ -187,5 +163,28 @@ namespace WebService.Controllers
             return Url.Link(nameof(GetQuestion), new { id });
         }
     
+
+		//[HttpGet("{id}/answers", Name = nameof(GetQuestionAnswers))]
+        //public async Task<IActionResult> GetQuestionAnswers(int id)
+        //{
+        //    var queAnswers = await _QuestionRepository.GetQuestionAnswers(id);
+        //    if (queAnswers == null) return NotFound();
+
+        //    var model = queAnswers.Select(que => CreateQuestionAnswersModel(que)); 
+
+        //    return Ok(model);
+        //}
+
+
+        //[HttpGet("{id}/comments", Name = nameof(GetQuestionComments))]
+        //public async Task<IActionResult> GetQuestionComments(int id)
+        //{
+        //    var queCom = await _QuestionRepository.GetQuestionComments(id);
+        //    if (queCom == null) return NotFound();
+
+        //    var model = queCom.Select(que => CreateQuestionCommnetsModel(que));
+
+        //    return Ok(model);
+        //}
     }
 }
