@@ -59,6 +59,10 @@
             viewModel: { require: "js/components/notes/noteItem" },
             template: { require: "text!js/components/notes/noteItem.html" }
         });
+        ko.components.register("bookmarks", {
+            viewModel: { require: "js/components/bookmarks/bookmarks" },
+            template: { require: "text!js/components/bookmarks/bookmarks.html" }
+        });
 
     });
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using WebService.Models.Bookmark;
 
 namespace WebService.Models.Question
 {
@@ -11,5 +12,6 @@ namespace WebService.Models.Question
         public int Score { get; set; } 
         public List<CommentModel> Comments { get; set; }
         public List<QuestionNoteModel> Notes { get; set; }
+		public IList<BookmarkModel> Bookmarks { get; set; }
     }
 }

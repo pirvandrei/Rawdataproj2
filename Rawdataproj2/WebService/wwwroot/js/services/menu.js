@@ -12,6 +12,12 @@
                 component: "notes",
                 params: { name: "Notes" },
                 path: '/#/notes'
+            },
+            {
+                name: "Bookmarks",
+                component: "bookmarks",
+                params: { name: "Bookmarks" },
+                path: '/#/bookmarks'
             }
 
         ]

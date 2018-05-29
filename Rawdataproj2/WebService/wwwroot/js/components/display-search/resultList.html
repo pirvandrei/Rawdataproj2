@@ -5,11 +5,13 @@
 
 <nav class="paginate">
     <ul class="pagination justify-content-center">
-        <li class="page-item" data-bind="click:changePagePrev">
+        <li class="page-item" data-bind="click:changePagePrev,css:currentPagenr() == 1 ?'disabled':''">
             <span class="page-link">Previous</span>
         </li>
-        <li class="page-item"><a href="#" data-bind="text:currentPagenr"></a></li>
-        <li class="page-item" data-bind="click:changePageNext">
+        <li class="page-item ">
+            <a class="page-link" href="#" data-bind="text:currentPagenr">1 <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="page-item" data-bind="click:changePageNext,css:currentPagenr() === cPage.pages ?'disabled':''">
             <span class="page-link">Next</span>
         </li>
     </ul>

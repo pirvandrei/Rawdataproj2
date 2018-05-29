@@ -14,27 +14,25 @@
     this.moveCursor = function (direction) {
         //Load next/previous page 
         if (direction === 'next') {
-            if (self.currentPage === self.data.total) {
+           if (self.data.currentPage === self.data.total) {
                 return false;
             } else {
-                self.loadPage(self.data.next);
+               if (self.loadPage(self.data.next));
                 return true;
             }
         } else if (direction === 'prev') {
-            if (self.currentPage > 1) {
+            if (self.data.currentPage > 1) {
                 self.loadPage(self.data.prev);
                 return true;
             } else {
                 return false;
             }
-            
         }
     }
     this.loadPage = function (target) {
         req.getPage({ target: target }, function (data) {
-            console.log(target)
             self.loadData(data);
-            console.log(self.data)
+            return true;
         });
     }
 

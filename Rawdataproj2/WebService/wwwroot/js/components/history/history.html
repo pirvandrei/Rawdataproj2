@@ -2,7 +2,7 @@
     <!--History section-->
     <div class="col-sm-12 col-md-12">
         <h1>Search history</h1>
-            <div id="historyItems" data-bind="foreach:historyItems()">
+            <div id="historyItems" data-bind="foreach:cPage()">
                 <div data-bind="component: { name: 'history-item', params: {data:$data} }"></div>
             </div>   
     </div>
