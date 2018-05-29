@@ -63,7 +63,12 @@
         #navbarNav {
             font-size: 2rem;
         }
-
+        .search-result p:not(:first-child), .search-result h2:not(:first-child) {
+            display: none;
+        }
+        .search-result pre,search-result ul{
+            display:none;
+        }
         .search-list-element:hover, .history-item:hover {
             background-color: #ececec;
             border-radius: 5px;

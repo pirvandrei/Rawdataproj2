@@ -1,4 +1,4 @@
-﻿define(['knockout'], function (ko, param) {
+﻿define(['knockout'], function (ko) {
     return function (params) {
         // public part
 
