@@ -59,6 +59,10 @@
                 var menu = menuDef.menuList.find(m => m.path == context.path);
                 changeMenu(menu);
             });
+            router.get("/#/bookmarks", function (context) {
+                var menu = menuDef.menuList.find(m => m.path == context.path);
+                changeMenu(menu);
+            });
             //Route to post display
             router.get("/#/post/:id", function (context) {
                 loadComponent({ component: 'post', params: context.params })

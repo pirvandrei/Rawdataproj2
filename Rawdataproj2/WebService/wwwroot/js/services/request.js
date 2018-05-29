@@ -10,6 +10,7 @@
     var getSearchHistory = function (data, callback) {
         fetch("api/history/" + data.id)
             .then(function (response) {
+                console.log(response)
                 return response.json();
             })
             .then(callback);

@@ -3,6 +3,7 @@
         // public part
         var text = params.text;
         var title = params.title;
+        var url = params.url;
 
 
 
