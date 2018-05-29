@@ -14,6 +14,7 @@ define(['knockout', 'request'], function (ko, req) {
         var qUserName = ko.observable();
         var qCreationDate = ko.observable();
         var countAnswers = ko.observable();
+        var qBookmarked = ko.observable();
         //First we need to load question data
 
         //load question data
@@ -31,7 +32,8 @@ define(['knockout', 'request'], function (ko, req) {
             qUserName(data.userName);
             acceptedAnswer(data.acceptedAnswerID);
             qCreationDate(data.creationdate);
-            countAnswers(data.comments.length);            
+            countAnswers(data.comments.length);     
+            qBookmarked(data.bookmarked);
             });
         });
     return {
@@ -46,7 +48,8 @@ define(['knockout', 'request'], function (ko, req) {
         qUserName,
         qCreationDate,
         countAnswers,
-        acceptedAnswer
+        acceptedAnswer,
+        qBookmarked,
         };
     };
 });

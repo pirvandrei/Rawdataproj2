@@ -1,10 +1,26 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
+﻿
+<div id="bookmarks">
+    <h2>Bookmarks</h2>
+    <div data-bind="foreach:cPage">
+        <div class="row">
+            <div class="col-sm-12">
+                <a href="#" data-bind="attr:{href:'/#/post/'+postID}"><span data-bind="text:title"></span></a>
+            </div>
+        </div>
+        <!--<div data-bind="component:{name:'note-item',params:{id:postID,title:title}}"></div>-->
+    </div>
+</div>
 
-</body>
-</html>
+<nav class="paginate">
+    <ul class="pagination justify-content-center">
+        <li class="page-item" data-bind="click:changePagePrev,css:currentPagenr() == 1 ?'disabled':''">
+            <span class="page-link">Previous</span>
+        </li>
+        <li class="page-item ">
+            <a class="page-link" href="#" data-bind="text:currentPagenr">1 <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="page-item" data-bind="click:changePageNext,css:currentPagenr() === cPage.pages ?'disabled':''">
+            <span class="page-link">Next</span>
+        </li>
+    </ul>
+</nav>

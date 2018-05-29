@@ -26,7 +26,9 @@ namespace StackoverflowContext
         {
             using (var db = new StackoverflowDbContext())
             {
-                return await db.Bookmarks.ToListAsync();
+                return await db.Bookmarks
+				               .Include(x=>x.Post)
+					           .ToListAsync();
             }
         }
 
@@ -78,5 +80,13 @@ namespace StackoverflowContext
         {
             throw new NotImplementedException();
         }
-    }
+
+		public string GetAnswerTitle(int Id)
+		{
+			using (var db = new StackoverflowDbContext())
+            {
+				return  db.Posts.FirstOrDefault(x => x.ID == (db.Answers.FirstOrDefault(y => y.ID == Id).ParentID)).Title;
+            }
+		}
+	}
 }

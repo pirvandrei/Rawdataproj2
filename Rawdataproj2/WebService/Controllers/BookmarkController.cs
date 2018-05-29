@@ -43,10 +43,10 @@ namespace WebService.Controllers
         [HttpGet("{id}", Name = nameof(GetBookmark))] 
         public async Task<IActionResult> GetBookmark(int id)
         {
-            var question =  await _BookmarkRepository.Get(id);
-            if (question == null) return NotFound(); 
+			var bookmark =  await _BookmarkRepository.Get(id);
+            if (bookmark == null) return NotFound(); 
 
-            var model = _Mapper.Map<BookmarkModel>(question);
+            var model = _Mapper.Map<BookmarkModel>(bookmark);
              
             return  Ok(model);
         }
@@ -86,12 +86,19 @@ namespace WebService.Controllers
             var model = new BookmarkListModel
             {
                   PostID = bookmark.PostID, 
+				Title = bookmark.Post.PostType == 1 ? bookmark.Post.Title : getAnswerTitle(bookmark.Post.ID),
+				Type = bookmark.Post.PostType == 1 ? "Question" : "Answer"
             };
             model.Url = CreateBookmarkLink(bookmark.PostID);
             return model;
         }
-          
-        private string CreateBookmarkLink(int id)
+
+		private string getAnswerTitle(int ID)
+		{
+			return  _BookmarkRepository.GetAnswerTitle(ID);
+		}
+
+		private string CreateBookmarkLink(int id)
         {
             return Url.Link(nameof(GetBookmark), new { id });
         }

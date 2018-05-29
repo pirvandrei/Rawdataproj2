@@ -28,16 +28,18 @@ namespace WebService
             {
                 cfg.CreateMap<Question, QuestionModel>() 
                             .ForMember(d => d.UserName, m => m.MapFrom(s => s.User.DisplayName)) 
+				            .ForMember(d => d.Bookmarked, m => m.MapFrom(s => s.Bookmarks.Count != 0))
                             .ReverseMap();
                 cfg.CreateMap<Comment, CommentModel>()
-                            .ForMember(d => d.UserName, m => m.MapFrom(s => s.User.DisplayName))
+                            .ForMember(d => d.UserName, m => m.MapFrom(s => s.User.DisplayName)) 
                             .ReverseMap();
                 cfg.CreateMap<Answer, AnswerModel>()
                             .ForMember(d => d.UserName, m => m.MapFrom(s => s.User.DisplayName)) 
+			            	.ForMember(d => d.Bookmarked, m => m.MapFrom(s => s.Bookmarks.Count != 0))
                             .ReverseMap();
                 cfg.CreateMap<Note, NoteModel>()
                             .ReverseMap();
-                cfg.CreateMap<Bookmark, BookmarkModel>()
+                cfg.CreateMap<Bookmark, BookmarkModel>() 
 				            .ReverseMap();
 
                 cfg.CreateMap<RankedWordListDto, RankedWordListModel>()

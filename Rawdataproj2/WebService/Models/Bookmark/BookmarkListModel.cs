@@ -9,5 +9,7 @@ namespace WebService.Models.Bookmark
     {
         public string Url { get; set; }
         public int PostID { get; set; } 
+        public string Title { get; set; }
+        public string Type { get; internal set; }
     }
 }

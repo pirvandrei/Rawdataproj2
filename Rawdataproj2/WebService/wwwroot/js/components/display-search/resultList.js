@@ -5,6 +5,7 @@ define(['knockout', 'request','paginate'], function (ko, req,pg) {
         var searchMethod = ko.observable(params.searchMethod);
         var startDate = ko.observable(params.startDate);
         var endDate = ko.observable(params.endDate);
+
         var currentPagenr = ko.observable();
         var previousLink = ko.observable;
         var nextLink = ko.observable;
@@ -38,10 +39,9 @@ define(['knockout', 'request','paginate'], function (ko, req,pg) {
                 pg.loadData(data)
                 cPage(pg.data.items)
                 currentPagenr(pg.data.currentPage);
+                console.log(cPage);
             });
-        });
-
-        
+        });        
 
     return {
         cPage,
