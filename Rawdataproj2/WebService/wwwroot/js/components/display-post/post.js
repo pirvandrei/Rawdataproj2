@@ -20,19 +20,13 @@ define(['knockout', 'request'], function (ko, req) {
 
         var addBookmark = function () {
             req.saveBookmark({ postid: id(), userid: 1 }, function (data) {
-                console.log("bookmarked ", data);
-                req.getQuestion(params, function (data) {
-                    qBookmarked(data.bookmarked);
-                });
+                qBookmarked(true);
             }); 
         }
 
         var removeBookmark = function () {
             req.deleteBookmark({ postid: id() }, function (data) {
-                console.log("bookmarked ", data);
-                req.getQuestion(params, function (data) {
-                    qBookmarked(data.bookmarked);
-                });
+                qBookmarked(false);
             });
         }
         

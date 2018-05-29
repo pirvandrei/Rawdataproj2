@@ -6,10 +6,10 @@
             <br />
             <!-- answer bookmark -->
             <div data-bind="if: bookedmarked">
-                <i class="fas fa-star"></i>
+                <i  data-bind="click:removeBookmark" class="fas fa-star"></i>
             </div>
             <div data-bind="ifnot: bookedmarked">
-                <i class="far fa-star"></i>
+                <i data-bind="click:addBookmark" class="far fa-star"></i>
             </div>
         </div>
 
