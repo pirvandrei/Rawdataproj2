@@ -1,4 +1,5 @@
 ﻿using DataService;
+using DataService.Dto.BookmarkDto;
 using DomainModel;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -86,6 +87,54 @@ namespace StackoverflowContext
 			using (var db = new StackoverflowDbContext())
             {
 				return  db.Posts.FirstOrDefault(x => x.ID == (db.Answers.FirstOrDefault(y => y.ID == Id).ParentID)).Title;
+            }
+		}
+        
+
+		public int? GetParentID(int? Id)
+		{
+			using (var db = new StackoverflowDbContext())
+            {
+                return db.Answers.FirstOrDefault(x => x.ID == Id).ParentID;
+            }
+		}
+
+		public async Task<IEnumerable<BookmarkDto>> GetBookmarks(PagingInfo pagingInfo)
+		{
+			using (var db = new StackoverflowDbContext())
+            {
+             
+
+				return await (from b  in db.Bookmarks 
+    				              join  a in db.Answers on b.PostID equals a.ID
+                                  join r in db.Posts on a.ParentID equals r.ID 
+				                  select new BookmarkDto
+                                     {
+                                         ParentID = a.ParentID,
+                                         Title = r.Title,
+                                         PostID = a.ID,
+                                         UserID = b.UserID,
+                                         Posttype = a.PostType == 1 ? "Question" : "Answer"
+                                     }
+				             )
+					        .Union(
+				             from b in db.Bookmarks
+                                join q in db.Questions on b.PostID equals q.ID 
+					            	select new BookmarkDto
+                                     {
+                                         
+                                         Title = q.Title,
+                                         PostID = q.ID,
+                                         UserID = b.UserID,
+                                         Posttype = q.PostType == 1 ? "Question" : "Answer"
+                                     }
+				            ).Skip((pagingInfo.Page - 1) * pagingInfo.PageSize)
+                                    .Take(pagingInfo.PageSize)
+                                    .ToListAsync();
+
+
+             
+                  
             }
 		}
 	}
