@@ -56,7 +56,7 @@ namespace WebService.Controllers
         public async Task<IActionResult> DeleteBookmark(int id)
         {
             if (!await _BookmarkRepository.Delete(id)) return NotFound();
-            return NoContent();
+            return Json(NoContent());
         }
 
         [HttpPost("{id}")]
