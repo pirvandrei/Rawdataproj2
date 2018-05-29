@@ -53,7 +53,7 @@ namespace WebService.Controllers
             var search = new Search
             {
                 Text = model.Text,
-                Date = DateTime.Today,
+                Date = DateTime.Now,
                 UserID = model.UserID
             };
 
