@@ -66,7 +66,7 @@ namespace WebService.Controllers
             switch (method)
             {
                 case "\"\"":
-                    var option1 = await _SearchRepository.BestMatchRanked(query, pagingInfo, startDate, endDate);
+                    var option1 = await _SearchRepository.BestMatchWeighted(query, pagingInfo, startDate, endDate);
                     result = option1.Item1;
                     numberOfRows = option1.Item2;
                     break;
@@ -86,7 +86,7 @@ namespace WebService.Controllers
                     numberOfRows = option4.Item2;
                     break;
                 default:
-                    var defaultOption = await _SearchRepository.BestMatchRanked(query, pagingInfo, startDate, endDate);
+                    var defaultOption = await _SearchRepository.BestMatchWeighted(query, pagingInfo, startDate, endDate);
                     result = defaultOption.Item1;
                     numberOfRows = defaultOption.Item2;
                     break;

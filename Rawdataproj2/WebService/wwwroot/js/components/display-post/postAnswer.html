@@ -1,9 +1,21 @@
 ﻿    <div class="row post-box" data-bind="style: { background: answerID() === id() ? '#ecf9ec' : 'white'}">   
-        <div class="col-sm-1 score justify-content-center align-items-center">
-            <span class="center vote-count" data-bind="text: score"></span>
+        
+        <!-- answer score -->
+        <div class="col-sm-1 score">
+            <i class="fas fa-sort-up"></i>
+            <div class="center vote-count" data-bind="text: score"></div>
+            <i class="fas fa-sort-down"></i><br /><br />
+
+            <!-- answer bookmark -->
+            <div data-bind="if: bookedmarked">
+                <i class="fas fa-star"></i>
+            </div>
+            <div data-bind="ifnot: bookedmarked">
+                <i class="far fa-star"></i>
+            </div>
         </div>
 
-
+        <!-- answer body -->
         <div class="col-sm-11">
             <div data-bind="if: answerID() === id()">
                 <div class="alert alert-success">
@@ -11,7 +23,6 @@
                 </div>
             </div>
 
-        <p>Bookmarked &nbsp;&nbsp;<b><span data-bind="text: bookedmarked"></span></b></p>
         <div class="col-sm-11">
             <div data-bind="html:body"></div>
         </div>

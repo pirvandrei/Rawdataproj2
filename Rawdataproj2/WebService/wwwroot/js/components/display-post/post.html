@@ -15,11 +15,22 @@
                     </div>
                     <hr />
                     <div class="row">
-                        <div class="col-md-1">
-                           
+
+                        <!-- question score -->
+                        <div class="col-md-1 score">
+                            <i class="fas fa-sort-up"></i>
                             <span class="qScore" data-bind="text: qScore"></span>
-                            <span>Marked: </span> <span data-bind="text: qBookmarked"></span>
-                          <i class="fa fa-car"></i>
+                            <i class="fas fa-sort-down"></i><br /><br />
+
+                            <!-- question bookmark -->
+                            <div data-bind="if: qBookmarked">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div data-bind="ifnot: qBookmarked">
+                                <i class="far fa-star"></i>
+                            </div>
+
+
                         </div>
                         <div class="col-md-11">
                             <div data-bind="html: qBody"></div>
@@ -76,5 +87,16 @@
     }
     .qScore {
         font-size: 2rem;
-    } 
+    }
+    .fa-sort-up, .fa-sort-down {
+        font-size: 2rem;
+        /*margin-left: 20px;*/
+    }
+    .fas.fa-star {
+        color: #ffdb4d;
+        
+    }
+    .fas, .far {
+        font-size: 1.5rem;
+    }
 </style>
