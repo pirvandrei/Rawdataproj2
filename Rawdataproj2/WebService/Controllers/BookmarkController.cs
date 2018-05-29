@@ -27,7 +27,8 @@ namespace WebService.Controllers
         [HttpGet(Name = nameof(GetBookmarks))]
         public async Task<IActionResult> GetBookmarks(PagingInfo pagingInfo)
         {
-            var bookmark = await _BookmarkRepository.GetAll(pagingInfo);
+            //var bookmark = await _BookmarkRepository.GetAll(pagingInfo);
+            var bookmark = await _BookmarkRepository.GetBookmarks(pagingInfo);
             var model = bookmark.Select(que => CreateBookmarkListModel(que));
 
             var total = _BookmarkRepository.Count();
@@ -40,22 +41,22 @@ namespace WebService.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{id}", Name = nameof(GetBookmark))] 
+        [HttpGet("{id}", Name = nameof(GetBookmark))]
         public async Task<IActionResult> GetBookmark(int id)
         {
-			var bookmark =  await _BookmarkRepository.Get(id);
-            if (bookmark == null) return NotFound(); 
+            var bookmark = await _BookmarkRepository.Get(id);
+            if (bookmark == null) return NotFound();
 
             var model = _Mapper.Map<BookmarkModel>(bookmark);
-             
-            return  Ok(model);
+
+            return Ok(model);
         }
 
-        [HttpDelete("{postid}")]
-        public async Task<IActionResult> DeleteBookmark(int postid)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteBookmark(int id)
         {
-            if (!await _BookmarkRepository.Delete(postid)) return NotFound();
-            return Json(NoContent());
+            if (!await _BookmarkRepository.Delete(id)) return NotFound();
+            return NoContent();
         }
 
         [HttpPost("{id}")]
@@ -64,14 +65,14 @@ namespace WebService.Controllers
             if (model == null) return BadRequest();
 
             var bookmark = new Bookmark
-            { 
+            {
                 PostID = model.PostID,
                 UserID = model.UserID
             };
 
             var result = await _BookmarkRepository.Add(bookmark);
 
-            return Json(Ok());
+            return Ok(result);
         }
 
 
@@ -81,27 +82,25 @@ namespace WebService.Controllers
          * *****************************************************/
 
 
-        private BookmarkListModel CreateBookmarkListModel(Bookmark bookmark)
+        private BookmarkListModel CreateBookmarkListModel(BookmarkDto bookmark)
         {
             var model = new BookmarkListModel
             {
-                PostID = bookmark.PostID, 
-				Title = bookmark.Post.PostType == 1 ? bookmark.Post.Title : getAnswerTitle(bookmark.Post.ID),
-				Type = bookmark.Post.PostType == 1 ? "Question" : "Answer"
+                Type = bookmark.Posttype,
+                ParentID = bookmark.ParentID,
+                PostID = bookmark.PostID,
+                Title = bookmark.Title,
+                UserID = bookmark.UserID,
+
             };
             model.Url = CreateBookmarkLink(bookmark.PostID);
             return model;
         }
 
-		private string getAnswerTitle(int ID)
-		{
-			return  _BookmarkRepository.GetAnswerTitle(ID);
-		}
-
-		private string CreateBookmarkLink(int id)
+        private string CreateBookmarkLink(int id)
         {
             return Url.Link(nameof(GetBookmark), new { id });
         }
-      
+
     }
 }
