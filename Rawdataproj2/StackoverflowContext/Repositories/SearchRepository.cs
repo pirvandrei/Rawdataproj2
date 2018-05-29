@@ -123,7 +123,9 @@ namespace StackoverflowContext
                         PostType = (int)reader["PostType"],
                         CreationDate = (DateTime)reader["CreationDate"],
                         AcceptedAnswerId = (reader["AcceptedAnswerID"] == DBNull.Value) ? 0 : (int)reader["AcceptedAnswerID"],
-                        Rank = (decimal)reader["rank"]
+                        Rank = (decimal)reader["rank"],
+                        ParentID = (reader["ParentID"] == DBNull.Value) ? 0 : (int)reader["ParentID"],
+                        Score = (int)reader["Score"]
                     });
                 }
             }

@@ -15,11 +15,22 @@
                     </div>
                     <hr />
                     <div class="row">
-                        <div class="col-md-1">
-                            <i class="fa fa-sort-asc" aria-hidden="true"></i>
-                            <span data-bind="text: qScore"></span>
-                            <span>Marked: </span> <span data-bind="text: qBookmarked"></span>
-                            <i class="fa fa-sort-desc" aria-hidden="true"></i>
+
+                        <!-- question score -->
+                        <div class="col-md-1 score">
+                            <i class="fas fa-sort-up"></i>
+                            <span class="qScore" data-bind="text: qScore"></span>
+                            <i class="fas fa-sort-down"></i><br /><br />
+
+                            <!-- question bookmark -->
+                            <div data-bind="if: qBookmarked">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div data-bind="ifnot: qBookmarked">
+                                <i class="far fa-star"></i>
+                            </div>
+
+
                         </div>
                         <div class="col-md-11">
                             <div data-bind="html: qBody"></div>
@@ -54,7 +65,7 @@
                             <!-- answers -->
                             <h3><span data-bind="text: countAnswers"></span>&nbsp;<span>Answers</span></h3>
                             <div data-bind="foreach:answerData">
-                                <div data-bind="component: { name: 'post-answer', params:{body:body,comments:comments,notes:notes,score:score,userName:userName, answerID: $parent.acceptedAnswer, id:id } }"></div>
+                                <div data-bind="component: { name: 'post-answer', params:{body:body,comments:comments,notes:notes,score:score,userName:userName, answerID: $parent.acceptedAnswer, id:id, bookmarked:bookmarked } }"></div>
                                 <hr />
                             </div>
 
@@ -73,5 +84,19 @@
         padding: 2%;
         overflow-y: scroll;
         max-height: 400px;
+    }
+    .qScore {
+        font-size: 2rem;
+    }
+    .fa-sort-up, .fa-sort-down {
+        font-size: 2rem;
+        /*margin-left: 20px;*/
+    }
+    .fas.fa-star {
+        color: #ffdb4d;
+        
+    }
+    .fas, .far {
+        font-size: 1.5rem;
     }
 </style>

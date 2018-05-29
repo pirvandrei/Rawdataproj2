@@ -15,8 +15,8 @@
         };
          //Array containing available methods for search
         var availableMethods = ko.observableArray([
-            new Method('Ranked', 'bestmatchranked'),
             new Method('Weighted', 'bestmatchweighted'),
+            new Method('Ranked', 'bestmatchranked'),
             new Method('All', 'bestmatchall'),
         ]);
         //When searching we will navigate to this route
@@ -49,7 +49,10 @@
         // create the router
         var appRouter = sammy('#main', function () {
             var router = this;
+            router.get("/", function (context) {
+                loadComponent({ component: 'display-search', params: {searchString:'sql',searchMethod:'bestmatchweighted'} })
 
+            });
             router.get("/#/history", function (context) {
                 var menu = menuDef.menuList.find(m => m.path == context.path);
                 changeMenu(menu);
