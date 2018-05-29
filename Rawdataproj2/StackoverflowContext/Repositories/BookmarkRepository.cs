@@ -26,7 +26,9 @@ namespace StackoverflowContext
         {
             using (var db = new StackoverflowDbContext())
             {
-                return await db.Bookmarks.ToListAsync();
+                return await db.Bookmarks
+				               .Include(x=>x.Post)
+					           .ToListAsync();
             }
         }
 
