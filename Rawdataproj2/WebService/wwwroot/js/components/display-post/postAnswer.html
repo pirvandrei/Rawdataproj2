@@ -1,10 +1,14 @@
-﻿    <div class="row post-box" >
+﻿    <div class="row post-box" data-bind="style: { background: answerID() === id() ? '#ecf9ec' : 'white'}">   
         <div class="col-sm-1 score justify-content-center align-items-center">
-            <span class="center vote-count" data-bind="text: id"></span>
+            <span class="center vote-count" data-bind="text: score"></span>
         </div>
-        <p>acceptedAnswerID&nbsp;&nbsp; <b><span data-bind="text: answerID"></span></b></p>&nbsp;&nbsp;
-        <p>ID &nbsp;&nbsp;<b><span data-bind="text: id"></span></b></p>
-        <div class="col-sm-11" data-bind="style: { background: answerID == id ? 'red' : 'yellow'}">
+
+        <div class="col-sm-11">
+            <div data-bind="if: answerID() === id()">
+                <div class="alert alert-success">
+                    <strong>Accepted answer</strong>
+                </div>
+            </div>
             <div data-bind="html:body"></div>
         </div>
     </div>
@@ -41,5 +45,8 @@
     }
     .profitWarning {
         background: red;
+    }
+    .alert-success {
+        text-align: center;
     }
 </style>
