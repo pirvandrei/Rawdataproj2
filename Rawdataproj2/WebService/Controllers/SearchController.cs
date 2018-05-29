@@ -130,7 +130,9 @@ namespace WebService.Controllers
                 CreationDate = search.CreationDate,
                 AcceptedAnswerId = search.AcceptedAnswerId,
                 Rank = search.Rank,
-                Body = search.Body
+                Body = search.Body,
+                ParentID = search.ParentID,
+                Score = search.Score
             };
             return model;
         }

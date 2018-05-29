@@ -13,5 +13,7 @@ namespace DataService.Dto.SearchDto
         public int AcceptedAnswerId { get; set; }
         public decimal Rank { get; set; }
         public string Body { get; set; }
+        public int ParentID { get; set; }
+        public int Score { get; set; }
     }
 }
