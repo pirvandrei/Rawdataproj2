@@ -16,8 +16,9 @@
             .then(callback);
     };
     var getSearchResults = function (data, callback) {
-        fetch("api/search?query=" + data.searchString + "&method=" + data.searchMethod)
+        fetch('api/search?query=' + data.searchString + '&method="' + data.searchMethod+'"')
             .then(function (response) {
+                console.log('api/search?query=' + data.searchString + '&method="' + data.searchMethod + '"')
                 return response.json();
             })
             .then(callback);
