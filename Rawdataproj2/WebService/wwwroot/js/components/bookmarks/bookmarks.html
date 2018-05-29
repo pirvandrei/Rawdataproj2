@@ -4,7 +4,7 @@
     <div data-bind="foreach:cPage">
         <div class="row">
             <div class="col-sm-12">
-                <a href="#" data-bind="attr:{href:'/#/post/'+postID}"><span data-bind="text:title"></span></a>
+                <a href="#" data-bind="attr:{href:'/#/post/'+(parentID?parentID:postID)}"><span data-bind="text:title"></span></a>
             </div>
         </div>
         <!--<div data-bind="component:{name:'note-item',params:{id:postID,title:title}}"></div>-->
