@@ -27,7 +27,8 @@ namespace WebService.Controllers
         [HttpGet(Name = nameof(GetBookmarks))]
         public async Task<IActionResult> GetBookmarks(PagingInfo pagingInfo)
         {
-            var bookmark = await _BookmarkRepository.GetAll(pagingInfo);
+            //var bookmark = await _BookmarkRepository.GetAll(pagingInfo);
+            var bookmark = await _BookmarkRepository.GetBookmarks(pagingInfo);
             var model = bookmark.Select(que => CreateBookmarkListModel(que));
 
             var total = _BookmarkRepository.Count();
@@ -43,7 +44,7 @@ namespace WebService.Controllers
         [HttpGet("{id}", Name = nameof(GetBookmark))] 
         public async Task<IActionResult> GetBookmark(int id)
         {
-			var bookmark =  await _BookmarkRepository.Get(id);
+            var bookmark =  await _BookmarkRepository.Get(id);
             if (bookmark == null) return NotFound(); 
 
             var model = _Mapper.Map<BookmarkModel>(bookmark);
@@ -81,24 +82,22 @@ namespace WebService.Controllers
          * *****************************************************/
 
 
-        private BookmarkListModel CreateBookmarkListModel(Bookmark bookmark)
+        private BookmarkListModel CreateBookmarkListModel(BookmarkDto bookmark)
         {
-            var model = new BookmarkListModel
-            {
-                  PostID = bookmark.PostID, 
-				Title = bookmark.Post.PostType == 1 ? bookmark.Post.Title : getAnswerTitle(bookmark.Post.ID),
-				Type = bookmark.Post.PostType == 1 ? "Question" : "Answer"
+            var model = new BookmarkListModel 
+            {  
+                 Type = bookmark.Posttype, 
+                 ParentID = bookmark.ParentID,
+                 PostID = bookmark.PostID,
+                 Title = bookmark.Title,
+                 UserID = bookmark.UserID,
+
             };
             model.Url = CreateBookmarkLink(bookmark.PostID);
             return model;
         }
-
-		private string getAnswerTitle(int ID)
-		{
-			return  _BookmarkRepository.GetAnswerTitle(ID);
-		}
-
-		private string CreateBookmarkLink(int id)
+  
+        private string CreateBookmarkLink(int id)
         {
             return Url.Link(nameof(GetBookmark), new { id });
         }
