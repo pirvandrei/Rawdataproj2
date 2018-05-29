@@ -72,7 +72,7 @@
             });
             //Route to post display
             router.get("/#/stats", function (context) {
-                loadComponent({ component: 'post', params: context.params })
+                loadComponent({ component: 'statistics', params: context.params })
             });
             router.get("/#/post/:id", function (context) {
                 loadComponent({ component: 'post', params: context.params })
