@@ -50,7 +50,32 @@
             })
             .then(callback);
     };
-
+    var saveBookmark = function (data, callback) {
+        fetch('api/booksmarks'+data.userid, {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'content-type': 'application/json'
+            }
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(callback);
+    };
+    var deleteBookmark = function (data, callback) {
+        fetch('api/booksmarks' + data.userid, {
+            method: 'DELETE',
+            body: JSON.stringify(data),
+            headers: {
+                'content-type': 'application/json'
+            }
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(callback);
+    };
 
     return {
         getQuestion,
