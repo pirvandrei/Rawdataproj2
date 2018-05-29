@@ -4,7 +4,20 @@
         <h1>Search history</h1>
             <div id="historyItems" data-bind="foreach:cPage()">
                 <div data-bind="component: { name: 'history-item', params: {data:$data} }"></div>
-            </div>   
+            </div>  
+            <nav class="paginate">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item" data-bind="click:changePagePrev,css:currentPagenr() == 1 ?'disabled':''">
+                        <span class="page-link">Previous</span>
+                    </li>
+                    <li class="page-item ">
+                        <a class="page-link" href="#" data-bind="text:currentPagenr">1 <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="page-item" data-bind="click:changePageNext,css:currentPagenr() === cPage.pages ?'disabled':''">
+                        <span class="page-link">Next</span>
+                    </li>
+                </ul>
+            </nav>
     </div>
     <!--Notes section?-->
     <div class="col-sm-12 col-md-6"></div>
