@@ -80,5 +80,13 @@ namespace StackoverflowContext
         {
             throw new NotImplementedException();
         }
-    }
+
+		public string GetAnswerTitle(int Id)
+		{
+			using (var db = new StackoverflowDbContext())
+            {
+				return  db.Posts.FirstOrDefault(x => x.ID == (db.Answers.FirstOrDefault(y => y.ID == Id).ParentID)).Title;
+            }
+		}
+	}
 }
