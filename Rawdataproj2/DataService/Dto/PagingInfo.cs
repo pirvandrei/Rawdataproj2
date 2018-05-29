@@ -8,8 +8,9 @@ namespace DataService
     {
         const int MaxPageSize = 25;
         private int _pageSize = 10;
+        private int _page = 1;
 
-        public int Page { get; set; }
+        public int Page { get { return _page; } set { _page = value; } }
         public int PageSize
         {
             get

@@ -39,8 +39,8 @@ namespace WebService.Controllers
             var model = notes.Select(note => CreateNoteListModel(note));
 
             var total = _NoteRepository.Count();
-            var prev = Url.Link(nameof(GetNotes), new { page = pagingInfo.Page - 1, pagingInfo.PageSize });
-            var next = Url.Link(nameof(GetNotes), new { page = pagingInfo.Page + 1, pagingInfo.PageSize });
+            var prev = Url.Link(nameof(GetNotes), new { page = pagingInfo.Page - 1, pagingInfo.PageSize }).ToLower();
+            var next = Url.Link(nameof(GetNotes), new { page = pagingInfo.Page + 1, pagingInfo.PageSize }).ToLower();
 
             var returnType = new ReturnTypeConstants("notes");
             var result = PagingHelper.GetPagingResult(pagingInfo, total, model, returnType, prev, next);

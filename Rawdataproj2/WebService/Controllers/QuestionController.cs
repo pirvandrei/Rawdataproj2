@@ -34,8 +34,8 @@ namespace WebService.Controllers
             var model = question.Select(que => CreateQuestionListModel(que));
 
             var total = _QuestionRepository.Count();
-            var prev = Url.Link(nameof(GetQuestions), new { page = pagingInfo.Page - 1, pagingInfo.PageSize });
-            var next = Url.Link(nameof(GetQuestions), new { page = pagingInfo.Page + 1, pagingInfo.PageSize });
+            var prev = Url.Link(nameof(GetQuestions), new { page = pagingInfo.Page - 1, pagingInfo.PageSize }).ToLower();
+            var next = Url.Link(nameof(GetQuestions), new { page = pagingInfo.Page + 1, pagingInfo.PageSize }).ToLower();
 
             var returnType = new ReturnTypeConstants("questions");
             var result = PagingHelper.GetPagingResult(pagingInfo, total, model, returnType, prev, next);

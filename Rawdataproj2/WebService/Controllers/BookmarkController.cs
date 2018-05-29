@@ -31,8 +31,8 @@ namespace WebService.Controllers
             var model = bookmark.Select(que => CreateBookmarkListModel(que));
 
             var total = _BookmarkRepository.Count();
-            var prev = Url.Link(nameof(GetBookmarks), new { page = pagingInfo.Page - 1, pagingInfo.PageSize });
-            var next = Url.Link(nameof(GetBookmarks), new { page = pagingInfo.Page + 1, pagingInfo.PageSize });
+            var prev = Url.Link(nameof(GetBookmarks), new { page = pagingInfo.Page - 1, pagingInfo.PageSize }).ToLower();
+            var next = Url.Link(nameof(GetBookmarks), new { page = pagingInfo.Page + 1, pagingInfo.PageSize }).ToLower();
 
             var returnType = new ReturnTypeConstants("bookmarks");
             var result = PagingHelper.GetPagingResult(pagingInfo, total, model, returnType, prev, next);

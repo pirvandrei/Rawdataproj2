@@ -29,8 +29,8 @@ namespace WebService.Controllers
             var model = history.Select(search => SearchHistoryListModel(search));
 
             var total = _SearchHistoryRepository.Count();
-            var prev = Url.Link(nameof(GetHistory), new { page = pagingInfo.Page - 1, pagingInfo.PageSize });
-            var next = Url.Link(nameof(GetHistory), new { page = pagingInfo.Page + 1, pagingInfo.PageSize });
+            var prev = Url.Link(nameof(GetHistory), new { page = pagingInfo.Page - 1, pagingInfo.PageSize }).ToLower();
+            var next = Url.Link(nameof(GetHistory), new { page = pagingInfo.Page + 1, pagingInfo.PageSize }).ToLower();
 
             var returnType = new ReturnTypeConstants("searchhistory");
             var result = PagingHelper.GetPagingResult(pagingInfo, total, model, returnType, prev, next);
