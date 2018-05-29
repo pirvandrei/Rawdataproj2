@@ -10,8 +10,8 @@
         });
         var id = ko.observable(params.id);
         var goToPost = function () {
+            //Check if post has parent id if yes then use that parent id as id instead
             window.location = '#/post/'+id();
-
         }
         return {
             id,

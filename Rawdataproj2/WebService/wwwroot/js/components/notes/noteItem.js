@@ -5,9 +5,10 @@
         var title = params.title;
         var url = params.url;
 
-
-
         return {
+            text,
+            title,
+            url
         };
     };
 });

@@ -10,7 +10,6 @@
         //Pagination button bindings
         var changePageNext = function () {
             if (pg.moveCursor('next')) {
-
                 setTimeout(function () {
                     cPage(pg.data.items)
                     currentPagenr(pg.data.currentPage);
@@ -37,8 +36,6 @@
                 console.log(cPage());
             });
         });
-
-
 
         return {
             cPage,
