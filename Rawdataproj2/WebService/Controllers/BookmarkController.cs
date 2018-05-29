@@ -51,11 +51,11 @@ namespace WebService.Controllers
             return  Ok(model);
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBookmark(int id)
+        [HttpDelete("{postid}")]
+        public async Task<IActionResult> DeleteBookmark(int postid)
         {
-            if (!await _BookmarkRepository.Delete(id)) return NotFound();
-            return NoContent();
+            if (!await _BookmarkRepository.Delete(postid)) return NotFound();
+            return Json(NoContent());
         }
 
         [HttpPost("{id}")]
@@ -71,7 +71,7 @@ namespace WebService.Controllers
 
             var result = await _BookmarkRepository.Add(bookmark);
 
-            return Ok(result);
+            return Json(Ok());
         }
 
 
@@ -85,7 +85,7 @@ namespace WebService.Controllers
         {
             var model = new BookmarkListModel
             {
-                  PostID = bookmark.PostID, 
+                PostID = bookmark.PostID, 
 				Title = bookmark.Post.PostType == 1 ? bookmark.Post.Title : getAnswerTitle(bookmark.Post.ID),
 				Type = bookmark.Post.PostType == 1 ? "Question" : "Answer"
             };

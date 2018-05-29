@@ -59,7 +59,7 @@
             .then(callback);
     };
     var saveBookmark = function (data, callback) {
-        fetch('api/booksmarks'+data.userid, {
+        fetch('api/bookmarks/'+data.userid, {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -67,12 +67,13 @@
             }
         })
             .then(function (response) {
+                console.log("response", response);
                 return response.json();
             })
             .then(callback);
     };
     var deleteBookmark = function (data, callback) {
-        fetch('api/booksmarks' + data.userid, {
+        fetch('api/bookmarks/' + data.postid, {
             method: 'DELETE',
             body: JSON.stringify(data),
             headers: {

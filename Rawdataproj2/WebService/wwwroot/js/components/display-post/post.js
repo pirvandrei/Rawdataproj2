@@ -15,7 +15,27 @@ define(['knockout', 'request'], function (ko, req) {
         var qCreationDate = ko.observable();
         var countAnswers = ko.observable();
         var qBookmarked = ko.observable();
+        var id = ko.observable();
         //First we need to load question data
+
+        var addBookmark = function () {
+            req.saveBookmark({ postid: id(), userid: 1 }, function (data) {
+                console.log("bookmarked ", data);
+                req.getQuestion(params, function (data) {
+                    qBookmarked(data.bookmarked);
+                });
+            }); 
+        }
+
+        var removeBookmark = function () {
+            req.deleteBookmark({ postid: id() }, function (data) {
+                console.log("bookmarked ", data);
+                req.getQuestion(params, function (data) {
+                    qBookmarked(data.bookmarked);
+                });
+            });
+        }
+        
 
         //load question data
     ko.computed(function () {
@@ -34,6 +54,7 @@ define(['knockout', 'request'], function (ko, req) {
             qCreationDate(data.creationdate);
             countAnswers(data.comments.length);     
             qBookmarked(data.bookmarked);
+            id(data.id);
             });
         });
     return {
@@ -50,6 +71,8 @@ define(['knockout', 'request'], function (ko, req) {
         countAnswers,
         acceptedAnswer,
         qBookmarked,
+        addBookmark,
+        removeBookmark
         };
     };
 });

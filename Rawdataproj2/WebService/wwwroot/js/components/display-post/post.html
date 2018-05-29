@@ -5,7 +5,7 @@
     </div>
 </div>-->
 
-
+<br />
 <div class="postView">
     <div class="row">
             <div class="col-md-12">
@@ -18,16 +18,14 @@
 
                         <!-- question score -->
                         <div class="col-md-1 score">
-                            <i class="fas fa-sort-up"></i>
-                            <span class="qScore" data-bind="text: qScore"></span>
-                            <i class="fas fa-sort-down"></i><br /><br />
+                            <span class="qScore" data-bind="text: qScore"></span><br /><br />
 
                             <!-- question bookmark -->
                             <div data-bind="if: qBookmarked">
-                                <i class="fas fa-star"></i>
+                                <i data-bind="click:removeBookmark" class="fas fa-star"></i>
                             </div>
                             <div data-bind="ifnot: qBookmarked">
-                                <i class="far fa-star"></i>
+                                <i data-bind="click:addBookmark" class="far fa-star"></i>
                             </div>
 
 
@@ -87,10 +85,6 @@
     }
     .qScore {
         font-size: 2rem;
-    }
-    .fa-sort-up, .fa-sort-down {
-        font-size: 2rem;
-        /*margin-left: 20px;*/
     }
     .fas.fa-star {
         color: #ffdb4d;
