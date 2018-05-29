@@ -36,6 +36,13 @@
             })
             .then(callback);
     };
+    var getBookmarks = function (data, callback) {
+        fetch('api/bookmarks?id=' + data.id)
+            .then(function (response) {
+                return response.json();
+            })
+            .then(callback);
+    };
     //POST requests
     var saveSearch = function (data, callback) {
         fetch('api/history', {
@@ -83,7 +90,11 @@
         getSearchResults,
         getPage,
         saveSearch,
-        getNotes
+        saveBookmark,
+        getNotes,
+        getBookmarks,
+        deleteBookmark
+        
     }
 
 
