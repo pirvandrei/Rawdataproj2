@@ -31,9 +31,9 @@
             viewModel: { require: "js/components/display-post/postQuestion" },
             template: { require: "text!js/components/display-post/postQuestion.html" }
         });
-        ko.components.register("post-comments", {
-            viewModel: { require: "js/components/display-post/postComments" },
-            template: { require: "text!js/components/display-post/postComments.html" }
+        ko.components.register("post-comment", {
+            viewModel: { require: "js/components/display-post/postComment" },
+            template: { require: "text!js/components/display-post/postComment.html" }
         });
         ko.components.register("display-search", {
             viewModel: { require: "js/components/display-search/resultList" },

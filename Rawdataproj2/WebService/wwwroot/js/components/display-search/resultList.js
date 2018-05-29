@@ -4,7 +4,6 @@ define(['knockout', 'request','paginate'], function (ko, req,pg) {
        
         var searchString = ko.observable(params.searchString);
         var searchMethod = ko.observable(params.selectedMethod);
-        console.log(searchMethod())
         var startDate = ko.observable(params.startDate);
         var endDate = ko.observable(params.endDate);
 
@@ -12,11 +11,11 @@ define(['knockout', 'request','paginate'], function (ko, req,pg) {
         var previousLink = ko.observable;
         var nextLink = ko.observable;
         var cPage = ko.observableArray();
+        var noData = ko.observable();
         
         //Pagination button bindings
         var changePageNext = function () {
             if (pg.moveCursor('next')) {
-                
                 setTimeout(function () {
                     cPage(pg.data.items)
                     currentPagenr(pg.data.currentPage);
@@ -35,15 +34,17 @@ define(['knockout', 'request','paginate'], function (ko, req,pg) {
             }
         }
         ko.computed(function () {
-            console.log(params)
             var data = { searchString: searchString(), searchMethod:searchMethod() };
-            console.log(data)
             //make api call
             req.getSearchResults(data, function (data) {
                 pg.loadData(data)
                 cPage(pg.data.items)
                 currentPagenr(pg.data.currentPage);
-                console.log(cPage);
+                if (pg.data.pages == null) {
+                    noData(true)
+                } else {
+                    noData(false)
+                }
                 
             });
         });        
@@ -53,7 +54,8 @@ define(['knockout', 'request','paginate'], function (ko, req,pg) {
         pg,
         currentPagenr,
         changePageNext,
-        changePagePrev
+        changePagePrev,
+        noData
         };
     };
 });
