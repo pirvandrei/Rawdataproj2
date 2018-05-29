@@ -72,7 +72,7 @@ namespace WebService.Controllers
 
             var result = await _BookmarkRepository.Add(bookmark);
 
-            return Ok(result);
+            return Json(Ok(result));
         }
 
 
