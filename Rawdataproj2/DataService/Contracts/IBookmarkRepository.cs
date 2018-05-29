@@ -8,9 +8,7 @@ using System.Threading.Tasks;
 namespace DataService
 {
     public interface IBookmarkRepository : IDataService<Bookmark, int>
-    {
-        string GetAnswerTitle(int Id);
-        int? GetParentID(int? Id);
+    { 
 		Task<IEnumerable<BookmarkDto>> GetBookmarks(PagingInfo pagingInfo);
     }
 }

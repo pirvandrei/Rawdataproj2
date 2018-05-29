@@ -44,6 +44,13 @@
             })
             .then(callback);
     };
+    var getWordCloudData = function (data, callback) {
+        fetch('api/statistics?word=' + data.word)
+            .then(function (response) {
+                return response.json();
+            })
+            .then(callback);
+    };
     //POST requests
     var saveSearch = function (data, callback) {
         fetch('api/history', {
@@ -95,7 +102,8 @@
         saveBookmark,
         getNotes,
         getBookmarks,
-        deleteBookmark
+        deleteBookmark,
+        getWordCloudData    
         
     }
 

@@ -31,19 +31,39 @@ namespace StackoverflowContext
 				               .Include(x=>x.Post)
 					           .ToListAsync();
             }
-        }
+        }        
 
-        //public async Task<Bookmark> Add(int id, Bookmark bookmark)
-        //{
-        //    using (var db = new StackoverflowDbContext())
-        //    {
-        //        bookmark.UserID = _user.ID;
-        //        bookmark.PostID = id;
-        //        await db.Bookmarks.AddAsync(bookmark);
-        //        db.SaveChanges();
-        //        return bookmark;
-        //    }
-        //}
+		public async Task<IEnumerable<BookmarkDto>> GetBookmarks(PagingInfo pagingInfo)
+        {
+            using (var db = new StackoverflowDbContext())
+            {             
+                return await (from b  in db.Bookmarks 
+                                  join  a in db.Answers on b.PostID equals a.ID
+                                  join r in db.Posts on a.ParentID equals r.ID 
+                                  select new BookmarkDto
+                                     {
+                                         ParentID = a.ParentID,
+                                         Title = r.Title,
+                                         PostID = a.ID,
+                                         UserID = b.UserID,
+                                         Posttype = a.PostType == 1 ? "Question" : "Answer"
+                                     }
+                             )
+                            .Union(
+                             from b in db.Bookmarks
+                                join q in db.Questions on b.PostID equals q.ID 
+                                    select new BookmarkDto
+                                     { 
+                                         Title = q.Title,
+                                         PostID = q.ID,
+                                         UserID = b.UserID,
+                                         Posttype = q.PostType == 1 ? "Question" : "Answer"
+                                     }
+                            ).Skip((pagingInfo.Page - 1) * pagingInfo.PageSize)
+                                    .Take(pagingInfo.PageSize)
+                                    .ToListAsync(); 
+            }
+        } 
 
         public async Task<bool> Delete(int postId)
         {
@@ -55,8 +75,7 @@ namespace StackoverflowContext
                 await db.SaveChangesAsync();
                 return true;
             }
-        }
-
+        }       
 
         public async Task<Bookmark> Add(Bookmark bookmark)
         {
@@ -65,8 +84,7 @@ namespace StackoverflowContext
                 await db.Bookmarks.AddAsync(bookmark);
                 db.SaveChanges();
                 return bookmark;
-            }
-
+            }          
         }
 
         public int Count()
@@ -80,62 +98,8 @@ namespace StackoverflowContext
         public Task<bool> Update(Bookmark b)
         {
             throw new NotImplementedException();
-        }
-
-		public string GetAnswerTitle(int Id)
-		{
-			using (var db = new StackoverflowDbContext())
-            {
-				return  db.Posts.FirstOrDefault(x => x.ID == (db.Answers.FirstOrDefault(y => y.ID == Id).ParentID)).Title;
-            }
-		}
-        
-
-		public int? GetParentID(int? Id)
-		{
-			using (var db = new StackoverflowDbContext())
-            {
-                return db.Answers.FirstOrDefault(x => x.ID == Id).ParentID;
-            }
-		}
-
-		public async Task<IEnumerable<BookmarkDto>> GetBookmarks(PagingInfo pagingInfo)
-		{
-			using (var db = new StackoverflowDbContext())
-            {
-             
-
-				return await (from b  in db.Bookmarks 
-    				              join  a in db.Answers on b.PostID equals a.ID
-                                  join r in db.Posts on a.ParentID equals r.ID 
-				                  select new BookmarkDto
-                                     {
-                                         ParentID = a.ParentID,
-                                         Title = r.Title,
-                                         PostID = a.ID,
-                                         UserID = b.UserID,
-                                         Posttype = a.PostType == 1 ? "Question" : "Answer"
-                                     }
-				             )
-					        .Union(
-				             from b in db.Bookmarks
-                                join q in db.Questions on b.PostID equals q.ID 
-					            	select new BookmarkDto
-                                     {
-                                         
-                                         Title = q.Title,
-                                         PostID = q.ID,
-                                         UserID = b.UserID,
-                                         Posttype = q.PostType == 1 ? "Question" : "Answer"
-                                     }
-				            ).Skip((pagingInfo.Page - 1) * pagingInfo.PageSize)
-                                    .Take(pagingInfo.PageSize)
-                                    .ToListAsync();
+        } 
 
 
-             
-                  
-            }
-		}
 	}
 }

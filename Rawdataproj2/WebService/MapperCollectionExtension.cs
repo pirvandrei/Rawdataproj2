@@ -40,8 +40,7 @@ namespace WebService
                 cfg.CreateMap<Note, NoteModel>()
                             .ReverseMap();
                 cfg.CreateMap<Bookmark, BookmarkModel>() 
-				            .ReverseMap();
-
+				            .ReverseMap();             
                 cfg.CreateMap<RankedWordListDto, RankedWordListModel>()
 				            .ReverseMap();
                 cfg.CreateMap<WeightedWordListDto, WeightedWordListModel>()

@@ -58,40 +58,7 @@ namespace StackoverflowContext
 			}
 		}
 
-		public async Task<IEnumerable<QuestionCommentsDto>> GetQuestionComments(int id)
-		{
-			using (var db = new StackoverflowDbContext())
-			{
-				return await db.Comments
-					.Where(q => q.PostID == id)
-					.Select(q => new QuestionCommentsDto
-					{
-						ID = q.ID,
-						Score = q.Score,
-						Text = q.Text,
-						Creationdate = q.CreationDate,
-					})
-					.ToListAsync();
-			}
-		}
 
-		public async Task<IEnumerable<QuestionAnswersDto>> GetQuestionAnswers(int id)
-		{
-			using (var db = new StackoverflowDbContext())
-			{
-				return await db.Answers
-					.Where(q => q.ParentID == id)
-					.Select(q => new QuestionAnswersDto
-					{
-						ID = q.ID,
-						Score = q.Score,
-						Body = q.Body,
-						Creationdate = q.CreationDate,
-
-					})
-					.ToListAsync();
-			}
-		}
 
 
 		public int Count()
@@ -134,5 +101,40 @@ namespace StackoverflowContext
 			}
 
 		}
+
+		//public async Task<IEnumerable<QuestionCommentsDto>> GetQuestionComments(int id)
+        //{
+        //  using (var db = new StackoverflowDbContext())
+        //  {
+        //      return await db.Comments
+        //          .Where(q => q.PostID == id)
+        //          .Select(q => new QuestionCommentsDto
+        //          {
+        //              ID = q.ID,
+        //              Score = q.Score,
+        //              Text = q.Text,
+        //              Creationdate = q.CreationDate,
+        //          })
+        //          .ToListAsync();
+        //  }
+        //}
+
+        //public async Task<IEnumerable<QuestionAnswersDto>> GetQuestionAnswers(int id)
+        //{
+        //  using (var db = new StackoverflowDbContext())
+        //  {
+        //      return await db.Answers
+        //          .Where(q => q.ParentID == id)
+        //          .Select(q => new QuestionAnswersDto
+        //          {
+        //              ID = q.ID,
+        //              Score = q.Score,
+        //              Body = q.Body,
+        //              Creationdate = q.CreationDate,
+
+        //          })
+        //          .ToListAsync();
+        //  }
+        //}
 	}
 }
