@@ -9,6 +9,7 @@
         var comments = ko.observableArray(params.comments);
         var id = ko.observable(params.id);
         var answerID = ko.observable(params.answerID());
+        var bookedmarked = ko.observable(params.bookmarked);
         console.log(answerID());
         return {
             score,
@@ -18,7 +19,8 @@
             score,
             comments,
             answerID,
-            id
+            id,
+            bookedmarked
         };
     };
 });
