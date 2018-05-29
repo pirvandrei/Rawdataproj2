@@ -27,7 +27,7 @@ namespace WebService.Models
         {
             pages = (int)Math.Ceiling(total / (double)pagingInfo.PageSize);
             prev = pagingInfo.Page > 1 ? prev : null;
-            next = pagingInfo.Page < pages - 1 ? next : null;
+            next = pagingInfo.Page < pages ? next : null;
         }
     }
 

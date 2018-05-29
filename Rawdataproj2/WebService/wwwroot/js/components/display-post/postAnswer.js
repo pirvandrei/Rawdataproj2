@@ -7,13 +7,18 @@
         var body = ko.observable(params.body);
         var score = ko.observable(params.score);
         var comments = ko.observableArray(params.comments);
+        var id = ko.observable(params.id);
+        var answerID = ko.observable(params.answerID());
+        console.log(answerID());
         return {
             score,
             userName,
             notes,
             body,
             score,
-            comments
+            comments,
+            answerID,
+            id
         };
     };
 });

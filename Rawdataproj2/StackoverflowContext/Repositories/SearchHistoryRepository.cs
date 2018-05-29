@@ -33,9 +33,9 @@ namespace StackoverflowContext
             using (var db = new StackoverflowDbContext())
             {
                 return await db.Searches
-                    .Skip(pagingInfo.Page * pagingInfo.PageSize)
+                    .Skip((pagingInfo.Page - 1) * pagingInfo.PageSize)
                     .Take(pagingInfo.PageSize)
-                    .Where(x => x.User.ID == userid).ToListAsync();
+                    .Where(x => x.UserID == userid).ToListAsync();
             }
         }
 

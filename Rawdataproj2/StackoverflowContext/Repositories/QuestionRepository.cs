@@ -28,7 +28,7 @@ namespace StackoverflowContext
 					.Include(x => x.PostTags)
 					.Include(x => x.User)
                     //.Include(x => x.Notes)
-					.Skip(pagingInfo.Page * pagingInfo.PageSize)
+					.Skip((pagingInfo.Page - 1) * pagingInfo.PageSize)
 					.Take(pagingInfo.PageSize)
 					.ToListAsync();
 			}
