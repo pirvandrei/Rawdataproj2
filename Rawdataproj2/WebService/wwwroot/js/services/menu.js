@@ -18,6 +18,12 @@
                 component: "bookmarks",
                 params: { name: "Bookmarks" },
                 path: '/#/bookmarks'
+            },
+            {
+                name: "Stats",
+                component: "statistics",
+                params: { name: "Statistics" },
+                path: '/#/stats'
             }
 
         ]

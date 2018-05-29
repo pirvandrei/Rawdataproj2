@@ -45,7 +45,7 @@
             .then(callback);
     };
     var getWordCloudData = function (data, callback) {
-        fetch('api/statistics?word=' + data.word)
+        fetch("api/statistics/rankedwordlist?word='" + data.word+"'")
             .then(function (response) {
                 return response.json();
             })

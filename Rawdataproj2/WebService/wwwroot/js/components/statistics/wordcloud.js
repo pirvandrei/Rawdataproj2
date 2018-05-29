@@ -1,12 +1,15 @@
-﻿define(['knockout', 'request','jquery' ], function (ko, req,jq) {
+﻿define(['knockout', 'request', 'jquery', 'jqcloud'], function (ko, req, $, jQCloud) {
     return function (params) {
         var cloudData = ko.observable();
 
         ko.computed(function () {
-            req.getCloudData(data, function (data) {
-                conosle.log(data)
-                cloudData = data();
-                jq.jQCloud(cloudData);
+            req.getWordCloudData({ word: 'sql' }, function (data) {
+                console.log(data);
+                cloudData(data);
+                console.log(cloudData());
+                console.log(data);
+                $('#wordcloud-container').jQCloud(cloudData());
+                
             });
 
         });

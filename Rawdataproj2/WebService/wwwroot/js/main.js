@@ -10,7 +10,6 @@
             menu: 'js/services/menu',
             request: 'js/services/request',
             paginate: 'js/services/paginate',
-            state: 'js/services/state'
         }
     });
    
@@ -65,17 +64,17 @@
         });
         ko.components.register("statistics", {
             viewModel: { require: "js/components/statistics/statistics" },
-            template: { require: "text!js/components/bookmarks/statistics.html" }
+            template: { require: "text!js/components/statistics/statistics.html" }
         });
         ko.components.register("wordcloud", {
             viewModel: { require: "js/components/statistics/wordcloud" },
-            template: { require: "text!js/components/bookmarks/wordcloud.html" }
+            template: { require: "text!js/components/statistics/wordcloud.html" }
         });
 
 
     });
 
-    require(['knockout', 'sammy', 'menu', 'state', 'js/viewModel'], function (ko, Sammy, menu, state, vm) {
+    require(['knockout', 'sammy', 'menu', 'js/viewModel'], function (ko, Sammy, menu,  vm) {
         ko.applyBindings(vm);
     })  
 

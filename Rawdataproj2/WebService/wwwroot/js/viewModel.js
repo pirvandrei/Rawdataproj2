@@ -1,5 +1,5 @@
-﻿define(['knockout', 'menu', 'state', 'sammy','request'],
-    function (ko, menuDef, state, sammy,req) {
+﻿define(['knockout', 'menu', 'sammy','request'],
+    function (ko, menuDef, sammy,req) {
         this.searchString = ko.observable();
         var self = this;
         this.startSearch = function () {
@@ -66,14 +66,18 @@
                 var menu = menuDef.menuList.find(m => m.path == context.path);
                 changeMenu(menu);
             });
+            router.get("/#/bookmarks", function (context) {
+                var menu = menuDef.menuList.find(m => m.path == context.path);
+                changeMenu(menu);
+            });
             //Route to post display
-            router.get("/#/post/:id", function (context) {
+            router.get("/#/stats", function (context) {
                 loadComponent({ component: 'post', params: context.params })
             });
+             //Route to search
             router.get("/#/search", function (context) {
                 console.log(context.params)
                 loadComponent({ component: 'display-search', params: context.params })
-
             });
 
         });
