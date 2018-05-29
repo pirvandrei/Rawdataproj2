@@ -13,6 +13,7 @@ using WebService.Models.Note;
 using WebService.Models;
 using WebService.Models.User;
 using Microsoft.Extensions.Logging;
+using DataService.Dto.NoteDto;
 
 namespace WebService.Controllers
 {
@@ -35,7 +36,8 @@ namespace WebService.Controllers
         public async Task<IActionResult> GetNotes(PagingInfo pagingInfo)
         {
             
-            var notes = await _NoteRepository.GetAll(pagingInfo);
+           // var notes = await _NoteRepository.GetAll(pagingInfo);
+			var notes = await _NoteRepository.GetNotes(pagingInfo); 
             var model = notes.Select(note => CreateNoteListModel(note));
 
             var total = _NoteRepository.Count();
@@ -113,20 +115,17 @@ namespace WebService.Controllers
          * Helpers
          * *****************************************************/
 
-        private NoteListModel CreateNoteListModel(Note note)
+        private NoteListModel CreateNoteListModel(NoteDto note)
         {
             var model = new NoteListModel
             {
                 
                 Text = note.Text,
-                Type = note.Post.PostType == 1 ? "Question" : "Answer",
-                Title = note.Post.Title,
+                Type = note.Posttype,
+                Title = note.Title,
                 PostID = note.PostID,
-                User = new UserModel
-                {
-                    ID = note.User.ID,
-                    DisplayName = note.User.DisplayName 
-                } 
+                ParentID = note.ParentID,
+                
             };
             model.Url = CreateLink(note.PostID);
             return model;

@@ -1,4 +1,5 @@
 ﻿using DataService;
+using DataService.Dto.NoteDto;
 using DataService.Dto.PostDto;
 using DomainModel;
 using Microsoft.EntityFrameworkCore;
@@ -75,5 +76,46 @@ namespace StackoverflowContext
                 return  db.Notes.Count();
             }
         } 
+
+		public async Task<IEnumerable<NoteDto>> GetNotes(PagingInfo pagingInfo)
+        {
+            using (var db = new StackoverflowDbContext())
+            {
+
+
+				return await (from n in db.Notes
+                              join a in db.Answers on n.PostID equals a.ID
+                              join r in db.Posts on a.ParentID equals r.ID
+				              select new NoteDto
+                              {
+                                  ParentID = a.ParentID,
+                                  Title = r.Title,
+                                  PostID = a.ID,
+                                  UserID = n.UserID,
+                                  Posttype = a.PostType == 1 ? "Question" : "Answer",
+					              Text = n.Text
+                              }
+                             )
+                            .Union(
+						from n in db.Notes
+                             join q in db.Questions on n.PostID equals q.ID
+					    	select new NoteDto
+                             {
+
+                                 Title = q.Title,
+                                 PostID = q.ID,
+                                 UserID = n.UserID,
+                                 Posttype = q.PostType == 1 ? "Question" : "Answer",
+					             Text = n.Text
+                             }
+                            ).Skip((pagingInfo.Page - 1) * pagingInfo.PageSize)
+                                    .Take(pagingInfo.PageSize)
+                                    .ToListAsync();
+
+
+
+
+            }
+        }
     }
 }
