@@ -42,7 +42,9 @@ namespace WebService
                 cfg.CreateMap<Bookmark, BookmarkModel>() 
 				            .ReverseMap();             
                 cfg.CreateMap<RankedWordListDto, RankedWordListModel>()
-				            .ReverseMap();
+                            .ForMember(r => r.Weight, m => m.MapFrom(s => s.Rank))
+                            .ForMember(r => r.Text, m => m.MapFrom(s => s.Word))
+                            .ReverseMap();
                 cfg.CreateMap<WeightedWordListDto, WeightedWordListModel>()
 				            .ReverseMap();
                 cfg.CreateMap<AssociationsListDto, AssociationsListModel>()
