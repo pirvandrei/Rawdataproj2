@@ -87,6 +87,9 @@ namespace StackoverflowContext
 
         private MySqlCommand InitCommand(MySqlConnection conn, string query, PagingInfo pagingInfo, string startDate, string endDate)
         {
+            // fix for now. We changed page to start at 1, but that will skip the first page when fetching.
+            var page = pagingInfo.Page - 1;
+
             var cmd = new MySqlCommand
             {
                 Connection = conn
@@ -99,7 +102,7 @@ namespace StackoverflowContext
             cmd.Parameters.Add("@endDate", DbType.String);
 
             cmd.Parameters["@pageSize"].Value = pagingInfo.PageSize;
-            cmd.Parameters["@pageNumber"].Value = pagingInfo.Page;
+            cmd.Parameters["@pageNumber"].Value = page;
             cmd.Parameters["@query"].Value = query;
             cmd.Parameters["@startDate"].Value = startDate;
             cmd.Parameters["@endDate"].Value = endDate;

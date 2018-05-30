@@ -17,7 +17,7 @@
         var availableMethods = ko.observableArray([
             new Method('Weighted', 'bestmatchweighted'),
             new Method('Ranked', 'bestmatchranked'),
-            new Method('All', 'bestmatchall'),
+            new Method('All', 'matchall'),
         ]);
         //When searching we will navigate to this route
         var startSearch = function () {
