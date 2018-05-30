@@ -1,13 +1,15 @@
 ﻿define(['knockout', 'request', 'jquery', 'jqcloud'], function (ko, req, $, jQCloud) {
     return function (params) {
         var cloudData = ko.observable();
-        var wordCloud = ko.observable("wordCloud");
-        ko.computed(function () {
-            req.getWordCloudData({ word: 'sql' }, function (data) {
-                //console.log(data);
-                //cloudData(data);
-                //console.log(cloudData());
-                //console.log(data);
+        var wordCloud = ko.observable();
+        console.log(wordCloud.data);
+
+        var cloud = ko.computed(function () {
+            req.getWordCloudData({ word: wordCloud() }, function (data) {
+                console.log(data);
+                cloudData(data);
+                console.log(cloudData());
+                console.log(data);
 
                 var words = ko.unwrap(data) || [];
                 var width =   500;
@@ -36,7 +38,8 @@
         });
 
         return {
-            wordCloud
+            wordCloud,
+            cloud
         };
     };
 });
