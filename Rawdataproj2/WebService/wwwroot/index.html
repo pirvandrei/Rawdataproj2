@@ -1,99 +1,30 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <title></title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SOVA application</title>
     <link rel="stylesheet" type="text/css" href="bower_components\bootstrap\dist\css\bootstrap.min.css">
     <!--<link rel="stylesheet" type="text/css" href="bower_components\components-font-awesome\css\fontawesome.min.css">-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-
-
-
-    <style>
-        div {
-            /*border: 1px solid black;*/
-        }
-
-        .container {
-            /*width: 800px;*/
-        }
-
-        .score {
-            /*display: flex;
-            position: relative;*/
-            text-align: center;
-        }
-
-        .post-box {
-            padding: 20px;
-        }
-
-        .comment-section ul div {
-            display: inline-block;
-        }
-
-        ul {
-            padding-top: 10px;
-            list-style-type: none;
-        }
-
-        .comment-content span:last-child {
-            color: grey;
-        }
-
-        .search-bar {
-            display: flex;
-            padding: 5px;
-        }
-
-        .search-list-element, .history-item {
-            cursor: pointer;
-        }
-
-        select {
-            padding: 7px;
-            border-radius: 5px;
-            margin: 0 10px;
-        }
-
-        .history-item {
-            margin: 10px;
-        }
-
-        #navbarNav {
-            font-size: 2rem;
-        }
-        .search-result p:not(:first-child), .search-result h2:not(:first-child) {
-            display: none;
-        }
-        .search-result pre, .search-result ul, .search-result hr {
-            display: none;
-        }
-        .search-list-element:hover, .history-item:hover {
-            background-color: #ececec;
-            border-radius: 5px;
-        }
-
-        .search-bar > input {
-            padding-right: .2rem;
-            width: 300px;
-            border: 1px solid black
-        }
-
-        .search-bar > button {
-            border-radius: initial;
-            border-top-right-radius: .2rem;
-            border-bottom-right-radius: .2rem;
-            padding: 1px .5rem;
-            background-color: transparent;
-            border: 1px solid black;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="css/StyleSheet.css">
 </head>
 <body>
-    <div class="container" id="main">
+    <div class="container-fluid" id="main">
         <!--Navbar -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+            <div class="navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav" data-bind="foreach: menuList">
+                    <li class="nav-item" data-bind="css: $parent.isActive($data)">
+                        <a class="nav-link" data-bind="attr: { href: path}">
+                            <span data-bind="text: name"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control" type="search" placeholder="Search" aria-label="Search" data-bind="value: searchString">
                 <div class="btn btn-outline-success my-2 my-sm-0" data-bind="click:startSearch"><i class="fas fa-search"></i></div>
@@ -103,25 +34,19 @@
                        optionsValue:'value',
                        value:selectedMethod">
                     <option value="value">text</option>
-                </select>  
+                </select>
             </form>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav" data-bind="foreach: menuList">
-                    <li class="nav-item" data-bind="css: $parent.isActive($data)">
-                        <a class="nav-link" data-bind="attr: { href: path}">
-                            <span data-bind="text: name"></span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+
         </nav>
 
         <!---Body -->
         <!--<div data-bind="component: { name: componentName, params: { value: $data } }"></div>-->
+        <div class="container">
+            <div data-bind="component: { name: selectedComponent, params: selectedParams }"></div>
+        </div>
+        
+    </div>
 
-        <div data-bind="component: { name: selectedComponent, params: selectedParams }"></div>
-    </div>
-    </div>
     <!--Scripts-->
     <script src="bower_components\requirejs\require.js"></script>
     <script src="js/main.js"></script>
