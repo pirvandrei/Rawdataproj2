@@ -260,10 +260,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\css\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="wwwroot\bower_components\bootstrap\.babelrc.js" />
     <None Include="wwwroot\bower_components\bootstrap\.editorconfig" />
     <None Include="wwwroot\bower_components\bootstrap\.eslintignore" />

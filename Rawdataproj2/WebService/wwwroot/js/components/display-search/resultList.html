@@ -1,5 +1,14 @@
 ﻿
 <br />
+<div data-bind="if: searchString">
+    <p>Results found: <b><span data-bind="text: total"></span></b></p>
+    <p>Pages in total: <b><span data-bind="text: pages"></span></b></p>
+</div>
+
+<div data-bind="ifnot: searchString">
+    <h3>Latest questions asked</h3><br />
+</div>
+
 <div data-bind="foreach:cPage">
     <div class="row" data-bind="component: { name: 'search-list-element',params:{body:$data.body,title:$data.title,creationDate:$data.creationDate,score:$data.score,id:$data.id,parentId:$data.parentID}}">
     </div>
@@ -9,12 +18,13 @@
         <p>Sorry but we couldn't find any post fulfilling provided criteria.</p>
     </div>
 </div>
+
 <nav class="paginate">
     <ul class="pagination justify-content-center">
         <li class="page-item" data-bind="click:changePagePrev,css:currentPagenr() == 1 ?'disabled':''">
             <span class="page-link">Previous</span>
         </li>
-        <li class="page-item ">
+        <li class="page-item disabled">
             <a class="page-link" href="#" data-bind="text:currentPagenr">1 <span class="sr-only">(current)</span></a>
         </li>
         <li class="page-item" data-bind="click:changePageNext,css:currentPagenr() === cPage.pages ?'disabled':''">

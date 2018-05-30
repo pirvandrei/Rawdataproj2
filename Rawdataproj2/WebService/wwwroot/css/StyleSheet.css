@@ -71,6 +71,9 @@ select {
 .n1 ul li a {
     color: lightgrey !important;
 }
+.page-link {
+    color: black;
+}
 
 .search-result p:not(:first-child), .search-result h2:not(:first-child) {
     display: none;

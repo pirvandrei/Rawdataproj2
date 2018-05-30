@@ -12,6 +12,8 @@ define(['knockout', 'request','paginate'], function (ko, req,pg) {
         var nextLink = ko.observable;
         var cPage = ko.observableArray();
         var noData = ko.observable();
+        var total = ko.observable();
+        var pages = ko.observable();
         
         //Pagination button bindings
         var changePageNext = function () {
@@ -40,6 +42,8 @@ define(['knockout', 'request','paginate'], function (ko, req,pg) {
                 pg.loadData(data)
                 cPage(pg.data.items)
                 currentPagenr(pg.data.currentPage);
+                total(data.total);
+                pages(data.pages);
                 if (pg.data.pages == null) {
                     noData(true)
                 } else {
@@ -55,7 +59,9 @@ define(['knockout', 'request','paginate'], function (ko, req,pg) {
         currentPagenr,
         changePageNext,
         changePagePrev,
-        noData
+        noData,
+        total,
+        pages
         };
     };
 });
