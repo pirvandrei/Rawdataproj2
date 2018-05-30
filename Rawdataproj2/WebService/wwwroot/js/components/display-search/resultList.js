@@ -39,8 +39,8 @@ define(['knockout', 'request','paginate'], function (ko, req,pg) {
             var data = { searchString: searchString(), searchMethod:searchMethod() };
             //make api call
             req.getSearchResults(data, function (data) {
-                pg.loadData(data)
-                cPage(pg.data.items)
+                pg.loadData(data);
+                cPage(pg.data.items);
                 currentPagenr(pg.data.currentPage);
                 total(data.total);
                 pages(data.pages);
