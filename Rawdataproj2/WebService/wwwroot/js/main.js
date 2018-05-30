@@ -10,6 +10,7 @@
             menu: 'js/services/menu',
             request: 'js/services/request',
             paginate: 'js/services/paginate',
+
         }
     });
    
