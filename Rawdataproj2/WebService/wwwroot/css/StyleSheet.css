@@ -116,7 +116,7 @@ select {
     .navbar-nav {
         text-align: center;
     }
-    .form-inline {
+    .form-inline { 
         margin: 0 auto;
     }
 }
