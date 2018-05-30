@@ -1,14 +1,16 @@
-﻿
+﻿<br />
 <div id="bookmarks">
     <h2>Bookmarks</h2>
-    <div data-bind="foreach:cPage">
-        <div class="row">
-            <div class="col-sm-12">
-                <a href="#" data-bind="attr:{href:'/#/post/'+(parentID?parentID:postID)}"><span data-bind="text:title"></span></a>
-            </div>
-        </div>
-        <!--<div data-bind="component:{name:'note-item',params:{id:postID,title:title}}"></div>-->
-    </div>
+    <hr />
+
+    <p>Results found: <b><span data-bind="text: total"></span></b></p>
+    <p>Pages in total: <b><span data-bind="text: pages"></span></b></p>
+
+    <ul class="list-group" data-bind="foreach:cPage">
+        <li class="list-group-item">
+            <a href="#" data-bind="attr:{href:'/#/post/'+(parentID?parentID:postID)}"><span data-bind="text:title"></span></a>
+        </li>
+    </ul>
 </div>
 
 <nav class="paginate">

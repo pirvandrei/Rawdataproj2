@@ -1,6 +1,13 @@
-﻿<div id="notes">
+﻿
+<br />
+<div id="notes">
     <h2>Notes</h2>
-    <div data-bind="foreach:cPage">
-        <div data-bind="component:{name:'note-item',params:{text:text,title:title,url:url,id:parentID?parentID:postID}}"></div>
-    </div>
+    <hr />
+
+    <p>Results found: <b><span data-bind="text: total"></span></b></p>
+    <p>Pages in total: <b><span data-bind="text: pages"></span></b></p>
+
+    <ul lass="list-group" data-bind="foreach:cPage" style="padding-left:0px;">
+        <li class="list-group-item notes-list-item"  data-bind="component:{name:'note-item',params:{text:text,title:title,url:url,id:parentID?parentID:postID}}"></li>
+    </ul>
 </div>

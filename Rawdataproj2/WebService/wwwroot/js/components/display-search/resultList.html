@@ -6,12 +6,13 @@
 </div>
 
 <div data-bind="ifnot: searchString">
-    <h3>Latest questions asked</h3><br />
+    <h3>Latest questions asked</h3>
 </div>
+<br />
 
 <div data-bind="foreach:cPage">
     <div class="row" data-bind="component: { name: 'search-list-element',params:{body:$data.body,title:$data.title,creationDate:$data.creationDate,score:$data.score,id:$data.id,parentId:$data.parentID}}">
-    </div>
+    </div><br />
 </div>
 <div class="row" data-bind="visible:noData">
     <div class="col-sm-12">

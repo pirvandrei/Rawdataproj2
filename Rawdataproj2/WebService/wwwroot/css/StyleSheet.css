@@ -102,6 +102,14 @@ select {
     background-color: transparent;
     border: 1px solid black;
 }
+.list-group {
+    padding-left: 0px !important;
+}
+
+.notes-list-item {
+    margin-bottom: 1.5%;
+}
+
 
 /* for menu */
 @media (max-width: 1000px) {
