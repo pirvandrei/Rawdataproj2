@@ -6,11 +6,13 @@
 
                     <!-- notes -->
                     <div class="note">
-                        <div data-bind="if: countNotes() <= 0">
-                            <button type="button" class="btn btn-dark" data-bind="click: addNote">Add a note to this question</button><br /><br />
-                            <div class="form-group">
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Write here..." data-bind="value: noteText"></textarea>
-                            </div> 
+                        <div data-bind="visible: showAddNote()">
+                            <div data-bind="if: countNotes() <= 0">
+                                <button type="button" class="btn btn-dark" data-bind="click: addNote">Add a note to this question</button><br /><br />
+                                <div class="form-group">
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Write here..." data-bind="value: noteText"></textarea>
+                                </div> 
+                            </div>
                         </div>
                     </div>
 

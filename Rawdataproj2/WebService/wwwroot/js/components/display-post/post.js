@@ -19,6 +19,7 @@ define(['knockout', 'request'], function (ko, req) {
         var id = ko.observable();
         var notes = ko.observableArray();
         var noteText = ko.observable();
+        var showAddNote = ko.observable(true);
         //First we need to load question data
 
         var addBookmark = function () {
@@ -38,7 +39,7 @@ define(['knockout', 'request'], function (ko, req) {
                 console.log(data);
                 req.getQuestion(params, function (data) {
                     notes(data.notes);
-                    countNotes(0);
+                    showAddNote(false);
                 });
             });
         }
@@ -46,7 +47,13 @@ define(['knockout', 'request'], function (ko, req) {
         var removeNote = function () {
             req.deleteNote({ postid: id() }, function (data) {
                 console.log(data);
+                req.getQuestion(params, function (data) {                  
+                    notes(data.notes);
+                    countNotes(data.notes.length);
+                    showAddNote(true);                       
+                });
             });
+            
         }
         
 
@@ -92,7 +99,8 @@ define(['knockout', 'request'], function (ko, req) {
         removeNote,
         notes,
         noteText,
-        countNotes
+        countNotes,
+        showAddNote
         };
     };
 });

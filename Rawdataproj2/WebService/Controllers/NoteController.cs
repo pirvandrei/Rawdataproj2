@@ -88,7 +88,7 @@ namespace WebService.Controllers
         public async Task<IActionResult> DeleteNote(int id)
         {
             if (!await _NoteRepository.Delete(id)) return NotFound();
-            return NoContent();
+            return Json(NoContent());
         }
 
         [HttpPost("{id}")]
