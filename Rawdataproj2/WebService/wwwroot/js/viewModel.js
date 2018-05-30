@@ -15,9 +15,9 @@
         };
          //Array containing available methods for search
         var availableMethods = ko.observableArray([
-            new Method('Weighted', 'bestmatchweighted'),
-            new Method('Ranked', 'bestmatchranked'),
-            new Method('All', 'matchall'),
+            new Method('Query weighted', 'bestmatchweighted'),
+            new Method('Query ranked', 'bestmatchranked'),
+            new Method('Query match all words', 'matchall'),
         ]);
         //When searching we will navigate to this route
         var startSearch = function () {

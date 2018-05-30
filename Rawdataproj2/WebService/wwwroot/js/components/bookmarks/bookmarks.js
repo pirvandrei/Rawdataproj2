@@ -5,6 +5,9 @@
         var nextLink = ko.observable;
         var cPage = ko.observableArray();
         var id = 1;
+        var total = ko.observable();
+        var pages = ko.observable();
+
         //Pagination button bindings
         var changePageNext = function () {
             if (pg.moveCursor('next')) {
@@ -36,6 +39,8 @@
                 cPage(pg.data.items)
                 currentPagenr(pg.data.currentPage);
                 console.log(cPage);
+                total(data.total);
+                pages(data.pages);
             });
         });        
         return {
@@ -43,7 +48,9 @@
             pg,
             currentPagenr,
             changePageNext,
-            changePagePrev
+            changePagePrev,
+            total,
+            pages
         };
     };
 });
