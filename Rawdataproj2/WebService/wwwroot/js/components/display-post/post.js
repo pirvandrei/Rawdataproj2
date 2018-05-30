@@ -14,8 +14,11 @@ define(['knockout', 'request'], function (ko, req) {
         var qUserName = ko.observable();
         var qCreationDate = ko.observable();
         var countAnswers = ko.observable();
+        var countNotes = ko.observable();
         var qBookmarked = ko.observable();
         var id = ko.observable();
+        var notes = ko.observableArray();
+        var noteText = ko.observable();
         //First we need to load question data
 
         var addBookmark = function () {
@@ -29,6 +32,22 @@ define(['knockout', 'request'], function (ko, req) {
                 qBookmarked(false);
             });
         }
+
+        var addNote = function () {
+            req.saveNote({ text: noteText(), postid: id(), userid: 1 }, function (data) {
+                console.log(data);
+                req.getQuestion(params, function (data) {
+                    notes(data.notes);
+                    countNotes(0);
+                });
+            });
+        }
+
+        var removeNote = function () {
+            req.deleteNote({ postid: id() }, function (data) {
+                console.log(data);
+            });
+        }
         
 
         //load question data
@@ -36,6 +55,7 @@ define(['knockout', 'request'], function (ko, req) {
         req.getQuestion(params, function (data) {
             console.log(data)
             answerData(data.answers);
+            notes(data.notes);
             console.log(answerData());
             qTitle(data.title);
             qBody(data.body);
@@ -49,6 +69,7 @@ define(['knockout', 'request'], function (ko, req) {
             countAnswers(data.comments.length);     
             qBookmarked(data.bookmarked);
             id(data.id);
+            countNotes(data.notes.length);
             });
         });
     return {
@@ -66,7 +87,12 @@ define(['knockout', 'request'], function (ko, req) {
         acceptedAnswer,
         qBookmarked,
         addBookmark,
-        removeBookmark
+        removeBookmark,
+        addNote,
+        removeNote,
+        notes,
+        noteText,
+        countNotes
         };
     };
 });

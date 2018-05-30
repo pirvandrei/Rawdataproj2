@@ -93,6 +93,34 @@
             .then(callback);
     };
 
+    var saveNote = function (data, callback) {
+        fetch('api/notes/' + data.userid, {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'content-type': 'application/json'
+            }
+        })
+            .then(function (response) {
+                console.log("response", response);
+                return response.json();
+            })
+            .then(callback);
+    };
+    var deleteNote = function (data, callback) {
+        fetch('api/notes/' + data.postid, {
+            method: 'DELETE',
+            body: JSON.stringify(data),
+            headers: {
+                'content-type': 'application/json'
+            }
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(callback);
+    };
+
     return {
         getQuestion,
         getSearchHistory,
@@ -103,7 +131,10 @@
         getNotes,
         getBookmarks,
         deleteBookmark,
-        getWordCloudData    
+        getWordCloudData,
+        saveNote,
+        deleteNote
+
         
     }
 
