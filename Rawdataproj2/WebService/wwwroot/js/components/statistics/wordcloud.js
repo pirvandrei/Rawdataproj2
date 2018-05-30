@@ -1,7 +1,7 @@
 ﻿define(['knockout', 'request', 'jquery', 'jqcloud'], function (ko, req, $, jQCloud) {
     return function (params) {
         var cloudData = ko.observable();
-
+        var wordCloud = ko.observable("wordCloud");
         ko.computed(function () {
             req.getWordCloudData({ word: 'sql' }, function (data) {
                 //console.log(data);
@@ -19,7 +19,7 @@
                     shape: 'rectangular',
                     autoResize: true,
                     classPattern: null,
-                    colors: ["#800026", "#bd0026", "#e31a1c", "#fc4e2a", "#fd8d3c", "#feb24c", "#fed976"],
+                    colors: ["#237204", "#38801d", "#4e8e36", "#659c4f", "#7baa68", "#91b881", "#a7c69a"],
                     fontSize: {
                         from: 0.1,
                         to: 0.03
