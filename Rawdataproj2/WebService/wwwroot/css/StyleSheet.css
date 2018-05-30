@@ -84,9 +84,12 @@ select {
     border: 1px solid black;
 }
 
-/* Small devices (tablets, 768px and up) */
-@media (min-width: @screen-sm-min) {
+/* for menu */
+@media (max-width: 1000px) {
     .navbar-nav {
         text-align: center;
+    }
+    .form-inline {
+        margin: 0 auto;
     }
 }
